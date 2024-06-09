@@ -1,24 +1,29 @@
-<div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
-  <div class="relative mx-32 bg-white px-6 pt-10 pb-8 shadow-xl sm:rounded-lg sm:px-10">
-    <div class="mx-auto">
-      <img src="https://vite-ruby.netlify.app/logo.svg" class="h-32" />
-      <h1 class="mt-6 mb-12 text-center font-sans text-5xl">Vite Rails</h1>
-      <section class="justify-center-center my-0 mx-auto flex flex-wrap justify-between px-8 pt-0 pb-16 leading-6 tracking-normal">
-        <a class="max-h-32 max-w-[23rem] flex-shrink flex-grow-0 cursor-pointer rounded-lg bg-gray-200 py-6 px-8 text-sm font-medium leading-6 tracking-normal shadow-xl" href="/">
-          <h2 class="mx-0 mt-0 mb-3 cursor-pointer text-xl font-semibold leading-6 tracking-tight">🔥 Fast Server Start</h2>
-          <p class="m-0 cursor-pointer text-sm font-medium leading-6 tracking-normal">Unlike Webpacker, files are processed on demand!</p>
-        </a>
+<h1 class="my-4">Search</h1>
 
-        <a class="my-6 max-h-32 max-w-[23rem] flex-shrink flex-grow-0 cursor-pointer rounded-lg bg-gray-100 bg-transparent py-6 px-8 text-sm font-medium leading-6 tracking-normal shadow-xl" href="/">
-          <h2 class="mx-0 mt-0 mb-3 cursor-pointer text-xl font-semibold leading-6 tracking-tight">⚡️ Instant Changes</h2>
-          <p class="m-0 cursor-pointer text-sm font-medium leading-6 tracking-normal">Fast updates thanks to HMR. Goodbye full-page reloads!</p>
-        </a>
+<%= form_tag(search_path, method: :get, class: "form-inline") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-control mr-2" %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
 
-        <a class="max-h-32 max-w-[23rem] flex-shrink flex-grow-0 cursor-pointer rounded-lg bg-gray-200 bg-transparent py-6 px-8 text-sm font-medium leading-6 tracking-normal shadow-xl" href="/">
-          <h2 class="mx-0 mt-0 mb-3 cursor-pointer text-xl font-semibold leading-6 tracking-tight">🚀 Zero-Config Deploys</h2>
-          <p class="m-0 cursor-pointer text-sm font-medium leading-6 tracking-normal">Integrates with Rake asset management tasks.</p>
-        </a>
-      </section>
+<% if user_signed_in? %>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "btn btn-danger mt-3") %>
+<% else %>
+  <form action="<%= user_session_path %>" method="post" class="mt-3">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <div class="form-group">
+      <label for="user_email">Email</label>
+      <input type="email" name="user[email]" id="user_email" class="form-control">
     </div>
+    <div class="form-group">
+      <label for="user_password">Password</label>
+      <input type="password" name="user[password]" id="user_password" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Log in" class="btn btn-primary">
+    </div>
+  </form>
+  <div class="mt-3">
+    <%= link_to "Sign up", new_user_registration_path, class: "btn btn-link" %> |
+    <%= link_to "Forgot your password?", new_user_password_path, class: "btn btn-link" %>
   </div>
-</div>
+<% end %>
