@@ -1,0 +1,43 @@
+<div class="container mt-3">
+  <p class="alert alert-success"><%= notice %></p>
+  <%= render @auction %>
+
+  <% if current_user&.id == @auction.seller_id %>
+    <%= link_to "Edit this auction", edit_item_path(@auction.item), class: "btn btn-primary" %> |
+    <%= link_to "Delete Auction", item_path(@auction.item), method: :delete, class: "btn btn-danger" %> |
+    <%= link_to "Back to Dashboard", dashboard_user_path(current_user), class: "btn btn-secondary" %>
+  <% end %>
+
+  <% if current_user && current_user&.id != @auction.seller_id %>
+    <div class="mb-3">
+      <%= link_to 'Watch this Auction', watchlists_path(auction_id: @auction.id), method: :post, class: "btn btn-info watch-auction-button" %> 
+    </div>
+  <% end %>
+
+
+
+  <% if current_user && current_user&.id != @auction.seller_id %>
+    <%= form_with model: [ @auction, @inquiry ], url: auction_inquiries_path(@auction), local: true do |form| %>
+      <% if @inquiry.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h2><%= pluralize(@inquiry.errors.count, "error") %> prohibited this inquiry from being saved:</h2>
+
+          <ul>
+          <% @inquiry.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= form.label :comment %><br>
+        <%= form.text_area :comment %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Post Inquiry", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  buyer: one
+  seller: one
+  final_price: 1.5
+  payment_status: 1
+  auction: one
+
+two:
+  buyer: two
+  seller: two
+  final_price: 1.5
+  payment_status: 1
+  auction: two

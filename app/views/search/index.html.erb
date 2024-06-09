@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Search Results</h1>
+    <%= form_tag(search_path, method: :get, class: "form-inline mb-4") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-control mr-2" %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <% end %>
+    <% if @results.present? %>
+        <% @results.each do |result| %>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><%= link_to result.name, auction_path(result.auction) %></h5>
+                    <p class="card-text"><%= result.description %></p>
+                </div>
+            </div>
+        <% end %>
+    <% else %>
+        <div class="alert alert-warning" role="alert">
+            No results found
+        </div>
+    <% end %>
+</div>
+</body>
+</html>

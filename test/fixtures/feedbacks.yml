@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_user: one
+  to_user: one
+  sale_transaction: one
+  auction: one
+  rating: 1
+  comment: MyText
+  reply: MyText
+
+two:
+  from_user: two
+  to_user: two
+  sale_transaction: two
+  auction: two
+  rating: 1
+  comment: MyText
+  reply: MyText

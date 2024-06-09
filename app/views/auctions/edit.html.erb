@@ -1,0 +1,257 @@
+<h1>THIS IS IN AUCTION </h1>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item</title>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'application' %>
+</head>
+<body>
+    <form action="<%= item_path(@item) %>" accept-charset="UTF-8" method="post" aria-labelledby="form-title">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+        <h1 id="form-title">Edit Item</h1>
+
+        <div class="field">
+            <label for="item_name">Name</label>
+            <input type="text" id="item_name" name="item[name]" value="<%= @item.name %>" required aria-required="true">
+        </div>
+
+        <div class="field">
+            <label for="item_description">Description</label>
+            <textarea id="item_description" name="item[description]"><%= @item.description %></textarea>
+        </div>
+
+        <div class="field">
+            <label for="item_category_type">Category</label>
+            <select id="item_category_type" name="item[category_type]" required aria-required="true">
+                <option value="">Select Category</option>
+                <option value="1" <%= 'selected' if @item.category_type == 1 %>>Plant</option>
+                <option value="2" <%= 'selected' if @item.category_type == 2 %>>Container</option>
+                <option value="3" <%= 'selected' if @item.category_type == 3 %>>Essential</option>
+            </select>
+        </div>
+
+        <!-- Plant Attributes -->
+        <fieldset id="plant_fields" class="item_fields" style="display: none;" aria-hidden="true">
+            <legend>Plant Details</legend>
+            <div class="field">
+                <label for="item_species">Species</label>
+                <select id="item_species" name="item[species]" onchange="updateSpeciesType()">
+                    <option value="">Select Species</option>
+                    <option value="1" <%= 'selected' if @item.species == 1 %>>Azalea</option>
+                    <option value="2" <%= 'selected' if @item.species == 2 %>>Boxwood</option>
+                    <option value="3" <%= 'selected' if @item.species == 3 %>>Cypress</option>
+                    <option value="4" <%= 'selected' if @item.species == 4 %>>Elm</option>
+                    <option value="5" <%= 'selected' if @item.species == 5 %>>Ficus</option>
+                    <option value="6" <%= 'selected' if @item.species == 6 %>>Gingko</option>
+                    <option value="7" <%= 'selected' if @item.species == 7 %>>Juniper</option>
+                    <option value="8" <%= 'selected' if @item.species == 8 %>>Maple</option>
+                    <option value="9" <%= 'selected' if @item.species == 9 %>>Oak</option>
+                    <option value="10" <%= 'selected' if @item.species == 10 %>>Olive</option>
+                    <option value="11" <%= 'selected' if @item.species == 11 %>>Pine</option>
+                    <option value="12" <%= 'selected' if @item.species == 12 %>>Schefflera</option>
+                    <option value="13" <%= 'selected' if @item.species == 13 %>>Tea</option>
+                    <option value="14" <%= 'selected' if @item.species == 14 %>>Other</option>
+                </select>
+                <input type="hidden" id="item_species_type" name="item[species_type]" value="<%= @item.species_type %>">
+                <input type="text" id="item_species_other" name="item[species_other]" value="<%= @item.species_other %>" style="display: none;" placeholder="Other Species" aria-hidden="true">
+            </div>
+
+            <div class="field">
+                <label for="item_style">Style</label>
+                <select id="item_style" name="item[style]">
+                    <option value="">Select Style</option>
+                    <option value="1" <%= 'selected' if @item.style == 1 %>>Formal Upright</option>
+                    <option value="2" <%= 'selected' if @item.style == 2 %>>Informal Upright</option>
+                    <option value="3" <%= 'selected' if @item.style == 3 %>>Cascade</option>
+                    <option value="4" <%= 'selected' if @item.style == 4 %>>Forest</option>
+                    <option value="5" <%= 'selected' if @item.style == 5 %>>Clump</option>
+                    <option value="6" <%= 'selected' if @item.style == 6 %>>Broom</option>
+                    <option value="7" <%= 'selected' if @item.style == 7 %>>Other</option>
+                </select>
+                <input type="text" id="item_style_other" name="item[style_other]" value="<%= @item.style_other %>" style="display: none;" placeholder="Other Style" aria-hidden="true">
+            </div>
+
+            <div class="field">
+                <label for="item_stage">Stage</label>
+                <select id="item_stage" name="item[stage]">
+                    <option value="">Select Stage</option>
+                    <option value="1" <%= 'selected' if @item.stage == 1 %>>Pre-Bonsai</option>
+                    <option value="2" <%= 'selected' if @item.stage == 2 %>>Development</option>
+                    <option value="3" <%= 'selected' if @item.stage == 3 %>>Refinement</option>
+                    <option value="4" <%= 'selected' if @item.stage == 4 %>>Specimen</option>
+                    <option value="5" <%= 'selected' if @item.stage == 5 %>>Seeds/Seedlings</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <!-- Container Attributes -->
+        <fieldset id="container_fields" class="item_fields" style="display: none;" aria-hidden="true">
+            <legend>Container Details</legend>
+
+            <div class="field">
+                <label for="item_material_container">Material</label>
+                <select id="item_material_container" name="item[material]">
+                    <option value="">Select Material</option>
+                    <option value="1" <%= 'selected' if @item.material == 1 %>>Commercial</option>
+                    <option value="2" <%= 'selected' if @item.material == 2 %>>Handmade</option>
+                    <option value="3" <%= 'selected' if @item.material == 3 %>>Other</option>
+                </select>
+                <input type="text" id="item_material_container_other" name="item[material_other]" value="<%= @item.material_other %>" style="display: none;" placeholder="Other Material" aria-hidden="true">
+            </div>
+
+            <div class="field">
+                <label for="item_shape_container">Shape</label>
+                <select id="item_shape_container" name="item[shape]">
+                    <option value="">Select Shape</option>
+                    <option value="1" <%= 'selected' if @item.shape == 1 %>>Lotus</option>
+                    <option value="2" <%= 'selected' if @item.shape == 2 %>>Nanban</option>
+                    <option value="3" <%= 'selected' if @item.shape == 3 %>>Round</option>
+                    <option value="4" <%= 'selected' if @item.shape == 4 %>>Oval</option>
+                    <option value="5" <%= 'selected' if @item.shape == 5 %>>Rectangle</option>
+                    <option value="6" <%= 'selected' if @item.shape == 6 %>>Bag</option>
+                    <option value="7" <%= 'selected' if @item.shape == 7 %>>Other</option>
+                </select>
+                <input type="text" id="item_shape_container_other" name="item[shape_other]" value="<%= @item.shape_other %>" style="display: none;" placeholder="Other Shape" aria-hidden="true">
+            </div>
+
+            <div class="field">
+                <label for="item_color_container">Color</label>
+                <select id="item_color_container" name="item[color]">
+                    <option value="">Select Color</option>
+                    <option value="1" <%= 'selected' if @item.color == 1 %>>Black</option>
+                    <option value="2" <%= 'selected' if @item.color == 2 %>>White</option>
+                    <option value="3" <%= 'selected' if @item.color == 3 %>>Natural</option>
+                    <option value="4" <%= 'selected' if @item.color == 4 %>>Blue</option>
+                    <option value="5" <%= 'selected' if @item.color == 5 %>>Green</option>
+                    <option value="6" <%= 'selected' if @item.color == 6 %>>Other</option>
+                </select>
+                <input type="text" id="item_color_container_other" name="item[color_other]" value="<%= @item.color_other %>" style="display: none;" placeholder="Other Color" aria-hidden="true">
+            </div>
+
+            <div class="field">
+                <label for="item_size_container">Size</label>
+                <select id="item_size_container" name="item[size]">
+                    <option value="">Select Size</option>
+                    <option value="1" <%= 'selected' if @item.size == 1 %>>X-Small</option>
+                    <option value="2" <%= 'selected' if @item.size == 2 %>>Small</option>
+                    <option value="3" <%= 'selected' if @item.size == 3 %>>Medium</option>
+                    <option value="4" <%= 'selected' if @item.size == 4 %>>Large</option>
+                    <option value="5" <%= 'selected' if @item.size == 5 %>>Extra Large</option>
+                    <option value="6" <%= 'selected' if @item.size == 6 %>>XX Large</option>
+                    <option value="7" <%= 'selected' if @item.size == 7 %>>Other</option>
+                </select>
+                <input type="text" id="item_size_container_other" name="item[size_other]" value="<%= @item.size_other %>" style="display: none;" placeholder="Other Size" aria-hidden="true">
+            </div>
+
+            <div class="field">
+                <label for="item_origin_container">Origin</label>
+                <select id="item_origin_container" name="item[origin]">
+                    <option value="">Select Origin</option>
+                    <option value="1" <%= 'selected' if @item.origin == 1 %>>US</option>
+                    <option value="2" <%= 'selected' if @item.origin == 2 %>>Japan</option>
+                    <option value="3" <%= 'selected' if @item.origin == 3 %>>China</option>
+                    <option value="4" <%= 'selected' if @item.origin == 4 %>>Other</option>
+                </select>
+                <input type="text" id="item_origin_container_other" name="item[origin_other]" value="<%= @item.origin_other %>" style="display: none;" placeholder="Other Origin" aria-hidden="true">
+            </div>
+        </fieldset>
+
+        <!-- Essential Attributes -->
+        <fieldset id="essential_fields" class="item_fields" style="display: none;" aria-hidden="true">
+            <legend>Essential Details</legend>
+
+            <div class="field">
+                <label for="item_essential_type">Essential Type</label>
+                <select id="item_essential_type" name="item[essential_type]">
+                    <option value="1" <%= 'selected' if @item.essential_type == 1 %>>Soil</option>
+                    <option value="2" <%= 'selected' if @item.essential_type == 2 %>>Supplements</option>
+                    <option value="3" <%= 'selected' if @item.essential_type == 3 %>>Decorations</option>
+                    <option value="4" <%= 'selected' if @item.essential_type == 4 %>>Wire</option>
+                    <option value="5" <%= 'selected' if @item.essential_type == 5 %>>Books</option>
+                    <option value="6" <%= 'selected' if @item.essential_type == 6 %>>Stands</option>
+                    <option value="7" <%= 'selected' if @item.essential_type == 7 %>>Tools</option>
+                    <option value="8" <%= 'selected' if @item.essential_type == 8 %>>Other</option>
+                </select>
+                <input type="text" id="item_essential_other" name="item[essential_other]" value="<%= @item.essential_other %>" style="display: none;" placeholder="Other Essential Type" aria-hidden="true">
+            </div>
+
+            <div id="wire_fields" style="display: none;">
+                <label for="item_wire_type">Wire Type</label>
+                <select id="item_wire_type" name="item[wire_type]">
+                    <option value="">Select Wire Type</option>
+                    <option value="1" <%= 'selected' if @item.wire_type == 1 %>>Copper</option>
+                    <option value="2" <%= 'selected' if @item.wire_type == 2 %>>Aluminum</option>
+                    <option value="3" <%= 'selected' if @item.wire_type == 3 %>>Other</option>
+                </select>
+                <input type="text" id="item_wire_other" name="item[wire_other]" value="<%= @item.wire_other %>" style="display: none;" placeholder="Other Wire Type" aria-hidden="true">
+            </div>
+
+            <fieldset id="tools_fields" style="display: none;">
+                <legend>Tool Details</legend>
+                <div class="field">
+                    <label for="item_tool_type">Tool Type</label>
+                    <select id="item_tool_type" name="item[tool_type]">
+                        <option value="">Select Tool</option>
+                        <option value="1" <%= 'selected' if @item.tool_type == 1 %>>Shears</option>
+                        <option value="2" <%= 'selected' if @item.tool_type == 2 %>>Pliers</option>
+                        <option value="3" <%= 'selected' if @item.tool_type == 3 %>>Branch Splitters</option>
+                        <option value="4" <%= 'selected' if @item.tool_type == 4 %>>Cutters</option>
+                        <option value="5" <%= 'selected' if @item.tool_type == 5 %>>Rakes</option>
+                        <option value="6" <%= 'selected' if @item.tool_type == 6 %>>Other</option>
+                    </select>
+                    <input type="text" id="item_tool_other" name="item[tool_other]" value="<%= @item.tool_other %>" style="display: none;" placeholder="Other Tool Type" aria-hidden="true">
+                </div>
+
+                <div class="field">
+                    <label for="item_brand">Brand</label>
+                    <input type="text" id="item_brand" name="item[brand]" value="<%= @item.brand %>">
+                </div>
+                <div class="field">
+                    <label for="item_condition">Condition</label>
+                    <input type="text" id="item_condition" name="item[condition]" value="<%= @item.condition %>">
+                </div>
+            </fieldset>
+        </fieldset>
+
+        <!-- Auction Attributes -->
+        <h2>Auction Details</h2>
+
+        <div class="field">
+            <label for="auction_starting_price">Starting Price</label>
+            <input type="number" id="auction_starting_price" name="item[auction_attributes][starting_price]" value="<%= @item.auction.starting_price %>" step="0.01">
+        </div>
+
+        <div class="field">
+            <label for="auction_bid_increment">Minimum Bid Increment</label>
+            <input type="number" id="auction_bid_increment" name="item[auction_attributes][bid_increment]" value="<%= @item.auction.bid_increment %>" step="0.01">
+        </div>
+
+        <div class="field">
+            <label for="auction_start_date">Start Date</label>
+            <input type="datetime-local" id="auction_start_date" name="item[auction_attributes][start_date]" value="<%= @item.auction.start_date.strftime('%Y-%m-%dT%H:%M:%S') %>">
+        </div>
+
+        <div class="field">
+            <label for="auction_end_date">End Date</label>
+            <input type="datetime-local" id="auction_end_date" name="item[auction_attributes][end_date]" value="<%= @item.auction.end_date.strftime('%Y-%m-%dT%H:%M:%S') %>">
+        </div>
+
+        <div class="field">
+            <label for="auction_buy_it_now_price">Buy It Now Price</label>
+            <input type="number" id="auction_buy_it_now_price" name="item[auction_attributes][buy_it_now_price]" value="<%= @item.auction.buy_it_now_price %>" step="0.01">
+        </div>
+
+        <div class="actions">
+            <input type="submit" value="Update Item">
+        </div>
+    </form>
+</body>
+</html>
