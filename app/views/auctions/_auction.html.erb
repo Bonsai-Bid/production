@@ -1,6 +1,6 @@
 <!-- app/views/auctions/_auction.html.erb -->
-<div class="auction-details">
-  <p><strong>Title:</strong> <%= @auction.item.name %></p>
+<div class="auction-details p-4 bg-white shadow-md rounded mb-4">
+  <p class="text-lg font-semibold"><strong>Title:</strong> <%= @auction.item.name %></p>
   <p><strong>Category:</strong> <%= @auction.item.category_type.capitalize %></p>
   <% if @auction.item.category_type == "plant" %>
     <p><strong>Species:</strong> <%= @auction.item.species.capitalize %></p>
@@ -33,30 +33,30 @@
 <% if @auction.inquiries.any? %>
   <strong>Inquiries:</strong>
   <% @auction.inquiries.each do |inquiry| %>
-    <div class="inquiry">
-      User: <%= User.find(inquiry.commenter_id).email %> <br>
-      Comment: <%= inquiry.comment %> <br>
-    </div>
+    <div class="inquiry p-4 bg-gray-100 rounded mb-4">
+      <p class="font-semibold">User: <%= User.find(inquiry.commenter_id).email %></p>
+      <p>Comment: <%= inquiry.comment %></p>
 
-    <% if inquiry.replies.any? %>
-      <% inquiry.replies.each do |reply| %>
-        <div class="reply">
-          User: <%= User.find(reply.user_id).email %> <br>
-          Comment: <%= reply.content %> <br>
-        </div>
+      <% if inquiry.replies.any? %>
+        <% inquiry.replies.each do |reply| %>
+          <div class="reply pl-4 ml-4 border-l-4 border-gray-300 mt-2">
+            <p class="font-semibold">User: <%= User.find(reply.user_id).email %></p>
+            <p>Comment: <%= reply.content %></p>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
 
-    <div class="reply-form">
-      <%= form_with model: inquiry.replies.build, scope: :reply, url: auction_inquiry_replies_path(@auction, inquiry), local: true do |form| %>
-        <div class="field">
-          <%= form.label :content %>
-          <%= form.text_area :content, rows: 2 %>
-        </div>
-        <div class="actions">
-          <%= form.submit "Reply" %>
-        </div>
-      <% end %>
+      <div class="reply-form mt-4">
+        <%= form_with model: inquiry.replies.build, scope: :reply, url: auction_inquiry_replies_path(@auction, inquiry), local: true, class: "space-y-4" do |form| %>
+          <div class="field">
+            <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_area :content, rows: 2, class: "form-textarea mt-1 block w-full p-2 border rounded" %>
+          </div>
+          <div class="actions">
+            <%= form.submit "Reply", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>

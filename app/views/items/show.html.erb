@@ -6,69 +6,71 @@
     <title><%= @item.name %> - Item Details</title>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'application' %>
+    <link href="/path/to/your/tailwind.css" rel="stylesheet">
 </head>
-<body>
-    <h1><%= @item.name %></h1>
-    <p><strong>Description:</strong> <%= @item.description %></p>
+<body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4"><%= @item.name %></h1>
+        <p class="mb-4"><strong class="font-semibold">Description:</strong> <%= @item.description %></p>
+        <p class="mb-4"><strong class="font-semibold">Category:</strong> <%= @item.category_type.humanize %></p>
 
-    <p><strong>Category:</strong> <%= @item.category_type.humanize %></p>
-
-    <% if @item.category_type_plant? %>
-        <h2>Plant Details</h2>
-        <p><strong>Species:</strong> <%= @item.species.humanize %></p>
-        <% if @item.species == "other" %>
-            <p><strong>Other Species:</strong> <%= @item.species_other %></p>
-        <% end %>
-        <p><strong>Style:</strong> <%= @item.style.humanize %></p>
-        <% if @item.style == "other" %>
-            <p><strong>Other Style:</strong> <%= @item.style_other %></p>
-        <% end %>
-        <p><strong>Stage:</strong> <%= @item.stage.humanize %></p>
-    <% elsif @item.category_type_container? %>
-        <h2>Container Details</h2>
-        <p><strong>Material:</strong> <%= @item.material.humanize %></p>
-        <% if @item.material == "other" %>
-            <p><strong>Other Material:</strong> <%= @item.material_other %></p>
-        <% end %>
-        <p><strong>Shape:</strong> <%= @item.shape.humanize %></p>
-        <% if @item.shape == "other" %>
-            <p><strong>Other Shape:</strong> <%= @item.shape_other %></p>
-        <% end %>
-        <p><strong>Color:</strong> <%= @item.color.humanize %></p>
-        <% if @item.color == "other" %>
-            <p><strong>Other Color:</strong> <%= @item.color_other %></p>
-        <% end %>
-        <p><strong>Size:</strong> <%= @item.size.humanize %></p>
-        <% if @item.size == "other" %>
-            <p><strong>Other Size:</strong> <%= @item.size_other %></p>
-        <% end %>
-        <p><strong>Origin:</strong> <%= @item.origin.humanize %></p>
-        <% if @item.origin == "other" %>
-            <p><strong>Other Origin:</strong> <%= @item.origin_other %></p>
-        <% end %>
-    <% elsif @item.category_type_essential? %>
-        <h2>Essential Details</h2>
-        <p><strong>Essential Type:</strong> <%= @item.essential_type.humanize %></p>
-        <% if @item.essential_type == "other" %>
-            <p><strong>Other Essential Type:</strong> <%= @item.essential_other %></p>
-        <% end %>
-        <% if @item.essential_type_wire? %>
-            <p><strong>Wire Type:</strong> <%= @item.wire_type.humanize %></p>
-            <% if @item.wire_type == "other" %>
-                <p><strong>Other Wire Type:</strong> <%= @item.wire_other %></p>
+        <% if @item.category_type_plant? %>
+            <h2 class="text-2xl font-semibold mb-2">Plant Details</h2>
+            <p class="mb-2"><strong class="font-semibold">Species:</strong> <%= @item.species.humanize %></p>
+            <% if @item.species == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Species:</strong> <%= @item.species_other %></p>
             <% end %>
-        <% elsif @item.essential_type_tools? %>
-            <h3>Tool Details</h3>
-            <p><strong>Tool Type:</strong> <%= @item.tool_type.humanize %></p>
-            <% if @item.tool_type == "other" %>
-                <p><strong>Other Tool Type:</strong> <%= @item.tool_other %></p>
+            <p class="mb-2"><strong class="font-semibold">Style:</strong> <%= @item.style.humanize %></p>
+            <% if @item.style == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Style:</strong> <%= @item.style_other %></p>
             <% end %>
-            <p><strong>Material:</strong> <%= @item.material %></p>
-            <p><strong>Brand:</strong> <%= @item.brand %></p>
-            <p><strong>Condition:</strong> <%= @item.condition %></p>
+            <p class="mb-2"><strong class="font-semibold">Stage:</strong> <%= @item.stage.humanize %></p>
+        <% elsif @item.category_type_container? %>
+            <h2 class="text-2xl font-semibold mb-2">Container Details</h2>
+            <p class="mb-2"><strong class="font-semibold">Material:</strong> <%= @item.material.humanize %></p>
+            <% if @item.material == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Material:</strong> <%= @item.material_other %></p>
+            <% end %>
+            <p class="mb-2"><strong class="font-semibold">Shape:</strong> <%= @item.shape.humanize %></p>
+            <% if @item.shape == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Shape:</strong> <%= @item.shape_other %></p>
+            <% end %>
+            <p class="mb-2"><strong class="font-semibold">Color:</strong> <%= @item.color.humanize %></p>
+            <% if @item.color == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Color:</strong> <%= @item.color_other %></p>
+            <% end %>
+            <p class="mb-2"><strong class="font-semibold">Size:</strong> <%= @item.size.humanize %></p>
+            <% if @item.size == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Size:</strong> <%= @item.size_other %></p>
+            <% end %>
+            <p class="mb-2"><strong class="font-semibold">Origin:</strong> <%= @item.origin.humanize %></p>
+            <% if @item.origin == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Origin:</strong> <%= @item.origin_other %></p>
+            <% end %>
+        <% elsif @item.category_type_essential? %>
+            <h2 class="text-2xl font-semibold mb-2">Essential Details</h2>
+            <p class="mb-2"><strong class="font-semibold">Essential Type:</strong> <%= @item.essential_type.humanize %></p>
+            <% if @item.essential_type == "other" %>
+                <p class="mb-2"><strong class="font-semibold">Other Essential Type:</strong> <%= @item.essential_other %></p>
+            <% end %>
+            <% if @item.essential_type_wire? %>
+                <p class="mb-2"><strong class="font-semibold">Wire Type:</strong> <%= @item.wire_type.humanize %></p>
+                <% if @item.wire_type == "other" %>
+                    <p class="mb-2"><strong class="font-semibold">Other Wire Type:</strong> <%= @item.wire_other %></p>
+                <% end %>
+            <% elsif @item.essential_type_tools? %>
+                <h3 class="text-xl font-semibold mb-2">Tool Details</h3>
+                <p class="mb-2"><strong class="font-semibold">Tool Type:</strong> <%= @item.tool_type.humanize %></p>
+                <% if @item.tool_type == "other" %>
+                    <p class="mb-2"><strong class="font-semibold">Other Tool Type:</strong> <%= @item.tool_other %></p>
+                <% end %>
+                <p class="mb-2"><strong class="font-semibold">Material:</strong> <%= @item.material %></p>
+                <p class="mb-2"><strong class="font-semibold">Brand:</strong> <%= @item.brand %></p>
+                <p class="mb-2"><strong class="font-semibold">Condition:</strong> <%= @item.condition %></p>
+            <% end %>
         <% end %>
-    <% end %>
 
-    <p><%= link_to 'Back', items_path %></p>
+        <p class="mt-4"><%= link_to 'Back', items_path, class: "text-blue-500 hover:text-blue-700" %></p>
+    </div>
 </body>
 </html>

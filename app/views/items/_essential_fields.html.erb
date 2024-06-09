@@ -1,7 +1,7 @@
-<div class="form-group">
-  <%= form.label :name %>
-  <%= form.text_field :name, class: 'form-control' %>
+<div class="mb-4">
+  <%= form.label :name, class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.text_field :name, class: 'form-input mt-1 block w-full p-2 border rounded' %>
 
-  <%= form.label :description %>
-  <%= form.text_area :description, class: 'form-control' %>
+  <%= form.label :description, class: 'block text-sm font-medium text-gray-700 mt-4' %>
+  <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded' %>
 </div>
