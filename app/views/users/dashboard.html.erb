@@ -1,24 +1,24 @@
-<div class="container mt-4">
-  <h1 class="mb-4"><%= @user.name %>'s Dashboard</h1>
+<div class="container mx-auto mt-4 px-4">
+  <h1 class="mb-4 text-2xl font-bold"><%= @user.name %>'s Dashboard</h1>
 
   <div class="mb-4">
-    <h2>Your Auctions</h2>
-    <ul class="list-group">
+    <h2 class="text-xl font-semibold">Your Auctions</h2>
+    <ul class="list-none p-0">
       <% @user.items.each do |item| %>
-        <li class="list-group-item">
-          <%= link_to item.name, auction_path(item.auction_show_page), class: "text-decoration-none" %>
+        <li class="mb-2 p-2 border rounded shadow-sm bg-white">
+          <%= link_to item.name, auction_path(item.auction_show_page), class: "text-blue-500 hover:text-blue-700" %>
         </li>
       <% end %>
     </ul>
-    <%= link_to 'New Auction', new_item_path, class: "btn btn-primary mt-3" %>
+    <%= link_to 'New Auction', new_item_path, class: "inline-block mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" %>
   </div>
 
   <div>
-    <h2>Watchlist</h2>
-    <ul class="list-group">
+    <h2 class="text-xl font-semibold">Watchlist</h2>
+    <ul class="list-none p-0">
       <% @watchlists.each do |watchlist| %>
-        <li class="list-group-item p-1">
-          <%= link_to watchlist.item.name, auction_path(watchlist.id), class: "text-decoration-none" %>
+        <li class="mb-2 p-2 border rounded shadow-sm bg-white">
+          <%= link_to watchlist.item.name, auction_path(watchlist.id), class: "text-blue-500 hover:text-blue-700" %>
         </li>
       <% end %>
     </ul>
