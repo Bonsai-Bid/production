@@ -1,12 +1,3 @@
-import Rails from '@rails/ujs';
-import Turbolinks from 'turbolinks';
-import * as ActiveStorage from '@rails/activestorage';
-import './application.css'; // Using Tailwind CSS file
-
-Rails.start();
-Turbolinks.start();
-ActiveStorage.start();
-
 document.addEventListener('turbolinks:load', () => {
   const itemCategorySelect = document.getElementById('item_category_type');
   const plantFields = document.getElementById('plant_fields');
@@ -50,12 +41,14 @@ document.addEventListener('turbolinks:load', () => {
     const selectedToolType = itemToolTypeSelect ? itemToolTypeSelect.value : null;
     const selectedSize = itemSizeSelect ? itemSizeSelect.value : null;
 
-    if (plantFields) plantFields.classList.toggle('hidden', selectedCategory !== '1');
-    if (selectedCategory === '1' && containerFields) {
-      containerFields.classList.toggle('hidden', false);
+    if (selectedCategory === '1') {
+      if (plantFields) plantFields.classList.remove('hidden');
+      if (containerFields) containerFields.classList.remove('hidden');
+    } else if (selectedCategory === '2') {
+      if (containerFields) containerFields.classList.remove('hidden');
+    } else if (selectedCategory === '3') {
+      if (essentialFields) essentialFields.classList.remove('hidden');
     }
-    if (containerFields) containerFields.classList.toggle('hidden', selectedCategory !== '2');
-    if (essentialFields) essentialFields.classList.toggle('hidden', selectedCategory !== '3');
 
     if (itemSpeciesOther) itemSpeciesOther.classList.toggle('hidden', selectedSpecies !== '14');
     if (itemStyleOther) itemStyleOther.classList.toggle('hidden', selectedStyle !== '7');

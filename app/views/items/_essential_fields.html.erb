@@ -1,7 +1,56 @@
-<div class="mb-4">
-  <%= form.label :name, class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.text_field :name, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+<!-- app/views/items/_essential_fields.html.erb -->
+<fieldset id="essential_fields" class="item_fields mb-4 hidden" aria-hidden="true">
+  <legend class="text-lg font-semibold">Essential Details</legend>
 
-  <%= form.label :description, class: 'block text-sm font-medium text-gray-700 mt-4' %>
-  <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded' %>
-</div>
+  <div class="mb-4">
+    <label for="item_essential_type" class="block text-sm font-medium text-gray-700">Essential Type</label>
+    <select id="item_essential_type" name="item[essential_type]" class="form-select mt-1 block w-full p-2 border rounded">
+      <option value="1" <%= 'selected' if item&.essential_type == "soil" %>>Soil</option>
+      <option value="2" <%= 'selected' if item&.essential_type == "supplements" %>>Supplements</option>
+      <option value="3" <%= 'selected' if item&.essential_type == "decorations" %>>Decorations</option>
+      <option value="4" <%= 'selected' if item&.essential_type == "wire" %>>Wire</option>
+      <option value="5" <%= 'selected' if item&.essential_type == "books" %>>Books</option>
+      <option value="6" <%= 'selected' if item&.essential_type == "stands" %>>Stands</option>
+      <option value="7" <%= 'selected' if item&.essential_type == "tools" %>>Tools</option>
+      <option value="8" <%= 'selected' if item&.essential_type == "other" %>>Other</option>
+    </select>
+    <input type="text" id="item_essential_other" name="item[essential_other]" value="<%= item&.essential_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Essential Type" aria-hidden="true">
+  </div>
+
+  <div id="wire_fields" class="mb-4 hidden">
+    <label for="item_wire_type" class="block text-sm font-medium text-gray-700">Wire Type</label>
+    <select id="item_wire_type" name="item[wire_type]" class="form-select mt-1 block w-full p-2 border rounded">
+      <option value="">Select Wire Type</option>
+      <option value="1" <%= 'selected' if item&.wire_type == "copper" %>>Copper</option>
+      <option value="2" <%= 'selected' if item&.wire_type == "aluminum" %>>Aluminum</option>
+      <option value="3" <%= 'selected' if item&.wire_type == "other" %>>Other</option>
+    </select>
+    <input type="text" id="item_wire_other" name="item[wire_other]" value="<%= item&.wire_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Wire Type" aria-hidden="true">
+  </div>
+
+  <fieldset id="tools_fields" class="mb-4 hidden">
+    <legend class="text-lg font-semibold">Tool Details</legend>
+    <div class="mb-4">
+      <label for="item_tool_type" class="block text-sm font-medium text-gray-700">Tool Type</label>
+      <select id="item_tool_type" name="item[tool_type]" class="form-select mt-1 block w-full p-2 border rounded">
+        <option value="">Select Tool</option>
+        <option value="1" <%= 'selected' if item&.tool_type == "shears" %>>Shears</option>
+        <option value="2" <%= 'selected' if item&.tool_type == "pliers" %>>Pliers</option>
+        <option value="3" <%= 'selected' if item&.tool_type == "branch_splitters" %>>Branch Splitters</option>
+        <option value="4" <%= 'selected' if item&.tool_type == "cutters" %>>Cutters</option>
+        <option value="5" <%= 'selected' if item&.tool_type == "rakes" %>>Rakes</option>
+        <option value="6" <%= 'selected' if item&.tool_type == "other" %>>Other</option>
+      </select>
+      <input type="text" id="item_tool_other" name="item[tool_other]" value="<%= item&.tool_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Tool Type" aria-hidden="true">
+    </div>
+
+    <div class="mb-4">
+      <label for="item_brand" class="block text-sm font-medium text-gray-700">Brand</label>
+      <input type="text" id="item_brand" name="item[brand]" value="<%= item&.brand %>" class="form-input mt-1 block w-full p-2 border rounded">
+    </div>
+    <div class="mb-4">
+      <label for="item_condition" class="block text-sm font-medium text-gray-700">Condition</label>
+      <input type="text" id="item_condition" name="item[condition]" value="<%= item&.condition %>" class="form-input mt-1 block w-full p-2 border rounded">
+    </div>
+  </fieldset>
+</fieldset>
