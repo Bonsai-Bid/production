@@ -3,18 +3,21 @@
   <head>
     <title>BbMvp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-<%= csrf_meta_tags %>
-<%= csp_meta_tag %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<%= vite_client_tag %>
-<%= vite_stylesheet_tag 'application', data: { "turbo-track": "reload" } %>
-<%= vite_javascript_tag 'application' %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
+    <%= vite_client_tag %>
+    <%= vite_stylesheet_tag 'application', data: { "turbo-track": "reload" } %>
+    <%= vite_javascript_tag 'application' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-gray-100">
+    <%= render 'layouts/navbar' %>
+
+    <div class="container mx-auto px-4 py-6">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>

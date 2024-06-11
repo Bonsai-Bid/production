@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/path/to/your/tailwind.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="mb-4">Search Results</h1>
-    <%= form_tag(search_path, method: :get, class: "form-inline mb-4") do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-control mr-2" %>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
+<div class="container mx-auto mt-5 px-4">
+    <h1 class="mb-4 text-2xl font-bold">Search Results</h1>
+    <%= form_tag(search_path, method: :get, class: "flex items-center mb-4") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-input mr-2 p-2 border rounded" %>
+      <%= submit_tag "Search", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
     <% end %>
     <% if @results.present? %>
         <% @results.each do |result| %>
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title"><%= link_to result.name, auction_path(result.auction) %></h5>
-                    <p class="card-text"><%= result.description %></p>
+            <div class="mb-3 p-4 border rounded shadow-sm bg-white">
+                <div>
+                    <h5 class="text-xl font-semibold"><%= link_to result.name, auction_path(result.auction), class: "text-blue-500 hover:text-blue-700" %></h5>
+                    <p class="mt-2 text-gray-700"><%= result.description %></p>
                 </div>
             </div>
         <% end %>
     <% else %>
-        <div class="alert alert-warning" role="alert">
+        <div class="p-4 mb-3 text-yellow-800 bg-yellow-100 border border-yellow-400 rounded" role="alert">
             No results found
         </div>
     <% end %>

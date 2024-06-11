@@ -1,3 +1,4 @@
+<!-- app/views/items/edit.html.erb -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,29 +7,29 @@
     <title>Edit Item</title>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'application' %>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/path/to/your/tailwind.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
-        <form action="/items/<%= @item.id %>" accept-charset="UTF-8" method="post" aria-labelledby="form-title">
+<body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
+    <div class="container mx-auto mt-5 px-4">
+        <form action="/items/<%= @item.id %>" accept-charset="UTF-8" method="post" aria-labelledby="form-title" class="bg-white p-6 rounded shadow-md">
             <input type="hidden" name="_method" value="patch">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-            <h1 id="form-title" class="mb-4">Edit Item</h1>
+            <h1 id="form-title" class="mb-4 text-2xl font-bold">Edit Item</h1>
 
-            <div class="form-group">
-                <label for="item_name">Name</label>
-                <input type="text" id="item_name" name="item[name]" value="<%= @item.name %>" class="form-control" required aria-required="true">
+            <div class="mb-4">
+                <label for="item_name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="item_name" name="item[name]" value="<%= @item.name %>" class="form-input mt-1 block w-full p-2 border rounded" required aria-required="true">
             </div>
 
-            <div class="form-group">
-                <label for="item_description">Description</label>
-                <textarea id="item_description" name="item[description]" class="form-control"><%= @item.description %></textarea>
+            <div class="mb-4">
+                <label for="item_description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea id="item_description" name="item[description]" class="form-textarea mt-1 block w-full p-2 border rounded"><%= @item.description %></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="item_category_type">Category</label>
-                <select id="item_category_type" name="item[category_type]" class="form-control" required aria-required="true">
+            <div class="mb-4">
+                <label for="item_category_type" class="block text-sm font-medium text-gray-700">Category</label>
+                <select id="item_category_type" name="item[category_type]" class="form-select mt-1 block w-full p-2 border rounded" required aria-required="true">
                     <option value="">Select Category</option>
                     <option value="1" <%= 'selected' if @item.category_type == "plant" %>>Plant</option>
                     <option value="2" <%= 'selected' if @item.category_type == "container" %>>Container</option>
@@ -36,227 +37,15 @@
                 </select>
             </div>
 
-            <!-- Plant Attributes -->
-            <fieldset id="plant_fields" class="item_fields" style="display: none;" aria-hidden="true">
-                <legend>Plant Details</legend>
-                <div class="form-group">
-                    <label for="item_species">Species</label>
-                    <select id="item_species" name="item[species]" class="form-control">
-                        <option value="">Select Species</option>
-                        <option value="1" <%= 'selected' if @item.species == "azalea" %>>Azalea</option>
-                        <option value="2" <%= 'selected' if @item.species == "boxwood" %>>Boxwood</option>
-                        <option value="3" <%= 'selected' if @item.species == "cypress" %>>Cypress</option>
-                        <option value="4" <%= 'selected' if @item.species == "elm" %>>Elm</option>
-                        <option value="5" <%= 'selected' if @item.species == "ficus" %>>Ficus</option>
-                        <option value="6" <%= 'selected' if @item.species == "gingko" %>>Gingko</option>
-                        <option value="7" <%= 'selected' if @item.species == "juniper" %>>Juniper</option>
-                        <option value="8" <%= 'selected' if @item.species == "maple" %>>Maple</option>
-                        <option value="9" <%= 'selected' if @item.species == "oak" %>>Oak</option>
-                        <option value="10" <%= 'selected' if @item.species == "olive" %>>Olive</option>
-                        <option value="11" <%= 'selected' if @item.species == "pine" %>>Pine</option>
-                        <option value="12" <%= 'selected' if @item.species == "schefflera" %>>Schefflera</option>
-                        <option value="13" <%= 'selected' if @item.species == "tea" %>>Tea</option>
-                        <option value="14" <%= 'selected' if @item.species == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_species_other" name="item[species_other]" value="<%= @item.species_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Species" aria-hidden="true">
-                </div>
+            <%= render 'items/plant_fields', item: @item %>
+            <%= render 'items/container_fields', item: @item %>
+            <%= render 'items/essential_fields', item: @item %>
+            <%= render 'items/auction_fields', item: @item %>
 
-                <div class="form-group">
-                    <label for="item_style">Style</label>
-                    <select id="item_style" name="item[style]" class="form-control">
-                        <option value="">Select Style</option>
-                        <option value="1" <%= 'selected' if @item.style == "formal_upright" %>>Formal Upright</option>
-                        <option value="2" <%= 'selected' if @item.style == "informal_upright" %>>Informal Upright</option>
-                        <option value="3" <%= 'selected' if @item.style == "cascade" %>>Cascade</option>
-                        <option value="4" <%= 'selected' if @item.style == "forest" %>>Forest</option>
-                        <option value="5" <%= 'selected' if @item.style == "clump" %>>Clump</option>
-                        <option value="6" <%= 'selected' if @item.style == "broom" %>>Broom</option>
-                        <option value="7" <%= 'selected' if @item.style == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_style_other" name="item[style_other]" value="<%= @item.style_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Style" aria-hidden="true">
-                </div>
-
-                <div class="form-group">
-                    <label for="item_stage">Stage</label>
-                    <select id="item_stage" name="item[stage]" class="form-control">
-                        <option value="">Select Stage</option>
-                        <option value="1" <%= 'selected' if @item.stage == "pre_bonsai" %>>Pre-Bonsai</option>
-                        <option value="2" <%= 'selected' if @item.stage == "development" %>>Development</option>
-                        <option value="3" <%= 'selected' if @item.stage == "refinement" %>>Refinement</option>
-                        <option value="4" <%= 'selected' if @item.stage == "specimen" %>>Specimen</option>
-                        <option value="5" <%= 'selected' if @item.stage == "seeds_seedlings" %>>Seeds/Seedlings</option>
-                    </select>
-                </div>
-            </fieldset>
-
-            <!-- Container Attributes -->
-            <fieldset id="container_fields" class="item_fields" style="display: none;" aria-hidden="true">
-                <legend>Container Details</legend>
-
-                <div class="form-group">
-                    <label for="item_material_container">Type</label>
-                    <select id="item_material_container" name="item[material]" class="form-control">
-                        <option value="">Select Type</option>
-                        <option value="1" <%= 'selected' if @item.material == "commercial" %>>Commercial</option>
-                        <option value="2" <%= 'selected' if @item.material == "handmade" %>>Handmade</option>
-                        <option value="3" <%= 'selected' if @item.material == "disposable" %>>Disposable</option>
-                        <option value="4" <%= 'selected' if @item.material == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_material_container_other" name="item[material_other]" value="<%= @item.material_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Material" aria-hidden="true">
-                </div>
-
-                <div class="form-group">
-                    <label for="item_shape_container">Shape</label>
-                    <select id="item_shape_container" name="item[shape]" class="form-control">
-                        <option value="">Select Shape</option>
-                        <option value="1" <%= 'selected' if @item.shape == "lotus" %>>Lotus</option>
-                        <option value="2" <%= 'selected' if @item.shape == "nanban" %>>Nanban</option>
-                        <option value="3" <%= 'selected' if @item.shape == "round" %>>Round</option>
-                        <option value="4" <%= 'selected' if @item.shape == "oval" %>>Oval</option>
-                        <option value="5" <%= 'selected' if @item.shape == "rectangle" %>>Rectangle</option>
-                        <option value="6" <%= 'selected' if @item.shape == "bag" %>>Bag</option>
-                        <option value="7" <%= 'selected' if @item.shape == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_shape_container_other" name="item[shape_other]" value="<%= @item.shape_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Shape" aria-hidden="true">
-                </div>
-
-                <div class="form-group">
-                    <label for="item_color_container">Color</label>
-                    <select id="item_color_container" name="item[color]" class="form-control">
-                        <option value="">Select Color</option>
-                        <option value="1" <%= 'selected' if @item.color == "black" %>>Black</option>
-                        <option value="2" <%= 'selected' if @item.color == "white" %>>White</option>
-                        <option value="3" <%= 'selected' if @item.color == "natural" %>>Natural</option>
-                        <option value="4" <%= 'selected' if @item.color == "blue" %>>Blue</option>
-                        <option value="5" <%= 'selected' if @item.color == "green" %>>Green</option>
-                        <option value="6" <%= 'selected' if @item.color == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_color_container_other" name="item[color_other]" value="<%= @item.color_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Color" aria-hidden="true">
-                </div>
-
-                <div class="form-group">
-                    <label for="item_size_container">Size</label>
-                    <select id="item_size_container" name="item[size]" class="form-control">
-                        <option value="">Select Size</option>
-                        <option value="1" <%= 'selected' if @item.size == "extra_small" %>>X-Small</option>
-                        <option value="2" <%= 'selected' if @item.size == "small" %>>Small</option>
-                        <option value="3" <%= 'selected' if @item.size == "medium" %>>Medium</option>
-                        <option value="4" <%= 'selected' if @item.size == "large" %>>Large</option>
-                        <option value="5" <%= 'selected' if @item.size == "extra_large" %>>Extra Large</option>
-                        <option value="6" <%= 'selected' if @item.size == "extraextra_large" %>>XX Large</option>
-                        <option value="7" <%= 'selected' if @item.size == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_size_container_other" name="item[size_other]" value="<%= @item.size_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Size" aria-hidden="true">
-                </div>
-
-                <div class="form-group">
-                    <label for="item_origin_container">Origin</label>
-                    <select id="item_origin_container" name="item[origin]" class="form-control">
-                        <option value="">Select Origin</option>
-                        <option value="1" <%= 'selected' if @item.origin == "us" %>>US</option>
-                        <option value="2" <%= 'selected' if @item.origin == "japan" %>>Japan</option>
-                        <option value="3" <%= 'selected' if @item.origin == "china" %>>China</option>
-                        <option value="4" <%= 'selected' if @item.origin == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_origin_container_other" name="item[origin_other]" value="<%= @item.origin_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Origin" aria-hidden="true">
-                </div>
-            </fieldset>
-
-            <!-- Essential Attributes -->
-            <fieldset id="essential_fields" class="item_fields" style="display: none;" aria-hidden="true">
-                <legend>Essential Details</legend>
-
-                <div class="form-group">
-                    <label for="item_essential_type">Essential Type</label>
-                    <select id="item_essential_type" name="item[essential_type]" class="form-control">
-                        <option value="1" <%= 'selected' if @item.essential_type == "soil" %>>Soil</option>
-                        <option value="2" <%= 'selected' if @item.essential_type == "supplements" %>>Supplements</option>
-                        <option value="3" <%= 'selected' if @item.essential_type == "decorations" %>>Decorations</option>
-                        <option value="4" <%= 'selected' if @item.essential_type == "wire" %>>Wire</option>
-                        <option value="5" <%= 'selected' if @item.essential_type == "books" %>>Books</option>
-                        <option value="6" <%= 'selected' if @item.essential_type == "stands" %>>Stands</option>
-                        <option value="7" <%= 'selected' if @item.essential_type == "tools" %>>Tools</option>
-                        <option value="8" <%= 'selected' if @item.essential_type == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_essential_other" name="item[essential_other]" value="<%= @item.essential_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Essential Type" aria-hidden="true">
-                </div>
-
-                <div id="wire_fields" class="form-group" style="display: none;">
-                    <label for="item_wire_type">Wire Type</label>
-                    <select id="item_wire_type" name="item[wire_type]" class="form-control">
-                        <option value="">Select Wire Type</option>
-                        <option value="1" <%= 'selected' if @item.wire_type == "copper" %>>Copper</option>
-                        <option value="2" <%= 'selected' if @item.wire_type == "aluminum" %>>Aluminum</option>
-                        <option value="3" <%= 'selected' if @item.wire_type == "other" %>>Other</option>
-                    </select>
-                    <input type="text" id="item_wire_other" name="item[wire_other]" value="<%= @item.wire_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Wire Type" aria-hidden="true">
-                </div>
-
-                <fieldset id="tools_fields" style="display: none;">
-                    <legend>Tool Details</legend>
-                    <div class="form-group">
-                        <label for="item_tool_type">Tool Type</label>
-                        <select id="item_tool_type" name="item[tool_type]" class="form-control">
-                            <option value="">Select Tool</option>
-                            <option value="1" <%= 'selected' if @item.tool_type == "shears" %>>Shears</option>
-                            <option value="2" <%= 'selected' if @item.tool_type == "pliers" %>>Pliers</option>
-                            <option value="3" <%= 'selected' if @item.tool_type == "branch_splitters" %>>Branch Splitters</option>
-                            <option value="4" <%= 'selected' if @item.tool_type == "cutters" %>>Cutters</option>
-                            <option value="5" <%= 'selected' if @item.tool_type == "rakes" %>>Rakes</option>
-                            <option value="6" <%= 'selected' if @item.tool_type == "other" %>>Other</option>
-                        </select>
-                        <input type="text" id="item_tool_other" name="item[tool_other]" value="<%= @item.tool_other %>" class="form-control mt-2" style="display: none;" placeholder="Other Tool Type" aria-hidden="true">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="item_brand">Brand</label>
-                        <input type="text" id="item_brand" name="item[brand]" value="<%= @item.brand %>" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="item_condition">Condition</label>
-                        <input type="text" id="item_condition" name="item[condition]" value="<%= @item.condition %>" class="form-control">
-                    </div>
-                </fieldset>
-            </fieldset>
-
-            <!-- Auction Attributes -->
-            <h2>Auction Details</h2>
-
-            <div class="form-group">
-                <label for="auction_starting_price">Starting Price</label>
-                <input type="number" id="auction_starting_price" name="item[auction_attributes][starting_price]" value="<%= @item.auction.starting_price %>" class="form-control" step="0.01">
-            </div>
-
-            <div class="form-group">
-                <label for="auction_bid_increment">Minimum Bid Increment</label>
-                <input type="number" id="auction_bid_increment" name="item[auction_attributes][bid_increment]" value="<%= @item.auction.bid_increment %>" class="form-control" step="0.01">
-            </div>
-
-            <div class="form-group">
-                <label for="auction_start_date">Start Date</label>
-                <input type="datetime-local" id="auction_start_date" name="item[auction_attributes][start_date]" value="<%= @item.auction.start_date.strftime('%Y-%m-%dT%H:%M:%S') %>" class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label for="auction_end_date">End Date</label>
-                <input type="datetime-local" id="auction_end_date" name="item[auction_attributes][end_date]" value="<%= @item.auction.end_date.strftime('%Y-%m-%dT%H:%M:%S') %>" class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label for="auction_buy_it_now_price">Buy It Now Price</label>
-                <input type="number" id="auction_buy_it_now_price" name="item[auction_attributes][buy_it_now_price]" value="<%= @item.auction.buy_it_now_price %>" class="form-control" step="0.01">
-            </div>
-
-            <div class="actions">
-                <input type="submit" value="Update Item" class="btn btn-primary">
+            <div>
+                <input type="submit" value="Update Item" class="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             </div>
         </form>
     </div>
-
-    <script>
-      // Make sure to include your JavaScript file
-      // This script tag ensures that the necessary JS code runs on this page
-      // This should be included only if vite is configured to handle your JS files correctly
-    </script>
 </body>
 </html>

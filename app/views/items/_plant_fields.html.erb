@@ -1,10 +1,53 @@
-<div class="form-group">
-  <%= form.label :species %>
-  <%= form.text_field :species, class: 'form-control' %>
+<!-- app/views/items/_plant_fields.html.erb -->
+<fieldset id="plant_fields" class="item_fields mb-4 hidden" aria-hidden="true">
+  <legend class="text-lg font-semibold">Plant Details</legend>
 
-  <%= form.label :age %>
-  <%= form.number_field :age, class: 'form-control' %>
+  <div class="mb-4">
+    <label for="item_species" class="block text-sm font-medium text-gray-700">Species</label>
+    <select id="item_species" name="item[species]" class="form-select mt-1 block w-full p-2 border rounded">
+      <option value="">Select Species</option>
+      <option value="1" <%= 'selected' if item&.species == "azalea" %>>Azalea</option>
+      <option value="2" <%= 'selected' if item&.species == "boxwood" %>>Boxwood</option>
+      <option value="3" <%= 'selected' if item&.species == "cypress" %>>Cypress</option>
+      <option value="4" <%= 'selected' if item&.species == "elm" %>>Elm</option>
+      <option value="5" <%= 'selected' if item&.species == "ficus" %>>Ficus</option>
+      <option value="6" <%= 'selected' if item&.species == "gingko" %>>Gingko</option>
+      <option value="7" <%= 'selected' if item&.species == "juniper" %>>Juniper</option>
+      <option value="8" <%= 'selected' if item&.species == "maple" %>>Maple</option>
+      <option value="9" <%= 'selected' if item&.species == "oak" %>>Oak</option>
+      <option value="10" <%= 'selected' if item&.species == "olive" %>>Olive</option>
+      <option value="11" <%= 'selected' if item&.species == "pine" %>>Pine</option>
+      <option value="12" <%= 'selected' if item&.species == "schefflera" %>>Schefflera</option>
+      <option value="13" <%= 'selected' if item&.species == "tea" %>>Tea</option>
+      <option value="14" <%= 'selected' if item&.species == "other" %>>Other</option>
+    </select>
+    <input type="text" id="item_species_other" name="item[species_other]" value="<%= item&.species_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Species" aria-hidden="true">
+  </div>
 
-  <%= form.label :pot_size %>
-  <%= form.text_field :pot_size, class: 'form-control' %>
-</div>
+  <div class="mb-4">
+    <label for="item_style" class="block text-sm font-medium text-gray-700">Style</label>
+    <select id="item_style" name="item[style]" class="form-select mt-1 block w-full p-2 border rounded">
+      <option value="">Select Style</option>
+      <option value="1" <%= 'selected' if item&.style == "formal_upright" %>>Formal Upright</option>
+      <option value="2" <%= 'selected' if item&.style == "informal_upright" %>>Informal Upright</option>
+      <option value="3" <%= 'selected' if item&.style == "cascade" %>>Cascade</option>
+      <option value="4" <%= 'selected' if item&.style == "forest" %>>Forest</option>
+      <option value="5" <%= 'selected' if item&.style == "clump" %>>Clump</option>
+      <option value="6" <%= 'selected' if item&.style == "broom" %>>Broom</option>
+      <option value="7" <%= 'selected' if item&.style == "other" %>>Other</option>
+    </select>
+    <input type="text" id="item_style_other" name="item[style_other]" value="<%= item&.style_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Style" aria-hidden="true">
+  </div>
+
+  <div class="mb-4">
+    <label for="item_stage" class="block text-sm font-medium text-gray-700">Stage</label>
+    <select id="item_stage" name="item[stage]" class="form-select mt-1 block w-full p-2 border rounded">
+      <option value="">Select Stage</option>
+      <option value="1" <%= 'selected' if item&.stage == "pre_bonsai" %>>Pre-Bonsai</option>
+      <option value="2" <%= 'selected' if item&.stage == "development" %>>Development</option>
+      <option value="3" <%= 'selected' if item&.stage == "refinement" %>>Refinement</option>
+      <option value="4" <%= 'selected' if item&.stage == "specimen" %>>Specimen</option>
+      <option value="5" <%= 'selected' if item&.stage == "seeds_seedlings" %>>Seeds/Seedlings</option>
+    </select>
+  </div>
+</fieldset>
