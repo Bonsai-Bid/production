@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-    @search_term = params[:search].downcase
+    @search_term = params[:query].downcase
     @results = search_items(@search_term)
   end
 

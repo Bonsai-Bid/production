@@ -46,7 +46,6 @@ class ItemsController < ApplicationController
         format.html { redirect_to auction_path(@item.auction), notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
-        require 'pry'; binding.pry
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end

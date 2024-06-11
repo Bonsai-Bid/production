@@ -1,13 +1,18 @@
 class AuctionsController < ApplicationController
   before_action :authenticate_user! 
 
-  before_action :set_auction, only: [:show, :edit, :update, :destroy]
+  before_action :set_auction, only: [:show, :bidding_history, :edit, :update, :destroy]
 
   def show
     @inquiry = Inquiry.new
+    @bid = Bid.new if current_user && current_user.id != @auction.seller_id
   end
 
   def edit
+  end
+
+  def bidding_history
+    @bids = @auction.bids.order(bid_amount: :desc)
   end
 
   def update

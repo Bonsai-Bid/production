@@ -18,27 +18,55 @@
     </div>
   <% end %>
 
-  <% if current_user && current_user&.id != @auction.seller_id %>
-    <%= form_with model: [ @auction, @inquiry ], url: auction_inquiries_path(@auction), local: true, class: "mt-4" do |form| %>
-      <% if @inquiry.errors.any? %>
-        <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-          <h2 class="font-bold mb-2"><%= pluralize(@inquiry.errors.count, "error") %> prohibited this inquiry from being saved:</h2>
-          <ul class="list-disc pl-5">
-            <% @inquiry.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+  <%# Bidding functionality starts here %>
+  <div class="mt-6">
+    <h2 class="text-xl font-bold">Highest Bid</h2>
+    <% if @auction.bids.any? %>
+      <% highest_bid = @auction.bids.order(bid_amount: :desc).first %>
+      <p><%= highest_bid.bidder.email %>: <%= number_to_currency(highest_bid.bid_amount) %></p>
+      <%= link_to 'View Bidding History', bidding_history_auction_path(@auction), class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <% else %>
+      <% if @auction.active? %>
+        <p>No bids have been placed yet.</p>
+      <% else %>
+        <% case @auction.status %>
+        <% when "listed" %>
+          <p>Bidding is not open. The auction is scheduled to start on <%= @auction.start_date.strftime('%Y-%m-%d %H:%M:%S') %>.</p>
+        <% when "sold", "ended" %>
+          <p>Bidding is closed.</p>
+        <% end %>
       <% end %>
-
-      <div class="mb-4">
-        <%= form.label :comment, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.text_area :comment, class: "form-textarea mt-1 block w-full p-2 border rounded" %>
-      </div>
-
-      <div class="actions">
-        <%= form.submit "Post Inquiry", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-      </div>
     <% end %>
-  <% end %>
+
+    <% if user_signed_in? && current_user.id != @auction.seller_id %>
+      <% case @auction.status %>
+      <% when "active" %>
+        <%= form_with(model: [@auction, Bid.new], local: true, class: "mt-4") do |form| %>
+          <% if @bid&.errors&.any? %>
+            <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+              <h2 class="font-bold mb-2"><%= pluralize(@bid.errors.count, "error") %> prohibited this bid from being saved:</h2>
+              <ul class="list-disc pl-5">
+                <% @bid.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-4">
+            <%= form.label :bid_amount, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.number_field :bid_amount, step: 0.01, class: "form-input mt-1 block w-full p-2 border rounded" %>
+          </div>
+
+          <div class="actions">
+            <%= form.submit "Place Bid", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+          </div>
+        <% end %>
+        <p>Bidding will close on <%= @auction.end_date.strftime('%Y-%m-%d %H:%M:%S') %>.</p>
+
+      <% end %>
+    <% else %>
+      <p>You must be logged in to place a bid.</p>
+    <% end %>
+  </div>
 </div>

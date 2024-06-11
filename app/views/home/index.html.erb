@@ -1,7 +1,7 @@
 <h1 class="my-4 text-xl font-bold">Search</h1>
 
 <%= form_tag(search_path, method: :get, class: "flex items-center") do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-input mr-2 p-2 border rounded" %>
+  <%= text_field_tag :query, params[:query], placeholder: "Search...", class: "form-input mr-2 p-2 border rounded" %>
   <%= submit_tag "Search", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
 <% end %>
 
