@@ -1,0 +1,23 @@
+<nav class="bg-white shadow-md">
+      <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <%= link_to 'Bonsai Bid', root_path, class: 'text-lg font-semibold text-gray-800 hover:text-gray-600' %>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <%= form_with url: search_path, method: :get, local: true, class: "flex items-center" do %>
+            <input type="text" name="query" placeholder="Search" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+            <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Search</button>
+          <% end %>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <% if user_signed_in? %>
+            <%= link_to 'Dashboard', dashboard_user_path(current_user), class: 'text-lg font-semibold text-gray-800 hover:text-gray-600' %>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'text-lg text-gray-800 hover:text-gray-600' %>
+          <% else %>
+            <%= link_to 'Login', new_user_session_path, class: 'text-lg text-gray-800 hover:text-gray-600' %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
