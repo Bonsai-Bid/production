@@ -28,12 +28,12 @@
     <label for="item_style" class="block text-sm font-medium text-gray-700">Style</label>
     <select id="item_style" name="item[style]" class="form-select mt-1 block w-full p-2 border rounded">
       <option value="">Select Style</option>
-      <option value="1" <%= 'selected' if item&.style == "formal_upright" %>>Formal Upright</option>
-      <option value="2" <%= 'selected' if item&.style == "informal_upright" %>>Informal Upright</option>
-      <option value="3" <%= 'selected' if item&.style == "cascade" %>>Cascade</option>
+      <option value="1" <%= 'selected' if item&.style == "broom" %>>Broom</option>
+      <option value="2" <%= 'selected' if item&.style == "cascade" %>>Cascade</option>
+      <option value="3" <%= 'selected' if item&.style == "clump" %>>Clump</option>
       <option value="4" <%= 'selected' if item&.style == "forest" %>>Forest</option>
-      <option value="5" <%= 'selected' if item&.style == "clump" %>>Clump</option>
-      <option value="6" <%= 'selected' if item&.style == "broom" %>>Broom</option>
+      <option value="5" <%= 'selected' if item&.style == "formal_upright" %>>Formal Upright</option>
+      <option value="6" <%= 'selected' if item&.style == "informal_upright" %>>Informal Upright</option>
       <option value="7" <%= 'selected' if item&.style == "other" %>>Other</option>
     </select>
     <input type="text" id="item_style_other" name="item[style_other]" value="<%= item&.style_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Style" aria-hidden="true">

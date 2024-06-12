@@ -10,7 +10,7 @@ class Item < ApplicationRecord
   enum species: { azalea: 1, boxwood: 2, cypress: 3, elm: 4, ficus: 5, gingko: 6, juniper: 7, maple: 8, oak: 9, olive: 10, pine: 11, schefflera: 12, tea: 13, species_other: 14 }, _prefix: true
   enum species_category: { broadleaf_evergreen: 1, coniferous: 2, deciduous: 3, tropical: 4, species_category_other: 5 }, _prefix: true
   enum style: { broom: 1, cascade: 2, clump: 3, formal_upright: 4, forest: 5, informal_upright: 6, style_other: 7 }, _prefix: true
-  enum stage: { development: 1, pre_bonsai: 2, refinement: 3, seeds_seedlings: 4, specimen: 5 }, _prefix: true
+  enum stage: { pre_bonsai: 1, development: 2, refinement: 3, specimen: 4, seeds_seedlings: 5 }, _prefix: true
   enum tool_type: { branch_splitters: 1, cutters: 2, pliers: 3, rakes: 4, shears: 5, tool_other: 6 }, _prefix: true
   
 
