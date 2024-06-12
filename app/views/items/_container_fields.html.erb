@@ -7,8 +7,8 @@
     <select id="item_material_container" name="item[material]" class="form-select mt-1 block w-full p-2 border rounded">
       <option value="">Select Material</option>
       <option value="1" <%= 'selected' if item&.material == "commercial" %>>Commercial</option>
-      <option value="2" <%= 'selected' if item&.material == "handmade" %>>Handmade</option>
-      <option value="3" <%= 'selected' if item&.material == "disposable" %>>Disposable</option>
+      <option value="2" <%= 'selected' if item&.material == "disposable" %>>Disposable</option>
+      <option value="3" <%= 'selected' if item&.material == "handmade" %>>Handmade</option>
       <option value="4" <%= 'selected' if item&.material == "other" %>>Other</option>
     </select>
     <input type="text" id="item_material_container_other" name="item[material_other]" value="<%= item&.material_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Material" aria-hidden="true">
@@ -18,12 +18,12 @@
     <label for="item_shape_container" class="block text-sm font-medium text-gray-700">Shape</label>
     <select id="item_shape_container" name="item[shape]" class="form-select mt-1 block w-full p-2 border rounded">
       <option value="">Select Shape</option>
-      <option value="1" <%= 'selected' if item&.shape == "lotus" %>>Lotus</option>
-      <option value="2" <%= 'selected' if item&.shape == "nanban" %>>Nanban</option>
-      <option value="3" <%= 'selected' if item&.shape == "round" %>>Round</option>
+      <option value="1" <%= 'selected' if item&.shape == "bag" %>>Bag</option>
+      <option value="2" <%= 'selected' if item&.shape == "lotus" %>>Lotus</option>
+      <option value="3" <%= 'selected' if item&.shape == "nanban" %>>Nanban</option>
       <option value="4" <%= 'selected' if item&.shape == "oval" %>>Oval</option>
       <option value="5" <%= 'selected' if item&.shape == "rectangle" %>>Rectangle</option>
-      <option value="6" <%= 'selected' if item&.shape == "bag" %>>Bag</option>
+      <option value="6" <%= 'selected' if item&.shape == "round" %>>Round</option>
       <option value="7" <%= 'selected' if item&.shape == "other" %>>Other</option>
     </select>
     <input type="text" id="item_shape_container_other" name="item[shape_other]" value="<%= item&.shape_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Shape" aria-hidden="true">
@@ -34,10 +34,10 @@
     <select id="item_color_container" name="item[color]" class="form-select mt-1 block w-full p-2 border rounded">
       <option value="">Select Color</option>
       <option value="1" <%= 'selected' if item&.color == "black" %>>Black</option>
-      <option value="2" <%= 'selected' if item&.color == "white" %>>White</option>
-      <option value="3" <%= 'selected' if item&.color == "natural" %>>Natural</option>
-      <option value="4" <%= 'selected' if item&.color == "blue" %>>Blue</option>
-      <option value="5" <%= 'selected' if item&.color == "green" %>>Green</option>
+      <option value="2" <%= 'selected' if item&.color == "blue" %>>Blue</option>
+      <option value="3" <%= 'selected' if item&.color == "green" %>>Green</option>
+      <option value="4" <%= 'selected' if item&.color == "natural" %>>Natural</option>
+      <option value="5" <%= 'selected' if item&.color == "white" %>>White</option>
       <option value="6" <%= 'selected' if item&.color == "other" %>>Other</option>
     </select>
     <input type="text" id="item_color_container_other" name="item[color_other]" value="<%= item&.color_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Color" aria-hidden="true">
@@ -62,9 +62,9 @@
     <label for="item_origin_container" class="block text-sm font-medium text-gray-700">Origin</label>
     <select id="item_origin_container" name="item[origin]" class="form-select mt-1 block w-full p-2 border rounded">
       <option value="">Select Origin</option>
-      <option value="1" <%= 'selected' if item&.origin == "us" %>>US</option>
+      <option value="1" <%= 'selected' if item&.origin == "china" %>>China</option>
       <option value="2" <%= 'selected' if item&.origin == "japan" %>>Japan</option>
-      <option value="3" <%= 'selected' if item&.origin == "china" %>>China</option>
+      <option value="3" <%= 'selected' if item&.origin == "us" %>>US</option>
       <option value="4" <%= 'selected' if item&.origin == "other" %>>Other</option>
     </select>
     <input type="text" id="item_origin_container_other" name="item[origin_other]" value="<%= item&.origin_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Origin" aria-hidden="true">
