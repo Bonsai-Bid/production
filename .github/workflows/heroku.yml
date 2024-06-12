@@ -19,7 +19,7 @@ jobs:
           node-version: '20.x'
 
       - name: Install Yarn
-        run: npm install -g yarn@1.22.19
+        run: npm install -g yarn@1.22.22
 
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
