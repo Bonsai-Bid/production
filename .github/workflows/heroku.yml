@@ -33,6 +33,9 @@ jobs:
           bundle install
 
       - name: Precompile assets
+        env:
+          RAILS_ENV: production
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         run: bin/rails assets:precompile RAILS_ENV=production
 
       - name: Deploy to Heroku
