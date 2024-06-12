@@ -2,6 +2,10 @@
   "name": "app",
   "private": true,
   "scripts": {},
+  "engines": {
+    "node": "20.x",
+    "yarn": "1.22.19"
+  },
   "devDependencies": {
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
