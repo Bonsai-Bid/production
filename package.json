@@ -1,10 +1,12 @@
 {
   "name": "app",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "build": "vite build"
+  },
   "engines": {
     "node": "20.x",
-    "yarn": "1.22.19"
+    "yarn": "1.22.22"
   },
   "devDependencies": {
     "eslint": "^9.4.0",
