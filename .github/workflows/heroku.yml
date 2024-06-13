@@ -47,8 +47,8 @@ jobs:
       - name: Add Heroku remote
         run: git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
 
-      - name: Unshallow the repository
-        run: git fetch --all --unshallow
+      - name: Fetch from Heroku remote
+        run: git fetch heroku
 
       - name: Push to Heroku
         run: git push heroku main
