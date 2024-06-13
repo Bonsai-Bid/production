@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch the full history
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -45,5 +47,8 @@ jobs:
       - name: Add Heroku remote
         run: git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
 
-      - name: Force push to Heroku
-        run: git push heroku main --force
+      - name: Unshallow the repository
+        run: git fetch --all --unshallow
+
+      - name: Push to Heroku
+        run: git push heroku main
