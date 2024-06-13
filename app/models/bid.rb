@@ -9,6 +9,8 @@ class Bid < ApplicationRecord
 
   private
 
+  
+
   # def bid_within_auction_time
   #   return if auction.nil? || bid_time.blank?
 
