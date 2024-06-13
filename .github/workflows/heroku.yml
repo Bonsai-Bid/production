@@ -43,9 +43,7 @@ jobs:
           echo "machine git.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
 
       - name: Add Heroku remote
-        run: |
-          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-          git fetch heroku
+        run: git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
 
-      - name: Push to Heroku
-        run: git push heroku main
+      - name: Force push to Heroku
+        run: git push heroku main --force
