@@ -46,7 +46,7 @@ jobs:
         run: git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
 
       - name: Pull remote changes
-        run: git pull heroku main --rebase
+        run: git pull heroku main --rebase || git pull --rebase --strategy=ours heroku main
 
       - name: Deploy to Heroku
         run: git push heroku main
