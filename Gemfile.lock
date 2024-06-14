@@ -79,6 +79,22 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     awesome_nested_set (3.6.0)
       activerecord (>= 4.0.0, < 7.2)
+    aws-eventstream (1.3.0)
+    aws-partitions (1.944.0)
+    aws-sdk-core (3.197.0)
+      aws-eventstream (~> 1, >= 1.3.0)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.8)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-kms (1.84.0)
+      aws-sdk-core (~> 3, >= 3.197.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.152.3)
+      aws-sdk-core (~> 3, >= 3.197.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.8)
+    aws-sigv4 (1.8.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.8)
@@ -190,6 +206,9 @@ GEM
     hashdiff (1.1.0)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     importmap-rails (2.0.1)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -201,6 +220,7 @@ GEM
     jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.2)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     launchy (3.0.1)
@@ -217,6 +237,7 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
+    mini_magick (4.13.0)
     mini_mime (1.1.5)
     minitest (5.23.1)
     msgpack (1.7.2)
@@ -353,6 +374,8 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
+    ruby-vips (2.2.1)
+      ffi (~> 1.12)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -443,6 +466,7 @@ PLATFORMS
 DEPENDENCIES
   actiontext (>= 7.1.3.3)
   awesome_nested_set
+  aws-sdk-s3 (~> 1.48)
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman
@@ -457,6 +481,7 @@ DEPENDENCIES
   faker
   faraday
   figaro
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   jsonapi-serializer
@@ -472,6 +497,7 @@ DEPENDENCIES
   redis-rails
   rexml (>= 3.2.7)
   rspec-rails
+  ruby-vips (~> 2.0)
   rubyzip (~> 2.3.0)
   selenium-webdriver
   shoulda-matchers (~> 6.0)

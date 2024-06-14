@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   enum stage: { pre_bonsai: 1, development: 2, refinement: 3, specimen: 4, seeds_seedlings: 5 }, _prefix: true
   enum tool_type: { branch_splitters: 1, cutters: 2, pliers: 3, rakes: 4, shears: 5, tool_other: 6 }, _prefix: true
   
-
+  has_many_attached :images
   belongs_to :seller, class_name: 'User'
   has_one :auction, dependent: :destroy
   accepts_nested_attributes_for :auction
@@ -28,6 +28,12 @@ class Item < ApplicationRecord
   def self.search(query, user_id)
     where("name LIKE ?", "%#{query}%").where.not(seller_id: user_id)
   end
+
+
+  def display_image
+    images.first.variant(resize_to_limit: [300, 300]).processed
+  end
+
   private
 
   def assign_species_category

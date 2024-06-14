@@ -13,12 +13,12 @@ document.addEventListener('turbolinks:load', () => {
     if (containerFields) containerFields.classList.add('hidden');
     if (essentialFields) essentialFields.classList.add('hidden');
 
-    if (selectedCategory === '1') {
+    if (selectedCategory === '3') {
       if (plantFields) plantFields.classList.remove('hidden');
       if (containerFields) containerFields.classList.remove('hidden');
-    } else if (selectedCategory === '2') {
+    } else if (selectedCategory === '1') {
       if (containerFields) containerFields.classList.remove('hidden');
-    } else if (selectedCategory === '3') {
+    } else if (selectedCategory === '2') {
       if (essentialFields) essentialFields.classList.remove('hidden');
     }
   };

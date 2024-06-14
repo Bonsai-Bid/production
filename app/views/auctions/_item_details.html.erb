@@ -1,0 +1,25 @@
+<!-- app/views/shared/_item_details.html.erb -->
+<div class="item-details">
+  <p class="text-lg font-semibold"><strong>Title:</strong> <%= item.name %></p>
+  <p><strong>Category:</strong> <%= item.category_type %></p>
+  <% if item.category_type == "plant" %>
+    <p><strong>Species:</strong> <%= item.species %></p>
+    <p><strong>Style:</strong> <%= item.style %></p>
+    <p><strong>Stage:</strong> <%= item.stage %></p>
+  <% elsif item.category_type == "container" %>
+    <p><strong>Material:</strong> <%= item.material %></p>
+    <p><strong>Shape:</strong> <%= item.shape %></p>
+    <p><strong>Color:</strong> <%= item.color %></p>
+    <p><strong>Size:</strong> <%= item.size %></p>
+    <p><strong>Origin:</strong> <%= item.origin %></p>
+  <% elsif item.category_type == "essential" %>
+    <p><strong>Essential Type:</strong> <%= item.essential_type %></p>
+    <% if item.essential_type == "wire" %>
+      <p><strong>Wire Type:</strong> <%= item.wire_type %></p>
+    <% elsif item.essential_type == "tools" %>
+      <p><strong>Tool Type:</strong> <%= item.tool_type %></p>
+      <p><strong>Brand:</strong> <%= item.brand %></p>
+      <p><strong>Condition:</strong> <%= item.condition %></p>
+    <% end %>
+  <% end %>
+</div>

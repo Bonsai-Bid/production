@@ -27,6 +27,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if @item.save
         @item.auction.update(item_id: @item.id)
+        attach_images if params[:item][:images].present?
         format.html { redirect_to dashboard_user_path(current_user), notice: "Item and associated auction were successfully created." }
         format.json { render :show, status: :created, location: @item }
       else
@@ -70,7 +71,7 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(
       :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential_type,
-      :species_other, :style_other, :type_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type,
+      :species_other, :style_other, :type_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type, images: [],
       auction_attributes: [:starting_price, :bid_increment, :start_date, :end_date, :buy_it_now_price, :status]
     ).tap do |whitelisted|
       integer_fields = [:category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential_type, :wire_type, :tool_type]
@@ -90,5 +91,13 @@ class ItemsController < ApplicationController
     end
 
     item_attributes
+  end
+
+  def attach_images
+    params[:item][:images].each do |file|
+      unless @item.images.any? { |img| img.filename.to_s == file.original_filename }
+      @item.images.attach(file)
+      end
+    end
   end
 end

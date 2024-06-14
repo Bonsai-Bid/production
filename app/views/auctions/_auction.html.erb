@@ -1,62 +1,7 @@
 <!-- app/views/auctions/_auction.html.erb -->
 <div class="auction-details p-4 bg-white shadow-md rounded mb-4">
-  <p class="text-lg font-semibold"><strong>Title:</strong> <%= @auction.item.name %></p>
-  <p><strong>Category:</strong> <%= @auction.item.category_type.capitalize %></p>
-  <% if @auction.item.category_type == "plant" %>
-    <p><strong>Species:</strong> <%= @auction.item.species.capitalize %></p>
-    <p><strong>Style:</strong> <%= @auction.item.style.capitalize %></p>
-    <p><strong>Stage:</strong> <%= @auction.item.stage.capitalize %></p>
-  <% elsif @auction.item.category_type == "container" %>
-    <p><strong>Material:</strong> <%= @auction.item.material.capitalize %></p>
-    <p><strong>Shape:</strong> <%= @auction.item.shape.capitalize %></p>
-    <p><strong>Color:</strong> <%= @auction.item.color.capitalize %></p>
-    <p><strong>Size:</strong> <%= @auction.item.size.capitalize %></p>
-    <p><strong>Origin:</strong> <%= @auction.item.origin.capitalize %></p>
-  <% elsif @auction.item.category_type == "essential" %>
-    <p><strong>Essential Type:</strong> <%= @auction.item.essential_type.capitalize %></p>
-    <% if @auction.item.essential_type == "wire" %>
-      <p><strong>Wire Type:</strong> <%= @auction.item.wire_type.capitalize %></p>
-    <% elsif @auction.item.essential_type == "tools" %>
-      <p><strong>Tool Type:</strong> <%= @auction.item.tool_type.capitalize %></p>
-      <p><strong>Brand:</strong> <%= @auction.item.brand %></p>
-      <p><strong>Condition:</strong> <%= @auction.item.condition %></p>
-    <% end %>
-  <% end %>
-  <p><strong>Start Date:</strong> <%= @auction.start_date.strftime("%B %d, %Y %I:%M %p") %></p>
-  <p><strong>End Date:</strong> <%= @auction.end_date.strftime("%B %d, %Y %I:%M %p") %></p>
-  <p><strong>Starting Price:</strong> <%= number_to_currency(@auction.starting_price) %></p>
-  <p><strong>Current Bid:</strong> <%= format_currency(@auction.current_highest_bid) %></p>
-  <p><strong>Buy It Now Price:</strong> <%= number_to_currency(@auction.buy_it_now_price) %></p>
-  <p><strong>Status:</strong> <%= @auction.status.capitalize %></p>
+  <%= render 'auctions/item_details', item: @auction.item %>
+  <%= render 'auctions/auction_details', auction: @auction %>
+  <%= render 'auctions/images', item: @auction.item %>
+  <%= render 'auctions/inquiries', auction: @auction %>
 </div>
-
-<% if @auction.inquiries.any? %>
-  <strong>Inquiries:</strong>
-  <% @auction.inquiries.each do |inquiry| %>
-    <div class="inquiry p-4 bg-gray-100 rounded mb-4">
-      <p class="font-semibold">User: <%= User.find(inquiry.commenter_id).email %></p>
-      <p>Comment: <%= inquiry.comment %></p>
-
-      <% if inquiry.replies.any? %>
-        <% inquiry.replies.each do |reply| %>
-          <div class="reply pl-4 ml-4 border-l-4 border-gray-300 mt-2">
-            <p class="font-semibold">User: <%= User.find(reply.user_id).email %></p>
-            <p>Comment: <%= reply.content %></p>
-          </div>
-        <% end %>
-      <% end %>
-
-      <div class="reply-form mt-4">
-        <%= form_with model: inquiry.replies.build, scope: :reply, url: auction_inquiry_replies_path(@auction, inquiry), local: true, class: "space-y-4" do |form| %>
-          <div class="field">
-            <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
-            <%= form.text_area :content, rows: 2, class: "form-textarea mt-1 block w-full p-2 border rounded" %>
-          </div>
-          <div class="actions">
-            <%= form.submit "Reply", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
