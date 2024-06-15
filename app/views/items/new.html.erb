@@ -6,49 +6,42 @@
     <title>Create Item</title>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'application' %>
-    <link href="/path/to/your/tailwind.css" rel="stylesheet">
+    <%= vite_stylesheet_tag 'application' %>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
     <div class="container mx-auto mt-5 px-4">
-        <form action="/items" accept-charset="UTF-8" method="post" enctype="multipart/form-data" aria-labelledby="form-title" class="bg-white p-6 rounded shadow-md">
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-
+        <%= form_with(model: @item, local: true, html: { enctype: "multipart/form-data", class: "bg-white p-6 rounded shadow-md" }) do |form| %>
             <h1 id="form-title" class="mb-4 text-2xl font-bold">Create Item</h1>
 
             <div class="mb-4">
-                <label for="item_name" class="block text-sm font-medium text-gray-700">Name</label>
-                <input type="text" id="item_name" name="item[name]" class="form-input mt-1 block w-full p-2 border rounded" required aria-required="true">
+                <%= form.label :name, 'Name', class: 'block text-sm font-medium text-gray-700' %>
+                <%= form.text_field :name, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
             </div>
 
             <div class="mb-4">
-                <label for="item_description" class="block text-sm font-medium text-gray-700">Description</label>
-                <textarea id="item_description" name="item[description]" class="form-textarea mt-1 block w-full p-2 border rounded"></textarea>
+                <%= form.label :description, 'Description', class: 'block text-sm font-medium text-gray-700' %>
+                <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded' %>
             </div>
 
             <div class="mb-4">
-                <label for="item_category_type" class="block text-sm font-medium text-gray-700">Category</label>
-                <select id="item_category_type" name="item[category_type]" class="form-select mt-1 block w-full p-2 border rounded" required aria-required="true">
-                    <option value="">Select Category</option>
-                    <option value="1">Container</option>
-                    <option value="2">Essential</option>
-                    <option value="3">Plant</option>
-                </select>
+                <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
+                <%= form.select :category_type, options_for_select([['Select Category', ''], ['Container', 1], ['Essential', 2], ['Plant', 3]]), {}, class: 'form-select mt-1 block w-full p-2 border rounded', required: true %>
             </div>
 
-            <%= render 'items/plant_fields', item: @item %>
-            <%= render 'items/container_fields', item: @item %>
-            <%= render 'items/essential_fields', item: @item %>
-            <%= render 'items/auction_fields', item: @item %>
+            <%= render 'items/plant_fields', form: form %>
+            <%= render 'items/container_fields', form: form %>
+            <%= render 'items/essential_fields', form: form %>
+            <%= render 'items/auction_fields', form: form %>
 
             <div class="mb-4">
-                <label for="item_images" class="block text-sm font-medium text-gray-700">Upload Images</label>
-                <input type="file" id="item_images" name="item[images][]" multiple class="form-input mt-1 block w-full p-2 border rounded">
+                <%= form.label :images, 'Upload Images', class: 'block text-sm font-medium text-gray-700' %>
+                <%= form.file_field :images, multiple: true, class: 'form-input mt-1 block w-full p-2 border rounded' %>
             </div>
 
             <div>
-                <input type="submit" value="Create Item" class="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <%= form.submit 'Create Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
             </div>
-        </form>
+        <% end %>
     </div>
 </body>
 </html>

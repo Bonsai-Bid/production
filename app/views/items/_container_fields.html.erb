@@ -2,71 +2,23 @@
 <fieldset id="container_fields" class="item_fields mb-4 hidden" aria-hidden="true">
   <legend class="text-lg font-semibold">Container Details</legend>
 
-  <div class="mb-4">
-    <label for="item_material_container" class="block text-sm font-medium text-gray-700">Material</label>
-    <select id="item_material_container" name="item[material]" class="form-select mt-1 block w-full p-2 border rounded">
-      <option value="">Select Material</option>
-      <option value="1" <%= 'selected' if item&.material == "commercial" %>>Commercial</option>
-      <option value="2" <%= 'selected' if item&.material == "disposable" %>>Disposable</option>
-      <option value="3" <%= 'selected' if item&.material == "handmade" %>>Handmade</option>
-      <option value="4" <%= 'selected' if item&.material == "other" %>>Other</option>
-    </select>
-    <input type="text" id="item_material_container_other" name="item[material_other]" value="<%= item&.material_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Material" aria-hidden="true">
-  </div>
+  <%= form.label :material, 'Material', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.select :material, options_for_select([['Select Material', ''], ['Commercial', 1], ['Disposable', 2], ['Handmade', 3], ['Other', 4]], form.object.material), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+  <%= form.text_field :material_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Material', aria: { hidden: true } %>
 
-  <div class="mb-4">
-    <label for="item_shape_container" class="block text-sm font-medium text-gray-700">Shape</label>
-    <select id="item_shape_container" name="item[shape]" class="form-select mt-1 block w-full p-2 border rounded">
-      <option value="">Select Shape</option>
-      <option value="1" <%= 'selected' if item&.shape == "bag" %>>Bag</option>
-      <option value="2" <%= 'selected' if item&.shape == "lotus" %>>Lotus</option>
-      <option value="3" <%= 'selected' if item&.shape == "nanban" %>>Nanban</option>
-      <option value="4" <%= 'selected' if item&.shape == "oval" %>>Oval</option>
-      <option value="5" <%= 'selected' if item&.shape == "rectangle" %>>Rectangle</option>
-      <option value="6" <%= 'selected' if item&.shape == "round" %>>Round</option>
-      <option value="7" <%= 'selected' if item&.shape == "other" %>>Other</option>
-    </select>
-    <input type="text" id="item_shape_container_other" name="item[shape_other]" value="<%= item&.shape_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Shape" aria-hidden="true">
-  </div>
+  <%= form.label :shape, 'Shape', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.select :shape, options_for_select([['Select Shape', ''], ['Bag', 1], ['Lotus', 2], ['Nanban', 3], ['Oval', 4], ['Rectangle', 5], ['Round', 6], ['Other', 7]], form.object.shape), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+  <%= form.text_field :shape_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Shape', aria: { hidden: true } %>
 
-  <div class="mb-4">
-    <label for="item_color_container" class="block text-sm font-medium text-gray-700">Color</label>
-    <select id="item_color_container" name="item[color]" class="form-select mt-1 block w-full p-2 border rounded">
-      <option value="">Select Color</option>
-      <option value="1" <%= 'selected' if item&.color == "black" %>>Black</option>
-      <option value="2" <%= 'selected' if item&.color == "blue" %>>Blue</option>
-      <option value="3" <%= 'selected' if item&.color == "green" %>>Green</option>
-      <option value="4" <%= 'selected' if item&.color == "natural" %>>Natural</option>
-      <option value="5" <%= 'selected' if item&.color == "white" %>>White</option>
-      <option value="6" <%= 'selected' if item&.color == "other" %>>Other</option>
-    </select>
-    <input type="text" id="item_color_container_other" name="item[color_other]" value="<%= item&.color_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Color" aria-hidden="true">
-  </div>
+  <%= form.label :color, 'Color', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.select :color, options_for_select([['Select Color', ''], ['Black', 1], ['Blue', 2], ['Green', 3], ['Natural', 4], ['White', 5], ['Other', 6]], form.object.color), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+  <%= form.text_field :color_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Color', aria: { hidden: true } %>
 
-  <div class="mb-4">
-    <label for="item_size_container" class="block text-sm font-medium text-gray-700">Size</label>
-    <select id="item_size_container" name="item[size]" class="form-select mt-1 block w-full p-2 border rounded">
-      <option value="">Select Size</option>
-      <option value="1" <%= 'selected' if item&.size == "extra_small" %>>X-Small</option>
-      <option value="2" <%= 'selected' if item&.size == "small" %>>Small</option>
-      <option value="3" <%= 'selected' if item&.size == "medium" %>>Medium</option>
-      <option value="4" <%= 'selected' if item&.size == "large" %>>Large</option>
-      <option value="5" <%= 'selected' if item&.size == "extra_large" %>>Extra Large</option>
-      <option value="6" <%= 'selected' if item&.size == "extraextra_large" %>>XX Large</option>
-      <option value="7" <%= 'selected' if item&.size == "other" %>>Other</option>
-    </select>
-    <input type="text" id="item_size_container_other" name="item[size_other]" value="<%= item&.size_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Size" aria-hidden="true">
-  </div>
+  <%= form.label :size, 'Size', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.select :size, options_for_select([['Select Size', ''], ['X-Small', 1], ['Small', 2], ['Medium', 3], ['Large', 4], ['Extra Large', 5], ['XX Large', 6], ['Other', 7]], form.object.size), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+  <%= form.text_field :size_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Size', aria: { hidden: true } %>
 
-  <div class="mb-4">
-    <label for="item_origin_container" class="block text-sm font-medium text-gray-700">Origin</label>
-    <select id="item_origin_container" name="item[origin]" class="form-select mt-1 block w-full p-2 border rounded">
-      <option value="">Select Origin</option>
-      <option value="1" <%= 'selected' if item&.origin == "china" %>>China</option>
-      <option value="2" <%= 'selected' if item&.origin == "japan" %>>Japan</option>
-      <option value="3" <%= 'selected' if item&.origin == "us" %>>US</option>
-      <option value="4" <%= 'selected' if item&.origin == "other" %>>Other</option>
-    </select>
-    <input type="text" id="item_origin_container_other" name="item[origin_other]" value="<%= item&.origin_other %>" class="form-input mt-2 block w-full p-2 border rounded hidden" placeholder="Other Origin" aria-hidden="true">
-  </div>
+  <%= form.label :origin, 'Origin', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.select :origin, options_for_select([['Select Origin', ''], ['China', 1], ['Japan', 2], ['US', 3], ['Other', 4]], form.object.origin), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+  <%= form.text_field :origin_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Origin', aria: { hidden: true } %>
 </fieldset>

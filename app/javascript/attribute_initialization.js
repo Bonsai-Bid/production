@@ -1,5 +1,3 @@
-// app/javascript/attribute_initialization.js
-
 document.addEventListener('turbolinks:load', () => {
   const initializeAttributes = () => {
     const itemSpeciesSelect = document.getElementById('item_species');
@@ -25,82 +23,93 @@ document.addEventListener('turbolinks:load', () => {
     const itemSizeSelect = document.getElementById('item_size_container');
     const itemSizeOther = document.getElementById('item_size_container_other');
 
+    const preselectDropdown = (selectElement, hiddenElement, values) => {
+      const selectedValue = selectElement.value;
+      hiddenElement.classList.toggle('hidden', !values.includes(selectedValue));
+    };
+
     if (itemSpeciesSelect) {
+      preselectDropdown(itemSpeciesSelect, itemSpeciesOther, ['14', 'azalea']);
       itemSpeciesSelect.addEventListener('change', () => {
-        if (itemSpeciesOther) itemSpeciesOther.classList.toggle('hidden', itemSpeciesSelect.value !== '14');
+        preselectDropdown(itemSpeciesSelect, itemSpeciesOther, ['14', 'azalea']);
       });
     }
 
     if (itemStyleSelect) {
+      preselectDropdown(itemStyleSelect, itemStyleOther, ['7', 'cascade']);
       itemStyleSelect.addEventListener('change', () => {
-        if (itemStyleOther) itemStyleOther.classList.toggle('hidden', itemStyleSelect.value !== '7');
+        preselectDropdown(itemStyleSelect, itemStyleOther, ['7', 'cascade']);
       });
     }
 
     if (itemMaterialSelect) {
+      preselectDropdown(itemMaterialSelect, itemMaterialOther, ['4', 'commercial']);
       itemMaterialSelect.addEventListener('change', () => {
-        if (itemMaterialOther) itemMaterialOther.classList.toggle('hidden', itemMaterialSelect.value !== '4');
+        preselectDropdown(itemMaterialSelect, itemMaterialOther, ['4', 'commercial']);
       });
     }
 
     if (itemShapeSelect) {
+      preselectDropdown(itemShapeSelect, itemShapeOther, ['7', 'lotus']);
       itemShapeSelect.addEventListener('change', () => {
-        if (itemShapeOther) itemShapeOther.classList.toggle('hidden', itemShapeSelect.value !== '7');
+        preselectDropdown(itemShapeSelect, itemShapeOther, ['7', 'lotus']);
       });
     }
 
     if (itemColorSelect) {
+      preselectDropdown(itemColorSelect, itemColorOther, ['6', 'blue']);
       itemColorSelect.addEventListener('change', () => {
-        if (itemColorOther) itemColorOther.classList.toggle('hidden', itemColorSelect.value !== '6');
+        preselectDropdown(itemColorSelect, itemColorOther, ['6', 'blue']);
       });
     }
 
     if (itemOriginSelect) {
+      preselectDropdown(itemOriginSelect, itemOriginOther, ['4', 'china']);
       itemOriginSelect.addEventListener('change', () => {
-        if (itemOriginOther) itemOriginOther.classList.toggle('hidden', itemOriginSelect.value !== '4');
+        preselectDropdown(itemOriginSelect, itemOriginOther, ['4', 'china']);
       });
     }
 
     if (itemEssentialTypeSelect) {
       const checkEssentialType = () => {
         const selectedEssentialType = itemEssentialTypeSelect.value;
-        if (wireFields) wireFields.classList.add('hidden');
-        if (toolsFields) toolsFields.classList.add('hidden');
+        wireFields.classList.add('hidden');
+        toolsFields.classList.add('hidden');
 
-        if (selectedEssentialType === '4') {
-          if (wireFields) wireFields.classList.remove('hidden');
-        } else if (selectedEssentialType === '7') {
-          if (toolsFields) toolsFields.classList.remove('hidden');
+        if (selectedEssentialType === '7' || selectedEssentialType === 'wire') {
+          wireFields.classList.remove('hidden');
+        } else if (selectedEssentialType === '6' || selectedEssentialType === 'tools') {
+          toolsFields.classList.remove('hidden');
         }
 
-        if (itemEssentialOther) itemEssentialOther.classList.toggle('hidden', selectedEssentialType !== '8');
+        itemEssentialOther.classList.toggle('hidden', selectedEssentialType !== '8' && selectedEssentialType !== 'other');
       };
 
-      // Initial check on page load
       checkEssentialType();
-
       itemEssentialTypeSelect.addEventListener('change', checkEssentialType);
     }
 
     if (itemWireTypeSelect) {
+      preselectDropdown(itemWireTypeSelect, itemWireOther, ['3', 'other']);
       itemWireTypeSelect.addEventListener('change', () => {
-        if (itemWireOther) itemWireOther.classList.toggle('hidden', itemWireTypeSelect.value !== '3');
+        preselectDropdown(itemWireTypeSelect, itemWireOther, ['3', 'other']);
       });
     }
 
     if (itemToolTypeSelect) {
+      preselectDropdown(itemToolTypeSelect, itemToolOther, ['6', 'other']);
       itemToolTypeSelect.addEventListener('change', () => {
-        if (itemToolOther) itemToolOther.classList.toggle('hidden', itemToolTypeSelect.value !== '6');
+        preselectDropdown(itemToolTypeSelect, itemToolOther, ['6', 'other']);
       });
     }
 
     if (itemSizeSelect) {
+      preselectDropdown(itemSizeSelect, itemSizeOther, ['7', 'large']);
       itemSizeSelect.addEventListener('change', () => {
-        if (itemSizeOther) itemSizeOther.classList.toggle('hidden', itemSizeSelect.value !== '7');
+        preselectDropdown(itemSizeSelect, itemSizeOther, ['7', 'large']);
       });
     }
   };
 
-  // Initial setup on page load
   initializeAttributes();
 });
