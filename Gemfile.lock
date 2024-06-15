@@ -486,6 +486,7 @@ DEPENDENCIES
   jbuilder
   jsonapi-serializer
   launchy
+  mini_magick (~> 4.10)
   nokogiri (>= 1.16.5)
   pg (~> 1.1)
   phony_rails

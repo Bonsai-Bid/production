@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  require 'mini_magick'
   before_action :set_item, only: %i[ show edit update destroy ]
 
   def index
@@ -44,10 +45,11 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(update_params)
+        attach_images if params[:item][:images].present?
+        remove_images if params[:item][:remove_images].present?
         format.html { redirect_to auction_path(@item.auction), notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
-        require 'pry'; binding.pry
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
@@ -71,7 +73,7 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(
       :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential_type,
-      :species_other, :style_other, :type_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type, images: [],
+      :species_other, :style_other, :type_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type, :tool_type, :material_other, :size_other, remove_images: [], images: [],
       auction_attributes: [:starting_price, :bid_increment, :start_date, :end_date, :buy_it_now_price, :status]
     ).tap do |whitelisted|
       integer_fields = [:category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential_type, :wire_type, :tool_type]
@@ -92,11 +94,59 @@ class ItemsController < ApplicationController
 
     item_attributes
   end
-
+  
   def attach_images
     params[:item][:images].each do |file|
+      next if file.blank? || file.is_a?(String)  # Skip empty or invalid files
+
       unless @item.images.any? { |img| img.filename.to_s == file.original_filename }
-      @item.images.attach(file)
+        compressed_file = compress_image(file)
+        if compressed_file
+          @item.images.attach(io: compressed_file[:io], filename: compressed_file[:filename], content_type: compressed_file[:content_type])
+        end
+      end
+    end
+  end
+
+  def compress_image(file)
+    begin
+      if file.is_a?(ActionDispatch::Http::UploadedFile)
+        tempfile = file.tempfile
+      elsif file.is_a?(ActiveStorage::Blob)
+        tempfile = file.download_blob_to_tempfile
+      else
+        Rails.logger.error "Invalid file type: #{file.class.name}"
+        return nil
+      end
+  
+      image = MiniMagick::Image.read(tempfile)
+      Rails.logger.info "Image format: #{image.type}"
+      image.resize "1200x1200"
+      image.quality 80
+  
+      compressed_tempfile = Tempfile.new(["compressed", ".jpg"])
+      image.write(compressed_tempfile.path)
+  
+      { io: compressed_tempfile, filename: file.original_filename, content_type: file.content_type }
+    ensure
+      tempfile.close if tempfile && !tempfile.closed?
+      compressed_tempfile.close if compressed_tempfile && !compressed_tempfile.closed?
+    end
+  end
+
+  def remove_images
+    if params[:item][:remove_images].present?
+      params[:item][:remove_images].each do |signed_id|
+        begin
+          image = ActiveStorage::Blob.find_signed(signed_id)
+          if image
+            image.attachments.each(&:purge)
+          else
+            Rails.logger.warn "Image with signed_id #{signed_id} not found"
+          end
+        rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+          Rails.logger.warn "Invalid signature for signed_id #{signed_id}: #{e.message}"
+        end
       end
     end
   end

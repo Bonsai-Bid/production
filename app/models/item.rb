@@ -29,6 +29,18 @@ class Item < ApplicationRecord
     where("name LIKE ?", "%#{query}%").where.not(seller_id: user_id)
   end
 
+  def thumbnail
+    images.map do |image|
+      image.variant(resize_to_limit: [300, 300]).processed
+    end
+  end
+
+  def compressed_images
+    images.map do |image|
+      image.variant(resize_to_limit: [1200, 1200], quality: 80).processed
+    end
+  end
+
 
   def display_image
     images.first.variant(resize_to_limit: [300, 300]).processed

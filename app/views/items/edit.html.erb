@@ -42,6 +42,27 @@
             <%= render 'items/essential_fields', item: @item %>
             <%= render 'items/auction_fields', item: @item %>
 
+ <!-- Existing Images with Remove Option -->
+            <div class="mb-4">
+                <h2 class="text-2xl font-semibold mb-2">Existing Images</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <% @item.images.each do |image| %>
+                        <div class="mb-4 relative">
+                            <%= image_tag url_for(image.variant(resize_to_limit: [300, 300]).processed), class: "w-full h-auto rounded shadow-md" %>
+                            <label class="absolute top-0 right-0 bg-white p-2 rounded-full shadow-md">
+                                <input type="checkbox" name="item[remove_images][]" value="<%= image.signed_id %>" class="form-checkbox"> Remove
+                            </label>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+
+            <!-- Add New Images -->
+            <div class="mb-4">
+                <label for="item_images" class="block text-sm font-medium text-gray-700">Upload New Images</label>
+                <input type="file" id="item_images" name="item[images][]" multiple class="form-input mt-1 block w-full p-2 border rounded">
+            </div>
+
             <div>
                 <input type="submit" value="Update Item" class="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             </div>
