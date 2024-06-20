@@ -1,8 +1,11 @@
 document.addEventListener('turbolinks:load', () => {
+
   const initializeAttributes = () => {
     const handleSelectChange = (selectElement, otherElement) => {
       const selectedValue = selectElement.value;
       console.log(`Selected value for ${selectElement.id}: ${selectedValue}`);
+
+      // Show or hide "Other" fields
       const showOther = (
         selectedValue === 'material_other' ||
         selectedValue === 'shape_other' ||
@@ -28,24 +31,52 @@ document.addEventListener('turbolinks:load', () => {
         otherElement.setAttribute('aria-hidden', 'true');
         console.log(`Other field classes after hiding: ${otherElement.className}`);
       }
+
+      // Show or hide wire and tool fields based on essential_type selection
+      if (selectElement.id === 'item_essential_type') {
+        const wireFields = document.getElementById('wire_fields');
+        const toolsFields = document.getElementById('tools_fields');
+
+        if (selectedValue === 'wire') {
+          console.log('Showing wire fields');
+          if (wireFields) {
+            wireFields.classList.remove('hidden');
+            wireFields.removeAttribute('aria-hidden');
+          }
+          if (toolsFields) {
+            toolsFields.classList.add('hidden');
+            toolsFields.setAttribute('aria-hidden', 'true');
+          }
+        } else if (selectedValue === 'tools') {
+          console.log('Showing tools fields');
+          if (toolsFields) {
+            toolsFields.classList.remove('hidden');
+            toolsFields.removeAttribute('aria-hidden');
+          }
+          if (wireFields) {
+            wireFields.classList.add('hidden');
+            wireFields.setAttribute('aria-hidden', 'true');
+          }
+        } else {
+          if (wireFields) {
+            wireFields.classList.add('hidden');
+            wireFields.setAttribute('aria-hidden', 'true');
+          }
+          if (toolsFields) {
+            toolsFields.classList.add('hidden');
+            toolsFields.setAttribute('aria-hidden', 'true');
+          }
+        }
+      }
     };
 
     const setupSelect = (selectElement, otherElement) => {
-      // Add an empty option if not already present
-      if (!Array.from(selectElement.options).some(option => option.value === "")) {
-        const emptyOption = document.createElement("option");
-        emptyOption.value = "";
-        emptyOption.text = "";
-        selectElement.insertBefore(emptyOption, selectElement.firstChild);
-        console.log(`Added empty option to ${selectElement.id}`);
-      }
-
       // Set initial value
       const selectedValue = selectElement.dataset.selectedValue || '';
       selectElement.value = selectedValue;
       console.log(`Initial selected value for ${selectElement.id}: ${selectedValue}`);
 
-      // Ensure correct initial visibility of the "Other" field
+      // Ensure correct initial visibility of the "Other" field and wire/tools fields
       handleSelectChange(selectElement, otherElement);
 
       // Add event listener for changes
@@ -70,9 +101,9 @@ document.addEventListener('turbolinks:load', () => {
         otherElementId = 'item_origin_other';
       } else if (selectElement.id.endsWith('essential_type')) {
         otherElementId = 'item_essential_other';
-      } else if (selectElement.id.endsWith('wire_type')) {
+      } else if (selectElement.id.endsWith('wire')) {
         otherElementId = 'item_wire_other';
-      } else if (selectElement.id.endsWith('tool_type')) {
+      } else if (selectElement.id.endsWith('tool')) {
         otherElementId = 'item_tool_other';
       } else if (selectElement.id.endsWith('species')) {
         otherElementId = 'item_species_other';
@@ -100,19 +131,19 @@ document.addEventListener('turbolinks:load', () => {
 
             if (selectElement.id.endsWith('material')) {
               otherElementId = 'item_material_other';
-            } else if (selectElement.id.endsWith('shape_container')) {
-              otherElementId = 'item_shape_container_other';
-            } else if (selectElement.id.endsWith('color_container')) {
-              otherElementId = 'item_color_container_other';
-            } else if (selectElement.id.endsWith('size_container')) {
-              otherElementId = 'item_size_container_other';
-            } else if (selectElement.id.endsWith('origin_container')) {
-              otherElementId = 'item_origin_container_other';
+            } else if (selectElement.id.endsWith('shape')) {
+              otherElementId = 'item_shape_other';
+            } else if (selectElement.id.endsWith('color')) {
+              otherElementId = 'item_color_other';
+            } else if (selectElement.id.endsWith('size')) {
+              otherElementId = 'item_size_other';
+            } else if (selectElement.id.endsWith('origin')) {
+              otherElementId = 'item_origin_other';
             } else if (selectElement.id.endsWith('essential_type')) {
               otherElementId = 'item_essential_other';
-            } else if (selectElement.id.endsWith('wire_type')) {
+            } else if (selectElement.id.endsWith('wire')) {
               otherElementId = 'item_wire_other';
-            } else if (selectElement.id.endsWith('tool_type')) {
+            } else if (selectElement.id.endsWith('tool')) {
               otherElementId = 'item_tool_other';
             } else if (selectElement.id.endsWith('species')) {
               otherElementId = 'item_species_other';
