@@ -25,7 +25,7 @@
 
             <div class="mb-4">
                 <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.select :category_type, options_for_select([['Select Category', ''], ['Container', 1], ['Essential', 2], ['Plant', 3]]), {}, class: 'form-select mt-1 block w-full p-2 border rounded', required: true %>
+                <%= form.select :category_type, options_for_select([ ['Container', 1], ['Essential', 2], ['Plant', 3]]), {}, class: 'form-select mt-1 block w-full p-2 border rounded', required: true %>
             </div>
 
             <%= render 'items/plant_fields', form: form %>

@@ -1,114 +1,133 @@
 document.addEventListener('turbolinks:load', () => {
   const initializeAttributes = () => {
-    const itemSpeciesSelect = document.getElementById('item_species');
-    const itemSpeciesOther = document.getElementById('item_species_other');
-    const itemStyleSelect = document.getElementById('item_style');
-    const itemStyleOther = document.getElementById('item_style_other');
-    const itemMaterialSelect = document.getElementById('item_material_container');
-    const itemMaterialOther = document.getElementById('item_material_container_other');
-    const itemShapeSelect = document.getElementById('item_shape_container');
-    const itemShapeOther = document.getElementById('item_shape_container_other');
-    const itemColorSelect = document.getElementById('item_color_container');
-    const itemColorOther = document.getElementById('item_color_container_other');
-    const itemOriginSelect = document.getElementById('item_origin_container');
-    const itemOriginOther = document.getElementById('item_origin_container_other');
-    const itemEssentialTypeSelect = document.getElementById('item_essential_type');
-    const itemEssentialOther = document.getElementById('item_essential_other');
-    const wireFields = document.getElementById('wire_fields');
-    const itemWireTypeSelect = document.getElementById('item_wire_type');
-    const itemWireOther = document.getElementById('item_wire_other');
-    const toolsFields = document.getElementById('tools_fields');
-    const itemToolTypeSelect = document.getElementById('item_tool_type');
-    const itemToolOther = document.getElementById('item_tool_other');
-    const itemSizeSelect = document.getElementById('item_size_container');
-    const itemSizeOther = document.getElementById('item_size_container_other');
-
-    const preselectDropdown = (selectElement, hiddenElement, values) => {
+    const handleSelectChange = (selectElement, otherElement) => {
       const selectedValue = selectElement.value;
-      hiddenElement.classList.toggle('hidden', !values.includes(selectedValue));
+      console.log(`Selected value for ${selectElement.id}: ${selectedValue}`);
+      const showOther = (
+        selectedValue === 'material_other' ||
+        selectedValue === 'shape_other' ||
+        selectedValue === 'color_other' ||
+        selectedValue === 'size_other' ||
+        selectedValue === 'origin_other' ||
+        selectedValue === 'essential_other' ||
+        selectedValue === 'wire_other' ||
+        selectedValue === 'tool_other' ||
+        selectedValue === 'species_other' ||
+        selectedValue === 'style_other' ||
+        selectedValue === 'stage_other'
+      );
+
+      if (showOther && otherElement) {
+        console.log(`Showing other field for ${selectElement.id}`);
+        otherElement.classList.remove('hidden');
+        otherElement.removeAttribute('aria-hidden');
+        console.log(`Other field classes after showing: ${otherElement.className}`);
+      } else if (otherElement) {
+        console.log(`Hiding other field for ${selectElement.id}`);
+        otherElement.classList.add('hidden');
+        otherElement.setAttribute('aria-hidden', 'true');
+        console.log(`Other field classes after hiding: ${otherElement.className}`);
+      }
     };
 
-    if (itemSpeciesSelect) {
-      preselectDropdown(itemSpeciesSelect, itemSpeciesOther, ['14', 'azalea']);
-      itemSpeciesSelect.addEventListener('change', () => {
-        preselectDropdown(itemSpeciesSelect, itemSpeciesOther, ['14', 'azalea']);
+    const setupSelect = (selectElement, otherElement) => {
+      // Add an empty option if not already present
+      if (!Array.from(selectElement.options).some(option => option.value === "")) {
+        const emptyOption = document.createElement("option");
+        emptyOption.value = "";
+        emptyOption.text = "";
+        selectElement.insertBefore(emptyOption, selectElement.firstChild);
+        console.log(`Added empty option to ${selectElement.id}`);
+      }
+
+      // Set initial value
+      const selectedValue = selectElement.dataset.selectedValue || '';
+      selectElement.value = selectedValue;
+      console.log(`Initial selected value for ${selectElement.id}: ${selectedValue}`);
+
+      // Ensure correct initial visibility of the "Other" field
+      handleSelectChange(selectElement, otherElement);
+
+      // Add event listener for changes
+      selectElement.addEventListener('change', () => {
+        handleSelectChange(selectElement, otherElement);
       });
-    }
+    };
 
-    if (itemStyleSelect) {
-      preselectDropdown(itemStyleSelect, itemStyleOther, ['7', 'cascade']);
-      itemStyleSelect.addEventListener('change', () => {
-        preselectDropdown(itemStyleSelect, itemStyleOther, ['7', 'cascade']);
+    const selectElements = document.querySelectorAll('select[id^="item_"]');
+    selectElements.forEach(selectElement => {
+      let otherElementId = null;
+
+      if (selectElement.id.endsWith('material')) {
+        otherElementId = 'item_material_other';
+      } else if (selectElement.id.endsWith('shape')) {
+        otherElementId = 'item_shape_other';
+      } else if (selectElement.id.endsWith('color')) {
+        otherElementId = 'item_color_other';
+      } else if (selectElement.id.endsWith('size')) {
+        otherElementId = 'item_size_other';
+      } else if (selectElement.id.endsWith('origin')) {
+        otherElementId = 'item_origin_other';
+      } else if (selectElement.id.endsWith('essential_type')) {
+        otherElementId = 'item_essential_other';
+      } else if (selectElement.id.endsWith('wire_type')) {
+        otherElementId = 'item_wire_other';
+      } else if (selectElement.id.endsWith('tool_type')) {
+        otherElementId = 'item_tool_other';
+      } else if (selectElement.id.endsWith('species')) {
+        otherElementId = 'item_species_other';
+      } else if (selectElement.id.endsWith('style')) {
+        otherElementId = 'item_style_other';
+      } else if (selectElement.id.endsWith('stage')) {
+        otherElementId = 'item_stage_other';
+      }
+
+      const otherElement = document.getElementById(otherElementId);
+      if (otherElement) {
+        console.log(`Setting up ${selectElement.id} with other field ${otherElementId}`);
+      } else {
+        console.log(`No other field found for ${selectElement.id}`);
+      }
+      setupSelect(selectElement, otherElement);
+    });
+
+    // Add event listener for form reset
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('reset', () => {
+        setTimeout(() => {
+          selectElements.forEach(selectElement => {
+            let otherElementId = null;
+
+            if (selectElement.id.endsWith('material')) {
+              otherElementId = 'item_material_other';
+            } else if (selectElement.id.endsWith('shape_container')) {
+              otherElementId = 'item_shape_container_other';
+            } else if (selectElement.id.endsWith('color_container')) {
+              otherElementId = 'item_color_container_other';
+            } else if (selectElement.id.endsWith('size_container')) {
+              otherElementId = 'item_size_container_other';
+            } else if (selectElement.id.endsWith('origin_container')) {
+              otherElementId = 'item_origin_container_other';
+            } else if (selectElement.id.endsWith('essential_type')) {
+              otherElementId = 'item_essential_other';
+            } else if (selectElement.id.endsWith('wire_type')) {
+              otherElementId = 'item_wire_other';
+            } else if (selectElement.id.endsWith('tool_type')) {
+              otherElementId = 'item_tool_other';
+            } else if (selectElement.id.endsWith('species')) {
+              otherElementId = 'item_species_other';
+            } else if (selectElement.id.endsWith('style')) {
+              otherElementId = 'item_style_other';
+            } else if (selectElement.id.endsWith('stage')) {
+              otherElementId = 'item_stage_other';
+            }
+
+            const otherElement = document.getElementById(otherElementId);
+            handleSelectChange(selectElement, otherElement);
+          });
+        }, 0); // Delay to allow form reset to complete
       });
-    }
-
-    if (itemMaterialSelect) {
-      preselectDropdown(itemMaterialSelect, itemMaterialOther, ['4', 'commercial']);
-      itemMaterialSelect.addEventListener('change', () => {
-        preselectDropdown(itemMaterialSelect, itemMaterialOther, ['4', 'commercial']);
-      });
-    }
-
-    if (itemShapeSelect) {
-      preselectDropdown(itemShapeSelect, itemShapeOther, ['7', 'lotus']);
-      itemShapeSelect.addEventListener('change', () => {
-        preselectDropdown(itemShapeSelect, itemShapeOther, ['7', 'lotus']);
-      });
-    }
-
-    if (itemColorSelect) {
-      preselectDropdown(itemColorSelect, itemColorOther, ['6', 'blue']);
-      itemColorSelect.addEventListener('change', () => {
-        preselectDropdown(itemColorSelect, itemColorOther, ['6', 'blue']);
-      });
-    }
-
-    if (itemOriginSelect) {
-      preselectDropdown(itemOriginSelect, itemOriginOther, ['4', 'china']);
-      itemOriginSelect.addEventListener('change', () => {
-        preselectDropdown(itemOriginSelect, itemOriginOther, ['4', 'china']);
-      });
-    }
-
-    if (itemEssentialTypeSelect) {
-      const checkEssentialType = () => {
-        const selectedEssentialType = itemEssentialTypeSelect.value;
-        wireFields.classList.add('hidden');
-        toolsFields.classList.add('hidden');
-
-        if (selectedEssentialType === '7' || selectedEssentialType === 'wire') {
-          wireFields.classList.remove('hidden');
-        } else if (selectedEssentialType === '6' || selectedEssentialType === 'tools') {
-          toolsFields.classList.remove('hidden');
-        }
-
-        itemEssentialOther.classList.toggle('hidden', selectedEssentialType !== '8' && selectedEssentialType !== 'other');
-      };
-
-      checkEssentialType();
-      itemEssentialTypeSelect.addEventListener('change', checkEssentialType);
-    }
-
-    if (itemWireTypeSelect) {
-      preselectDropdown(itemWireTypeSelect, itemWireOther, ['3', 'other']);
-      itemWireTypeSelect.addEventListener('change', () => {
-        preselectDropdown(itemWireTypeSelect, itemWireOther, ['3', 'other']);
-      });
-    }
-
-    if (itemToolTypeSelect) {
-      preselectDropdown(itemToolTypeSelect, itemToolOther, ['6', 'other']);
-      itemToolTypeSelect.addEventListener('change', () => {
-        preselectDropdown(itemToolTypeSelect, itemToolOther, ['6', 'other']);
-      });
-    }
-
-    if (itemSizeSelect) {
-      preselectDropdown(itemSizeSelect, itemSizeOther, ['7', 'large']);
-      itemSizeSelect.addEventListener('change', () => {
-        preselectDropdown(itemSizeSelect, itemSizeOther, ['7', 'large']);
-      });
-    }
+    });
   };
 
   initializeAttributes();

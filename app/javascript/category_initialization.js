@@ -7,7 +7,7 @@ document.addEventListener('turbolinks:load', () => {
   const initializeCategory = () => {
     const selectedCategory = itemCategorySelect ? itemCategorySelect.value : null;
 
-    console.log("Selected Category:", selectedCategory);
+    // console.log("Selected Category:", selectedCategory);
 
     if (plantFields) plantFields.classList.add('hidden');
     if (containerFields) containerFields.classList.add('hidden');
@@ -15,6 +15,8 @@ document.addEventListener('turbolinks:load', () => {
 
     if (selectedCategory === 'plant' || selectedCategory === '3') {
       if (plantFields) plantFields.classList.remove('hidden');
+      if (containerFields) containerFields.classList.remove('hidden');
+      
     } else if (selectedCategory === 'container' || selectedCategory === '1') {
       if (containerFields) containerFields.classList.remove('hidden');
     } else if (selectedCategory === 'essential' || selectedCategory === '2') {

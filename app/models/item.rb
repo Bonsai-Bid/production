@@ -46,7 +46,25 @@ class Item < ApplicationRecord
     images.first.variant(resize_to_limit: [300, 300]).processed
   end
 
+  def set_auction_times
+    if auction.timing_option == 'list_now'
+      auction.start_date = Time.current
+      auction.end_date = auction.start_date + auction.auction_length.days
+    elsif auction.timing_option == 'list_later'
+      auction.start_date = combine_date_and_time(auction.start_date, auction.start_time)
+      auction.end_date = auction.start_date + auction.auction_length.days
+    else
+      auction.end_date = combine_date_and_time(auction.end_date, auction.end_time)
+    end
+  end
+
+
+
   private
+
+  def combine_date_and_time(date, time)
+    DateTime.parse("#{date} #{time}")
+  end
 
   def assign_species_category
     category_map = {

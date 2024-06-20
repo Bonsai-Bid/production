@@ -1,6 +1,7 @@
 class Auction < ApplicationRecord
   enum status: { listed: 0, active: 1, sold: 2, ended: 3 }
 
+  attr_accessor :timing_option, :auction_length, :start_time, :end_time
   belongs_to :item, dependent: :destroy 
   belongs_to :seller, class_name: 'User'
   has_many :bids
@@ -15,6 +16,7 @@ class Auction < ApplicationRecord
   validates :status, presence: true, inclusion: { in: Auction.statuses.keys }
 
   after_initialize :set_default_status, if: :new_record?
+  before_save :set_auction_times
 
   def current_highest_bid
     highest_bid = bids.order(bid_amount: :desc).first
@@ -41,7 +43,31 @@ class Auction < ApplicationRecord
       self.status = :ended
     end
   end
+
+  def set_auction_times
+    auction_length_in_days = auction_length.to_i
+
+    case timing_option
+    when 'list_now'
+      self.start_date = Time.current
+      self.end_date = start_date + auction_length_in_days.days
+    when 'list_later'
+      self.start_date = combine_date_and_time(start_date, start_time)
+      self.end_date = start_date + auction_length_in_days.days
+    else
+      self.end_date = combine_date_and_time(end_date, end_time)
+    end
+  end
+  
   private
+
+  def timing_option_requires_dates?
+    timing_option == 'list_later'
+  end
+
+  def timing_option_list_now?
+    timing_option == 'list_now'
+  end
 
   def end_date_after_start_date
     return if end_date.blank? || start_date.blank?
@@ -63,4 +89,15 @@ class Auction < ApplicationRecord
     self.status ||= :listed
   end
 
+
+
+  def combine_date_and_time(date, time)
+    if date.present? && time.present?
+      DateTime.parse("#{date} #{time}")
+    elsif date.present?
+      date.to_datetime
+    else
+      nil
+    end
+  end
 end

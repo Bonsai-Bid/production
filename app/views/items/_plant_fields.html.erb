@@ -1,21 +1,20 @@
-<!-- app/views/items/_plant_fields.html.erb -->
 <fieldset id="plant_fields" class="item_fields mb-4 hidden" aria-hidden="true">
   <legend class="text-lg font-semibold">Plant Details</legend>
 
   <div class="mb-4">
     <%= form.label :species, 'Species', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :species, options_for_select([['Select Species', ''], ['Azalea', 1], ['Boxwood', 2], ['Cypress', 3], ['Elm', 4], ['Ficus', 5], ['Gingko', 6], ['Juniper', 7], ['Maple', 8], ['Oak', 9], ['Olive', 10], ['Pine', 11], ['Schefflera', 12], ['Tea', 13], ['Other', 14]], form.object.species), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
-    <%= form.text_field :species_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Species', aria: { hidden: true } %>
+    <%= form.select :species, options_for_select(Item.species.keys.map { |key| [key.humanize, key] }, selected: form.object.species), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_species', data: { selected_value: form.object.species } %>
+    <%= form.text_field :species_other, value: form.object.species_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', id: 'item_species_other', placeholder: 'Other Species', aria: { hidden: true }, data: { selected_value: form.object.species_other } %>
   </div>
 
   <div class="mb-4">
     <%= form.label :style, 'Style', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :style, options_for_select([['Select Style', ''], ['Broom', 1], ['Cascade', 2], ['Clump', 3], ['Forest', 4], ['Formal Upright', 5], ['Informal Upright', 6], ['Other', 7]], form.object.style), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
-    <%= form.text_field :style_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Style', aria: { hidden: true } %>
+    <%= form.select :style, options_for_select(Item.styles.keys.map { |key| [key.humanize, key] }, selected: form.object.style), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_style', data: { selected_value: form.object.style } %>
+    <%= form.text_field :style_other, value: form.object.style_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', id: 'item_style_other', placeholder: 'Other Style', aria: { hidden: true }, data: { selected_value: form.object.style_other } %>
   </div>
 
   <div class="mb-4">
     <%= form.label :stage, 'Stage', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :stage, options_for_select([['Select Stage', ''], ['Pre-Bonsai', 1], ['Development', 2], ['Refinement', 3], ['Specimen', 4], ['Seeds/Seedlings', 5]], form.object.stage), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+    <%= form.select :stage, options_for_select(Item.stages.keys.map { |key| [key.humanize, key] }, selected: form.object.stage), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_stage', data: { selected_value: form.object.stage } %>
   </div>
 </fieldset>
