@@ -75,4 +75,12 @@ class Item < ApplicationRecord
     }
     self.species_category = category_map[self.species_before_type_cast] if self.species
   end
+
+  def image_type
+    images.each do |image|
+      if !image.blob.content_type.in?(%('image/jpeg image/png'))
+        errors.add(:images, 'needs to be a JPEG or PNG')
+      end
+    end
+  end
 end

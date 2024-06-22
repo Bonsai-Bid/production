@@ -59,6 +59,11 @@
       <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
       <%= profile_form.text_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
     </div>
+
+    <div class="mb-4">
+      <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
+      <%= profile_form.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
+    </div>
   <% end %>
 
   <div class="actions">

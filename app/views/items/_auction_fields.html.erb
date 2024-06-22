@@ -1,56 +1,59 @@
 <!-- app/views/items/_auction_fields.html.erb -->
 <h2 class="mt-4 text-2xl font-semibold">Auction Details</h2>
-
-<%= form.fields_for :auction do |auction_form| %>
-  <div class="mb-4">
-    <%= auction_form.label :starting_price, 'Starting Price', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.number_field :starting_price, step: 0.01, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <div class="mb-4">
-    <%= auction_form.label :bid_increment, 'Minimum Bid Increment', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.number_field :bid_increment, step: 0.01, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <div class="mb-4">
-    <%= auction_form.label :buy_it_now_price, 'Buy It Now Price', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.number_field :buy_it_now_price, step: 0.01, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <div class="mb-4">
-    <%= auction_form.label :auction_timing, 'Auction Timing', class: 'block text-sm font-medium text-gray-700' %>
-    <div>
-      <%= auction_form.radio_button :timing_option, 'list_now', id: 'list_now', checked: true %>
-      <%= auction_form.label :timing_option, 'List Now', for: 'list_now', class: 'ml-2' %>
+<% if form.object.auction.editable? %>
+  <%= form.fields_for :auction do |auction_form| %>
+    <div class="mb-4">
+      <%= auction_form.label :starting_price, 'Starting Price', class: 'block text-sm font-medium text-gray-700' %>
+      <%= auction_form.number_field :starting_price, step: 0.01, class: 'form-input mt-1 block w-full p-2 border rounded' %>
     </div>
-    <div>
-      <%= auction_form.radio_button :timing_option, 'list_later', id: 'list_later' %>
-      <%= auction_form.label :timing_option, 'List Later', for: 'list_later', class: 'ml-2' %>
+
+    <div class="mb-4">
+      <%= auction_form.label :bid_increment, 'Minimum Bid Increment', class: 'block text-sm font-medium text-gray-700' %>
+      <%= auction_form.number_field :bid_increment, step: 0.01, class: 'form-input mt-1 block w-full p-2 border rounded' %>
     </div>
-  </div>
 
-  <div id="list_now_fields" class="mb-4">
-    <%= auction_form.label :auction_length, 'Auction Length (days)', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.select :auction_length, options_for_select(1..10, selected: 7), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <div id="list_later_fields" class="mb-4 hidden">
-    <div class="mb-2">
-      <%= auction_form.label :start_date, 'Start Date', class: 'block text-sm font-medium text-gray-700' %>
-      <%= auction_form.date_field :start_date, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+    <div class="mb-4">
+      <%= auction_form.label :buy_it_now_price, 'Buy It Now Price', class: 'block text-sm font-medium text-gray-700' %>
+      <%= auction_form.number_field :buy_it_now_price, step: 0.01, class: 'form-input mt-1 block w-full p-2 border rounded' %>
     </div>
-    <div>
-      <%= auction_form.label :start_time, 'Start Time', class: 'block text-sm font-medium text-gray-700' %>
-      <%= auction_form.time_field :start_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+
+    <div class="mb-4">
+      <%= auction_form.label :auction_timing, 'Auction Timing', class: 'block text-sm font-medium text-gray-700' %>
+      <div>
+        <%= auction_form.radio_button :timing_option, 'list_now', id: 'list_now', checked: true %>
+        <%= auction_form.label :timing_option, 'List Now', for: 'list_now', class: 'ml-2' %>
+      </div>
+      <div>
+        <%= auction_form.radio_button :timing_option, 'list_later', id: 'list_later' %>
+        <%= auction_form.label :timing_option, 'List Later', for: 'list_later', class: 'ml-2' %>
+      </div>
     </div>
-  </div>
 
-  <div class="mb-4">
-    <button type="button" id="toggle_end_time" class="mt-1 block text-sm font-medium text-gray-700">Set End Time Manually</button>
-  </div>
+    <div id="list_now_fields" class="mb-4">
+      <%= auction_form.label :auction_length, 'Auction Length (days)', class: 'block text-sm font-medium text-gray-700' %>
+      <%= auction_form.select :auction_length, options_for_select(1..10, selected: 7), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
+    </div>
 
-  <div class="mb-4 hidden" id="end_time_fields">
-    <%= auction_form.label :end_time, 'End Time', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.time_field :end_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
+    <div id="list_later_fields" class="mb-4 hidden">
+      <div class="mb-2">
+        <%= auction_form.label :start_date, 'Start Date', class: 'block text-sm font-medium text-gray-700' %>
+        <%= auction_form.date_field :start_date, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+      </div>
+      <div>
+        <%= auction_form.label :start_time, 'Start Time', class: 'block text-sm font-medium text-gray-700' %>
+        <%= auction_form.time_field :start_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <button type="button" id="toggle_end_time" class="mt-1 block text-sm font-medium text-gray-700">Set End Time Manually</button>
+    </div>
+
+    <div class="mb-4 hidden" id="end_time_fields">
+      <%= auction_form.label :end_time, 'End Time', class: 'block text-sm font-medium text-gray-700' %>
+      <%= auction_form.time_field :end_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+    </div>
+  <% end %>
+<% else %>
+  <%= render 'shared/auction_details', auction: form.object.auction %>
 <% end %>

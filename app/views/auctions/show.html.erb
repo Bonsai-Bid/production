@@ -4,6 +4,7 @@
   <% end %>
   <%= render @auction %>
 
+
   <% if current_user&.id == @auction.seller_id %>
     <div class="flex space-x-2 mt-4">
       <%= link_to "Edit this auction", edit_item_path(@auction.item), class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>

@@ -7,6 +7,7 @@ class UserProfile < ApplicationRecord
     with: /\A\+?1?\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})\z/, 
     message: "must be a valid phone number" 
   }, presence: true
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, allow_nil: true
 
   before_save :normalize_phone_number
 
