@@ -9,10 +9,8 @@ document.addEventListener('turbolinks:load', () => {
 
   const toggleFields = () => {
     if (listNowRadio.checked) {
-      listNowFields.classList.remove('hidden');
       listLaterFields.classList.add('hidden');
     } else if (listLaterRadio.checked) {
-      listNowFields.classList.add('hidden');
       listLaterFields.classList.remove('hidden');
     }
   };

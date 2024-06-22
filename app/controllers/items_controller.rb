@@ -92,14 +92,14 @@ class ItemsController < ApplicationController
 
   def attach_images
     return unless params[:item][:images].present?
-
-    params[:item][:images].each do |image|
-      next if image.blank?
-
+  
+    @item.images.purge
+    params[:item][:images].reject(&:blank?).each do |image|
       compressed_image = compress_image(image)
       @item.images.attach(compressed_image)
     end
   end
+  
 
   def compress_image(image)
     compressed_tempfile = ImageProcessing::MiniMagick

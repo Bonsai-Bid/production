@@ -25,7 +25,7 @@ class Auction < ApplicationRecord
   end
 
   def editable?
-    status == :listed
+    status.to_sym == :listed || status == :listed
   end
 
   def auction_active?

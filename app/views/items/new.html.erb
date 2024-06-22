@@ -37,7 +37,7 @@
 
             <div class="mb-4">
                 <%= form.label :images, 'Upload Images', class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.file_field :images, multiple: true, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+                <%= form.file_field :images, multiple: true, accept: 'image/*', class: 'form-input mt-1 block w-full p-2 border rounded' %>
             </div>
 
             <div>
