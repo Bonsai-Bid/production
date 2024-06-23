@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   end
 
   resources :auctions, only: [:show] do
-    resources :bids
+    resources :bids, only: [:create]
+
     resources :inquiries do
       resources :replies
     end

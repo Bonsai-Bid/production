@@ -21,7 +21,7 @@ class Auction < ApplicationRecord
 
   def current_highest_bid
     highest_bid = bids.order(bid_amount: :desc).first
-    highest_bid ? highest_bid.bid_amount : "no bids"
+    highest_bid ? highest_bid.bid_amount : starting_price
   end
 
   def editable?
@@ -61,6 +61,13 @@ class Auction < ApplicationRecord
       self.end_date = combine_date_and_time(end_date, end_time)
     end
   end
+
+  def listing_name
+    item.name
+  end
+
+  scope :newest_active, -> { where(status: :active).order(created_at: :desc) }
+
   private
 
 

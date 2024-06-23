@@ -1,0 +1,10 @@
+<!-- app/views/shared/_your_auctions.html.erb -->
+<div class="mb-4">
+  <h2 class="text-xl font-semibold">Your Auctions</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <% @user.items.each do |item| %>
+      <%= render 'shared/auction_info', auction: item.auction %>
+    <% end %>
+  </div>
+  <%= link_to 'New Auction', new_item_path, class: "inline-block mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" %>
+</div>

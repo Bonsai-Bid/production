@@ -17,6 +17,7 @@
             <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'text-lg text-gray-800 hover:text-gray-600' %>
           <% else %>
             <%= link_to 'Login', new_user_session_path, class: 'text-lg text-gray-800 hover:text-gray-600' %>
+            <%= link_to "Sign up", new_user_registration_path, class: 'text-lg text-gray-800 hover:text-gray-600' %>
           <% end %>
         </div>
       </div>
