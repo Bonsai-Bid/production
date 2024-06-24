@@ -1,7 +1,6 @@
 class AuctionsController < ApplicationController
-  before_action :authenticate_user! 
-
-  before_action :set_auction, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_auction, only: %i[show edit update destroy]
 
   def show
     @inquiry = Inquiry.new
@@ -37,6 +36,16 @@ class AuctionsController < ApplicationController
   end
 
   def auction_params
-    params.require(:auction).permit(:start_date, :end_date, :starting_price, :buy_it_now_price, :bid_increment, :status, item_attributes: [:name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential_type, :species_other, :style_other, :type_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type])
+    params.require(:auction).permit(
+      :start_date, :end_date, :starting_price, :buy_it_now_price,
+      :bid_increment, :status, :timing_option, :auction_length,
+      :start_time, :end_time, item_attributes: [
+        :name, :description, :category_type, :species, :style, :stage,
+        :material, :shape, :color, :size, :origin, :essential_type,
+        :species_other, :style_other, :type_other, :shape_other,
+        :color_other, :origin_other, :essential_other, :wire_other,
+        :tool_other, :brand, :condition, :wire_type
+      ]
+    )
   end
 end

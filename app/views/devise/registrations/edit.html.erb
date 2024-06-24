@@ -31,6 +31,24 @@
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
+  <!-- Nested fields for UserProfile -->
+  <%= f.fields_for :user_profile_attributes do |profile_form| %>
+    <div class="field">
+      <%= profile_form.label :name %><br />
+      <%= profile_form.text_field :name, autocomplete: "name" %>
+    </div>
+
+    <div class="field">
+      <%= profile_form.label :phone %><br />
+      <%= profile_form.text_field :phone, autocomplete: "phone" %>
+    </div>
+
+    <div class="field">
+      <%= profile_form.label :time_zone %><br />
+      <%= profile_form.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, {}, class: "form-control" %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

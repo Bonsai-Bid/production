@@ -1,106 +1,165 @@
-// app/javascript/attribute_initialization.js
-
 document.addEventListener('turbolinks:load', () => {
+
   const initializeAttributes = () => {
-    const itemSpeciesSelect = document.getElementById('item_species');
-    const itemSpeciesOther = document.getElementById('item_species_other');
-    const itemStyleSelect = document.getElementById('item_style');
-    const itemStyleOther = document.getElementById('item_style_other');
-    const itemMaterialSelect = document.getElementById('item_material_container');
-    const itemMaterialOther = document.getElementById('item_material_container_other');
-    const itemShapeSelect = document.getElementById('item_shape_container');
-    const itemShapeOther = document.getElementById('item_shape_container_other');
-    const itemColorSelect = document.getElementById('item_color_container');
-    const itemColorOther = document.getElementById('item_color_container_other');
-    const itemOriginSelect = document.getElementById('item_origin_container');
-    const itemOriginOther = document.getElementById('item_origin_container_other');
-    const itemEssentialTypeSelect = document.getElementById('item_essential_type');
-    const itemEssentialOther = document.getElementById('item_essential_other');
-    const wireFields = document.getElementById('wire_fields');
-    const itemWireTypeSelect = document.getElementById('item_wire_type');
-    const itemWireOther = document.getElementById('item_wire_other');
-    const toolsFields = document.getElementById('tools_fields');
-    const itemToolTypeSelect = document.getElementById('item_tool_type');
-    const itemToolOther = document.getElementById('item_tool_other');
-    const itemSizeSelect = document.getElementById('item_size_container');
-    const itemSizeOther = document.getElementById('item_size_container_other');
+    const handleSelectChange = (selectElement, otherElement) => {
+      const selectedValue = selectElement.value;
+      console.log(`Selected value for ${selectElement.id}: ${selectedValue}`);
 
-    if (itemSpeciesSelect) {
-      itemSpeciesSelect.addEventListener('change', () => {
-        if (itemSpeciesOther) itemSpeciesOther.classList.toggle('hidden', itemSpeciesSelect.value !== '14');
-      });
-    }
+      // Show or hide "Other" fields
+      const showOther = (
+        selectedValue === 'material_other' ||
+        selectedValue === 'shape_other' ||
+        selectedValue === 'color_other' ||
+        selectedValue === 'size_other' ||
+        selectedValue === 'origin_other' ||
+        selectedValue === 'essential_other' ||
+        selectedValue === 'wire_other' ||
+        selectedValue === 'tool_other' ||
+        selectedValue === 'species_other' ||
+        selectedValue === 'style_other' ||
+        selectedValue === 'stage_other'
+      );
 
-    if (itemStyleSelect) {
-      itemStyleSelect.addEventListener('change', () => {
-        if (itemStyleOther) itemStyleOther.classList.toggle('hidden', itemStyleSelect.value !== '7');
-      });
-    }
+      if (showOther && otherElement) {
+        console.log(`Showing other field for ${selectElement.id}`);
+        otherElement.classList.remove('hidden');
+        otherElement.removeAttribute('aria-hidden');
+        console.log(`Other field classes after showing: ${otherElement.className}`);
+      } else if (otherElement) {
+        console.log(`Hiding other field for ${selectElement.id}`);
+        otherElement.classList.add('hidden');
+        otherElement.setAttribute('aria-hidden', 'true');
+        console.log(`Other field classes after hiding: ${otherElement.className}`);
+      }
 
-    if (itemMaterialSelect) {
-      itemMaterialSelect.addEventListener('change', () => {
-        if (itemMaterialOther) itemMaterialOther.classList.toggle('hidden', itemMaterialSelect.value !== '4');
-      });
-    }
+      // Show or hide wire and tool fields based on essential_type selection
+      if (selectElement.id === 'item_essential_type') {
+        const wireFields = document.getElementById('wire_fields');
+        const toolsFields = document.getElementById('tools_fields');
 
-    if (itemShapeSelect) {
-      itemShapeSelect.addEventListener('change', () => {
-        if (itemShapeOther) itemShapeOther.classList.toggle('hidden', itemShapeSelect.value !== '7');
-      });
-    }
-
-    if (itemColorSelect) {
-      itemColorSelect.addEventListener('change', () => {
-        if (itemColorOther) itemColorOther.classList.toggle('hidden', itemColorSelect.value !== '6');
-      });
-    }
-
-    if (itemOriginSelect) {
-      itemOriginSelect.addEventListener('change', () => {
-        if (itemOriginOther) itemOriginOther.classList.toggle('hidden', itemOriginSelect.value !== '4');
-      });
-    }
-
-    if (itemEssentialTypeSelect) {
-      const checkEssentialType = () => {
-        const selectedEssentialType = itemEssentialTypeSelect.value;
-        if (wireFields) wireFields.classList.add('hidden');
-        if (toolsFields) toolsFields.classList.add('hidden');
-
-        if (selectedEssentialType === '4') {
-          if (wireFields) wireFields.classList.remove('hidden');
-        } else if (selectedEssentialType === '7') {
-          if (toolsFields) toolsFields.classList.remove('hidden');
+        if (selectedValue === 'wire') {
+          console.log('Showing wire fields');
+          if (wireFields) {
+            wireFields.classList.remove('hidden');
+            wireFields.removeAttribute('aria-hidden');
+          }
+          if (toolsFields) {
+            toolsFields.classList.add('hidden');
+            toolsFields.setAttribute('aria-hidden', 'true');
+          }
+        } else if (selectedValue === 'tools') {
+          console.log('Showing tools fields');
+          if (toolsFields) {
+            toolsFields.classList.remove('hidden');
+            toolsFields.removeAttribute('aria-hidden');
+          }
+          if (wireFields) {
+            wireFields.classList.add('hidden');
+            wireFields.setAttribute('aria-hidden', 'true');
+          }
+        } else {
+          if (wireFields) {
+            wireFields.classList.add('hidden');
+            wireFields.setAttribute('aria-hidden', 'true');
+          }
+          if (toolsFields) {
+            toolsFields.classList.add('hidden');
+            toolsFields.setAttribute('aria-hidden', 'true');
+          }
         }
+      }
+    };
 
-        if (itemEssentialOther) itemEssentialOther.classList.toggle('hidden', selectedEssentialType !== '8');
-      };
+    const setupSelect = (selectElement, otherElement) => {
+      // Set initial value
+      const selectedValue = selectElement.dataset.selectedValue || '';
+      selectElement.value = selectedValue;
+      console.log(`Initial selected value for ${selectElement.id}: ${selectedValue}`);
 
-      // Initial check on page load
-      checkEssentialType();
+      // Ensure correct initial visibility of the "Other" field and wire/tools fields
+      handleSelectChange(selectElement, otherElement);
 
-      itemEssentialTypeSelect.addEventListener('change', checkEssentialType);
-    }
-
-    if (itemWireTypeSelect) {
-      itemWireTypeSelect.addEventListener('change', () => {
-        if (itemWireOther) itemWireOther.classList.toggle('hidden', itemWireTypeSelect.value !== '3');
+      // Add event listener for changes
+      selectElement.addEventListener('change', () => {
+        handleSelectChange(selectElement, otherElement);
       });
-    }
+    };
 
-    if (itemToolTypeSelect) {
-      itemToolTypeSelect.addEventListener('change', () => {
-        if (itemToolOther) itemToolOther.classList.toggle('hidden', itemToolTypeSelect.value !== '6');
-      });
-    }
+    const selectElements = document.querySelectorAll('select[id^="item_"]');
+    selectElements.forEach(selectElement => {
+      let otherElementId = null;
 
-    if (itemSizeSelect) {
-      itemSizeSelect.addEventListener('change', () => {
-        if (itemSizeOther) itemSizeOther.classList.toggle('hidden', itemSizeSelect.value !== '7');
+      if (selectElement.id.endsWith('material')) {
+        otherElementId = 'item_material_other';
+      } else if (selectElement.id.endsWith('shape')) {
+        otherElementId = 'item_shape_other';
+      } else if (selectElement.id.endsWith('color')) {
+        otherElementId = 'item_color_other';
+      } else if (selectElement.id.endsWith('size')) {
+        otherElementId = 'item_size_other';
+      } else if (selectElement.id.endsWith('origin')) {
+        otherElementId = 'item_origin_other';
+      } else if (selectElement.id.endsWith('essential_type')) {
+        otherElementId = 'item_essential_other';
+      } else if (selectElement.id.endsWith('wire')) {
+        otherElementId = 'item_wire_other';
+      } else if (selectElement.id.endsWith('tool')) {
+        otherElementId = 'item_tool_other';
+      } else if (selectElement.id.endsWith('species')) {
+        otherElementId = 'item_species_other';
+      } else if (selectElement.id.endsWith('style')) {
+        otherElementId = 'item_style_other';
+      } else if (selectElement.id.endsWith('stage')) {
+        otherElementId = 'item_stage_other';
+      }
+
+      const otherElement = document.getElementById(otherElementId);
+      if (otherElement) {
+        console.log(`Setting up ${selectElement.id} with other field ${otherElementId}`);
+      } else {
+        console.log(`No other field found for ${selectElement.id}`);
+      }
+      setupSelect(selectElement, otherElement);
+    });
+
+    // Add event listener for form reset
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('reset', () => {
+        setTimeout(() => {
+          selectElements.forEach(selectElement => {
+            let otherElementId = null;
+
+            if (selectElement.id.endsWith('material')) {
+              otherElementId = 'item_material_other';
+            } else if (selectElement.id.endsWith('shape')) {
+              otherElementId = 'item_shape_other';
+            } else if (selectElement.id.endsWith('color')) {
+              otherElementId = 'item_color_other';
+            } else if (selectElement.id.endsWith('size')) {
+              otherElementId = 'item_size_other';
+            } else if (selectElement.id.endsWith('origin')) {
+              otherElementId = 'item_origin_other';
+            } else if (selectElement.id.endsWith('essential_type')) {
+              otherElementId = 'item_essential_other';
+            } else if (selectElement.id.endsWith('wire')) {
+              otherElementId = 'item_wire_other';
+            } else if (selectElement.id.endsWith('tool')) {
+              otherElementId = 'item_tool_other';
+            } else if (selectElement.id.endsWith('species')) {
+              otherElementId = 'item_species_other';
+            } else if (selectElement.id.endsWith('style')) {
+              otherElementId = 'item_style_other';
+            } else if (selectElement.id.endsWith('stage')) {
+              otherElementId = 'item_stage_other';
+            }
+
+            const otherElement = document.getElementById(otherElementId);
+            handleSelectChange(selectElement, otherElement);
+          });
+        }, 0); // Delay to allow form reset to complete
       });
-    }
+    });
   };
 
-  // Initial setup on page load
   initializeAttributes();
 });

@@ -10,188 +10,230 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_09_200424) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_24_211223) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'auctions', force: :cascade do |t|
-    t.bigint 'item_id', null: false
-    t.bigint 'seller_id', null: false
-    t.datetime 'start_date'
-    t.datetime 'end_date'
-    t.float 'starting_price'
-    t.float 'buy_it_now_price'
-    t.float 'bid_increment'
-    t.integer 'status'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['item_id'], name: 'index_auctions_on_item_id'
-    t.index ['seller_id'], name: 'index_auctions_on_seller_id'
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table 'bids', force: :cascade do |t|
-    t.bigint 'bidder_id', null: false
-    t.bigint 'auction_id', null: false
-    t.float 'bid_amount'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['auction_id'], name: 'index_bids_on_auction_id'
-    t.index ['bidder_id'], name: 'index_bids_on_bidder_id'
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table 'feedbacks', force: :cascade do |t|
-    t.bigint 'from_user_id', null: false
-    t.bigint 'to_user_id', null: false
-    t.bigint 'sale_transaction_id', null: false
-    t.bigint 'auction_id', null: false
-    t.integer 'rating'
-    t.text 'comment'
-    t.text 'reply'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['auction_id'], name: 'index_feedbacks_on_auction_id'
-    t.index ['from_user_id'], name: 'index_feedbacks_on_from_user_id'
-    t.index ['sale_transaction_id'], name: 'index_feedbacks_on_sale_transaction_id'
-    t.index ['to_user_id'], name: 'index_feedbacks_on_to_user_id'
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table 'inquiries', force: :cascade do |t|
-    t.bigint 'commenter_id'
-    t.bigint 'seller_id'
-    t.text 'comment'
-    t.bigint 'parent_id'
-    t.bigint 'auction_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['auction_id'], name: 'index_inquiries_on_auction_id'
-    t.index ['commenter_id'], name: 'index_inquiries_on_commenter_id'
-    t.index ['seller_id'], name: 'index_inquiries_on_seller_id'
+  create_table "auctions", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "seller_id", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.float "starting_price"
+    t.float "buy_it_now_price"
+    t.float "bid_increment"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_auctions_on_item_id"
+    t.index ["seller_id"], name: "index_auctions_on_seller_id"
   end
 
-  create_table 'items', force: :cascade do |t|
-    t.bigint 'seller_id', null: false
-    t.string 'name'
-    t.text 'description'
-    t.text 'images'
-    t.integer 'category_type'
-    t.integer 'material'
-    t.integer 'shape'
-    t.integer 'color'
-    t.integer 'origin'
-    t.integer 'essential_type'
-    t.integer 'wire_type'
-    t.integer 'species'
-    t.integer 'style'
-    t.integer 'stage'
-    t.integer 'tool_type'
-    t.string 'material_other'
-    t.string 'shape_other'
-    t.string 'color_other'
-    t.string 'origin_other'
-    t.string 'essential_other'
-    t.string 'wire_other'
-    t.string 'species_other'
-    t.string 'style_other'
-    t.integer 'size'
-    t.string 'size_other'
-    t.string 'brand'
-    t.string 'condition'
-    t.string 'tool_other'
-    t.integer 'species_category'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['seller_id'], name: 'index_items_on_seller_id'
+  create_table "bids", force: :cascade do |t|
+    t.bigint "bidder_id", null: false
+    t.bigint "auction_id", null: false
+    t.float "bid_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auction_id"], name: "index_bids_on_auction_id"
+    t.index ["bidder_id"], name: "index_bids_on_bidder_id"
   end
 
-  create_table 'replies', force: :cascade do |t|
-    t.text 'content'
-    t.bigint 'user_id', null: false
-    t.string 'respondable_type'
-    t.bigint 'respondable_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['respondable_type', 'respondable_id'], name: 'index_replies_on_respondable'
-    t.index ['user_id'], name: 'index_replies_on_user_id'
+  create_table "feedbacks", force: :cascade do |t|
+    t.bigint "from_user_id", null: false
+    t.bigint "to_user_id", null: false
+    t.bigint "sale_transaction_id", null: false
+    t.bigint "auction_id", null: false
+    t.integer "rating"
+    t.text "comment"
+    t.text "reply"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auction_id"], name: "index_feedbacks_on_auction_id"
+    t.index ["from_user_id"], name: "index_feedbacks_on_from_user_id"
+    t.index ["sale_transaction_id"], name: "index_feedbacks_on_sale_transaction_id"
+    t.index ["to_user_id"], name: "index_feedbacks_on_to_user_id"
   end
 
-  create_table 'sale_transactions', force: :cascade do |t|
-    t.bigint 'buyer_id'
-    t.bigint 'seller_id'
-    t.float 'final_price'
-    t.integer 'payment_status'
-    t.bigint 'auction_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['auction_id'], name: 'index_sale_transactions_on_auction_id'
-    t.index ['buyer_id'], name: 'index_sale_transactions_on_buyer_id'
-    t.index ['seller_id'], name: 'index_sale_transactions_on_seller_id'
+  create_table "inquiries", force: :cascade do |t|
+    t.bigint "commenter_id"
+    t.bigint "seller_id"
+    t.text "comment"
+    t.bigint "parent_id"
+    t.bigint "auction_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auction_id"], name: "index_inquiries_on_auction_id"
+    t.index ["commenter_id"], name: "index_inquiries_on_commenter_id"
+    t.index ["seller_id"], name: "index_inquiries_on_seller_id"
   end
 
-  create_table 'user_profiles', force: :cascade do |t|
-    t.bigint 'user_id', null: false
-    t.string 'name'
-    t.string 'phone'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['user_id'], name: 'index_user_profiles_on_user_id'
+  create_table "items", force: :cascade do |t|
+    t.bigint "seller_id", null: false
+    t.string "name"
+    t.text "description"
+    t.integer "category_type"
+    t.integer "material"
+    t.integer "shape"
+    t.integer "color"
+    t.integer "origin"
+    t.integer "essential_type"
+    t.integer "wire_type"
+    t.integer "species"
+    t.integer "style"
+    t.integer "stage"
+    t.integer "tool_type"
+    t.string "material_other"
+    t.string "shape_other"
+    t.string "color_other"
+    t.string "origin_other"
+    t.string "essential_other"
+    t.string "wire_other"
+    t.string "species_other"
+    t.string "style_other"
+    t.integer "size"
+    t.string "size_other"
+    t.string "brand"
+    t.string "condition"
+    t.string "tool_other"
+    t.integer "species_category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["seller_id"], name: "index_items_on_seller_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email', default: '', null: false
-    t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'street'
-    t.string 'city'
-    t.string 'state'
-    t.string 'zip'
-    t.integer 'sign_in_count', default: 0, null: false
-    t.datetime 'current_sign_in_at'
-    t.datetime 'last_sign_in_at'
-    t.string 'current_sign_in_ip'
-    t.string 'last_sign_in_ip'
-    t.string 'confirmation_token'
-    t.datetime 'confirmed_at'
-    t.datetime 'confirmation_sent_at'
-    t.string 'unconfirmed_email'
-    t.integer 'failed_attempts', default: 0, null: false
-    t.string 'unlock_token'
-    t.datetime 'locked_at'
-    t.index ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
-    t.index ['unlock_token'], name: 'index_users_on_unlock_token', unique: true
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "user_profile_id", null: false
+    t.string "rating_type", null: false
+    t.float "rating_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_profile_id"], name: "index_ratings_on_user_profile_id"
   end
 
-  create_table 'watchlists', force: :cascade do |t|
-    t.bigint 'user_id', null: false
-    t.bigint 'auction_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['auction_id'], name: 'index_watchlists_on_auction_id'
-    t.index ['user_id'], name: 'index_watchlists_on_user_id'
+  create_table "replies", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.string "respondable_type"
+    t.bigint "respondable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["respondable_type", "respondable_id"], name: "index_replies_on_respondable"
+    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
-  add_foreign_key 'auctions', 'items'
-  add_foreign_key 'auctions', 'users', column: 'seller_id'
-  add_foreign_key 'bids', 'auctions'
-  add_foreign_key 'bids', 'users', column: 'bidder_id'
-  add_foreign_key 'feedbacks', 'auctions'
-  add_foreign_key 'feedbacks', 'sale_transactions'
-  add_foreign_key 'feedbacks', 'users', column: 'from_user_id'
-  add_foreign_key 'feedbacks', 'users', column: 'to_user_id'
-  add_foreign_key 'inquiries', 'auctions'
-  add_foreign_key 'inquiries', 'users', column: 'commenter_id'
-  add_foreign_key 'inquiries', 'users', column: 'seller_id'
-  add_foreign_key 'items', 'users', column: 'seller_id'
-  add_foreign_key 'replies', 'users'
-  add_foreign_key 'sale_transactions', 'auctions'
-  add_foreign_key 'sale_transactions', 'users', column: 'buyer_id'
-  add_foreign_key 'sale_transactions', 'users', column: 'seller_id'
-  add_foreign_key 'user_profiles', 'users'
-  add_foreign_key 'watchlists', 'auctions'
-  add_foreign_key 'watchlists', 'users'
+  create_table "sale_transactions", force: :cascade do |t|
+    t.bigint "buyer_id"
+    t.bigint "seller_id"
+    t.float "final_price"
+    t.integer "payment_status"
+    t.bigint "auction_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auction_id"], name: "index_sale_transactions_on_auction_id"
+    t.index ["buyer_id"], name: "index_sale_transactions_on_buyer_id"
+    t.index ["seller_id"], name: "index_sale_transactions_on_seller_id"
+  end
+
+  create_table "user_profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.string "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "time_zone"
+    t.text "about_me"
+    t.text "seller_policy"
+    t.index ["user_id"], name: "index_user_profiles_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
+  create_table "watchlists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "auction_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auction_id"], name: "index_watchlists_on_auction_id"
+    t.index ["user_id"], name: "index_watchlists_on_user_id"
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "auctions", "items"
+  add_foreign_key "auctions", "users", column: "seller_id"
+  add_foreign_key "bids", "auctions"
+  add_foreign_key "bids", "users", column: "bidder_id"
+  add_foreign_key "feedbacks", "auctions"
+  add_foreign_key "feedbacks", "sale_transactions"
+  add_foreign_key "feedbacks", "users", column: "from_user_id"
+  add_foreign_key "feedbacks", "users", column: "to_user_id"
+  add_foreign_key "inquiries", "auctions"
+  add_foreign_key "inquiries", "users", column: "commenter_id"
+  add_foreign_key "inquiries", "users", column: "seller_id"
+  add_foreign_key "items", "users", column: "seller_id"
+  add_foreign_key "ratings", "user_profiles"
+  add_foreign_key "replies", "users"
+  add_foreign_key "sale_transactions", "auctions"
+  add_foreign_key "sale_transactions", "users", column: "buyer_id"
+  add_foreign_key "sale_transactions", "users", column: "seller_id"
+  add_foreign_key "user_profiles", "users"
+  add_foreign_key "watchlists", "auctions"
+  add_foreign_key "watchlists", "users"
 end

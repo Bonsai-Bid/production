@@ -59,8 +59,15 @@
       <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
       <%= profile_form.text_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
     </div>
-  <% end %>
 
+<div class="mb-4">
+  <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
+  <%= profile_form.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
+</div>
+
+
+
+  <% end %>
   <div class="actions">
     <%= f.submit "Sign Up", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
   </div>

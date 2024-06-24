@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   enum stage: { pre_bonsai: 1, development: 2, refinement: 3, specimen: 4, seeds_seedlings: 5 }, _prefix: true
   enum tool_type: { branch_splitters: 1, cutters: 2, pliers: 3, rakes: 4, shears: 5, tool_other: 6 }, _prefix: true
   
-
+  has_many_attached :images
   belongs_to :seller, class_name: 'User'
   has_one :auction, dependent: :destroy
   accepts_nested_attributes_for :auction
@@ -28,7 +28,43 @@ class Item < ApplicationRecord
   def self.search(query, user_id)
     where("name LIKE ?", "%#{query}%").where.not(seller_id: user_id)
   end
+
+  def thumbnail
+    images.map do |image|
+      image.variant(resize_to_limit: [300, 300]).processed
+    end
+  end
+
+  def compressed_images
+    images.map do |image|
+      image.variant(resize_to_limit: [1200, 1200], quality: 80).processed
+    end
+  end
+
+
+  def display_image
+    images.first.variant(resize_to_limit: [300, 300]).processed
+  end
+
+  def set_auction_times
+    if auction.timing_option == 'list_now'
+      auction.start_date = Time.current
+      auction.end_date = auction.start_date + auction.auction_length.days
+    elsif auction.timing_option == 'list_later'
+      auction.start_date = combine_date_and_time(auction.start_date, auction.start_time)
+      auction.end_date = auction.start_date + auction.auction_length.days
+    else
+      auction.end_date = combine_date_and_time(auction.end_date, auction.end_time)
+    end
+  end
+
+
+
   private
+
+  def combine_date_and_time(date, time)
+    DateTime.parse("#{date} #{time}")
+  end
 
   def assign_species_category
     category_map = {
@@ -38,5 +74,13 @@ class Item < ApplicationRecord
       11 => :coniferous, 12 => :tropical, 13 => :tropical, 14 => :other
     }
     self.species_category = category_map[self.species_before_type_cast] if self.species
+  end
+
+  def image_type
+    images.each do |image|
+      if !image.blob.content_type.in?(%('image/jpeg image/png'))
+        errors.add(:images, 'needs to be a JPEG or PNG')
+      end
+    end
   end
 end

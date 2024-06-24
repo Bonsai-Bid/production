@@ -12,3 +12,6 @@ ActiveStorage.start();
 import '../category_initialization';
 import '../attribute_initialization';
 import '../form_submission';
+import '../auction_initialization';
+import '../other_initialization';
+import '../user_profile';

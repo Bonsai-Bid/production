@@ -1,6 +1,8 @@
 class Auction < ApplicationRecord
   enum status: { listed: 0, active: 1, sold: 2, ended: 3 }
 
+  attr_accessor :timing_option, :auction_length, :start_time, :end_time
+
   belongs_to :item, dependent: :destroy 
   belongs_to :seller, class_name: 'User'
   has_many :bids
@@ -15,43 +17,67 @@ class Auction < ApplicationRecord
   validates :status, presence: true, inclusion: { in: Auction.statuses.keys }
 
   after_initialize :set_default_status, if: :new_record?
+  before_save :set_auction_times
 
   def current_highest_bid
     highest_bid = bids.order(bid_amount: :desc).first
-    highest_bid ? highest_bid.bid_amount : "no bids"
+    highest_bid ? highest_bid.bid_amount : starting_price
+  end
+
+  def editable?
+    status.to_sym == :listed || status == :listed
   end
 
   def auction_active?
-    now = Time.now
+    now = Time.current
     start_date <= now && now <= end_date
   end
 
   def update_status_if_needed
-    now = Time.now
+    now = Time.current
 
-    if self.status == "listed" && start_date <= now && now <= end_date
+    if listed? && auction_active?
       self.status = :active
-    elsif self.status == "active" && end_date < now
-      if bids.any?
-        self.status = :sold
-      else
-        self.status = :ended
-      end
-    elsif self.status == "sold" && sale_transaction.present?
+    elsif active? && end_date < now
+      self.status = bids.any? ? :sold : :ended
+    elsif sold? && sale_transaction.present?
       self.status = :ended
     end
   end
+
+  def set_auction_times
+    auction_length_in_days = auction_length.to_i
+
+    case timing_option
+    when 'list_now'
+      self.start_date = Time.current
+      self.end_date = start_date + auction_length_in_days.days
+      self.status = :active
+    when 'list_later'
+      self.start_date = combine_date_and_time(start_date, start_time)
+      self.end_date = start_date + auction_length_in_days.days
+      self.status = :listed
+    else
+      self.end_date = combine_date_and_time(end_date, end_time)
+    end
+  end
+
+  def listing_name
+    item.name
+  end
+
+  scope :newest_active, -> { where(status: :active).order(created_at: :desc) }
+
   private
+
 
   def end_date_after_start_date
     return if end_date.blank? || start_date.blank?
-
     errors.add(:end_date, "must be after the start date") if end_date < start_date
   end
 
   def start_date_not_in_past
     return if start_date.blank?
-
     errors.add(:start_date, "cannot be in the past") if start_date < Date.today
   end
 
@@ -63,4 +89,8 @@ class Auction < ApplicationRecord
     self.status ||= :listed
   end
 
+  def combine_date_and_time(date, time)
+    return unless date.present?
+    time.present? ? DateTime.parse("#{date} #{time}") : date.to_datetime
+  end
 end

@@ -1,21 +1,23 @@
 class Bid < ApplicationRecord
-  belongs_to :auction  
+  belongs_to :auction
   belongs_to :bidder, class_name: 'User'
 
   validates :auction_id, :bidder_id, :bid_amount, presence: true
-  
   validates :bid_amount, numericality: { greater_than: 0 }
-  # validate :bid_within_auction_time
+  validate :bid_amount_greater_than_current_highest_plus_increment
+
+  delegate :name, to: :bidder, prefix: true
 
   private
 
-  
+  def bid_amount_greater_than_current_highest_plus_increment
+    return if auction.nil?
 
-  # def bid_within_auction_time
-  #   return if auction.nil? || bid_time.blank?
+    current_highest_bid = auction.current_highest_bid == "no bids" ? auction.starting_price : auction.current_highest_bid
+    minimum_bid = current_highest_bid + auction.bid_increment
 
-  #   if bid_time < auction.start_date || bid_time > auction.end_date
-  #     errors.add(:bid_time, "must be within the auction's start and end times")
-  #   end
-  # end
+    if bid_amount < minimum_bid
+      errors.add(:bid_amount, "must be greater than the current highest bid plus the bid increment")
+    end
+  end
 end

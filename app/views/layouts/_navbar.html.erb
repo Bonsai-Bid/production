@@ -14,9 +14,11 @@
         <div class="flex items-center space-x-4">
           <% if user_signed_in? %>
             <%= link_to 'Dashboard', dashboard_user_path(current_user), class: 'text-lg font-semibold text-gray-800 hover:text-gray-600' %>
+            <%= link_to 'Profile', user_profile_path(current_user.user_profile), class: 'text-lg font-semibold text-gray-800 hover:text-gray-600' %>
             <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'text-lg text-gray-800 hover:text-gray-600' %>
           <% else %>
             <%= link_to 'Login', new_user_session_path, class: 'text-lg text-gray-800 hover:text-gray-600' %>
+            <%= link_to "Sign up", new_user_registration_path, class: 'text-lg text-gray-800 hover:text-gray-600' %>
           <% end %>
         </div>
       </div>

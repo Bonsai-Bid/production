@@ -1,0 +1,30 @@
+<!-- app/views/shared/_auction_info.html.erb -->
+<div class="border rounded shadow-sm bg-white p-4">
+  <div class="relative">
+    <% if auction.item.images.attached? %>
+      <%= link_to auction_path(auction) do %>
+        <%= image_tag url_for(auction.item.images.first), class: "w-full h-auto rounded" %>
+      <% end %>
+    <% else %>
+      <%= link_to "No Image Available", auction_path(auction), class: "text-gray-500 block text-center py-20" %>
+    <% end %>
+
+    <% if user_signed_in? && current_user.id != auction.seller_id %>
+      <% unless current_user.watchlists.exists?(auction_id: auction.id) %>
+        <div class="absolute top-2 right-2">
+          <%= link_to 'Watch This', watchlists_path(auction_id: auction.id), method: :post, class: "text-gray-500 hover:text-red-500" %>
+        </div>
+      <% else %>
+        <div class="absolute top-2 right-2">
+          <span class="text-gray-500">❤️</span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="mt-2">
+    <%= link_to auction.listing_name, auction_path(auction), class: "text-blue-500 hover:text-blue-700 block text-sm font-semibold" %>
+    <p class="text-gray-700"><%= number_to_currency(auction.current_highest_bid) %></p>
+    <p class="text-gray-700">Starting Price: <%= number_to_currency(auction.starting_price) %></p>
+    <p class="text-gray-700"><%= auction.end_date.strftime("%B %d, %Y %I:%M %p") %></p>
+  </div>
+</div>

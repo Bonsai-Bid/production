@@ -1,0 +1,13 @@
+<!-- app/views/shared/_your_watchlist.html.erb -->
+<div>
+  <h2 class="text-xl font-semibold">Watchlist</h2>
+  <% if watchlists.present? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <% watchlists.each do |auction| %>
+        <%= render 'shared/auction_info', auction: auction %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>You have nothing in your watchlist. Would you like to <%= link_to 'search for something?', search_path, class: "text-blue-500 hover:text-blue-700" %></p>
+  <% end %>
+</div>

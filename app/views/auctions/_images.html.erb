@@ -1,0 +1,12 @@
+<!-- app/views/shared/_images.html.erb -->
+<% if item.images.attached? %>
+
+  <h2 class="text-2xl font-semibold mb-2">Attached Images</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% item.images.each do |image| %>
+      <div class="mb-4">
+        <%= image_tag url_for(image.variant(resize_to_limit: [300, 300]).processed), class: "w-full h-auto rounded shadow-md" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -20,12 +20,14 @@ Rails.application.routes.draw do
   end
 
   resources :auctions, only: [:show] do
-    resources :bids
+    resources :bids, only: [:create, :index]
+
     resources :inquiries do
       resources :replies
     end
   end
-  
+
+  resources :user_profiles, only: [:show, :edit, :update]
   get "up" => "rails/health#show", as: :rails_health_check
 
 
