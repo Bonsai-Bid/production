@@ -6,6 +6,8 @@ class Bid < ApplicationRecord
   validates :bid_amount, numericality: { greater_than: 0 }
   validate :bid_amount_greater_than_current_highest_plus_increment
 
+  delegate :name, to: :bidder, prefix: true
+
   private
 
   def bid_amount_greater_than_current_highest_plus_increment

@@ -8,8 +8,20 @@ class UserProfile < ApplicationRecord
     message: "must be a valid phone number" 
   }, presence: true
   validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, allow_nil: true
+  has_many :ratings, dependent: :destroy
+
+  has_one_attached :profile_picture
+  has_one_attached :banner_image
 
   before_save :normalize_phone_number
+
+  def average_seller_rating
+    ratings.where(rating_type: 'seller').average(:rating_value).to_f
+  end
+
+  def average_buyer_rating
+    ratings.where(rating_type: 'buyer').average(:rating_value).to_f
+  end
 
   private
 

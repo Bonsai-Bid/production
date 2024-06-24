@@ -15,6 +15,10 @@ class BidsController < ApplicationController
     end
   end
 
+  def index
+    @auction = Auction.find(params[:auction_id])
+    @bids = @auction.bids  
+  end
   private
 
   def bid_params

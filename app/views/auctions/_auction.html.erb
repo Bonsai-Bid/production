@@ -1,7 +1,7 @@
 <!-- app/views/auctions/_auction.html.erb -->
 <div class="auction-details p-4 bg-white shadow-md rounded mb-4">
   <%= render 'auctions/item_details', item: @auction.item %>
-  <%= render 'auctions/auction_details', auction: @auction %>
   <%= render 'auctions/images', item: @auction.item %>
+  <%= render 'auctions/auction_details', auction: @auction %>
   <%= render 'auctions/inquiries', auction: @auction %>
 </div>

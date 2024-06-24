@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_22_200923) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_24_211223) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -130,6 +130,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_200923) do
     t.index ["seller_id"], name: "index_items_on_seller_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "user_profile_id", null: false
+    t.string "rating_type", null: false
+    t.float "rating_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_profile_id"], name: "index_ratings_on_user_profile_id"
+  end
+
   create_table "replies", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
@@ -161,6 +170,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_200923) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "time_zone"
+    t.text "about_me"
+    t.text "seller_policy"
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
@@ -217,6 +228,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_200923) do
   add_foreign_key "inquiries", "users", column: "commenter_id"
   add_foreign_key "inquiries", "users", column: "seller_id"
   add_foreign_key "items", "users", column: "seller_id"
+  add_foreign_key "ratings", "user_profiles"
   add_foreign_key "replies", "users"
   add_foreign_key "sale_transactions", "auctions"
   add_foreign_key "sale_transactions", "users", column: "buyer_id"

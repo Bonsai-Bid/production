@@ -1,0 +1,26 @@
+<!-- app/views/bids/index.html.erb -->
+<div class="container mx-auto mt-3 px-4">
+  <h1 class="text-2xl font-bold mb-4">Bid History for <%= @auction.item.name %></h1> <!-- Assuming auction has a title attribute -->
+
+  <table class="min-w-full bg-white border border-gray-200 rounded" aria-describedby="bid-history-description">
+    <caption id="bid-history-description" class="sr-only">This table shows the bid history for the auction item, including the bid amount, bid time, and user.</caption>
+    <thead>
+      <tr class="bg-gray-100 border-b">
+        <th scope="col" class="py-2 px-4 text-left font-medium text-gray-700">Bid Amount</th>
+        <th scope="col" class="py-2 px-4 text-left font-medium text-gray-700">Bid Time</th>
+        <th scope="col" class="py-2 px-4 text-left font-medium text-gray-700">User</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bids.each do |bid| %>
+        <tr class="border-b">
+          <td class="py-2 px-4" role="cell"><%= number_to_currency(bid.bid_amount) %></td>
+          <td class="py-2 px-4" role="cell"><%= bid.created_at.strftime("%B %d, %Y %I:%M %p") %></td>
+          <td class="py-2 px-4" role="cell">
+            <%= link_to bid.bidder_name, user_profile_path(bid.bidder), class: "text-blue-500 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

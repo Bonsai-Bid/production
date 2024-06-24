@@ -1,6 +1,7 @@
 <!-- app/views/shared/_item_details.html.erb -->
 <div class="item-details">
-  <p class="text-lg font-semibold"><strong>Title:</strong> <%= item.name %></p>
+  <p class="text-lg font-semibold"><strong><%= item.name %></strong> </p>
+  <p><strong>Seller:</strong> <%= item.seller.name %></p> 
   <p><strong>Category:</strong> <%= item.category_type %></p>
   <% if item.category_type == "plant" %>
     <p><strong>Species:</strong> <%= item.species %></p>

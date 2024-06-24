@@ -1,1 +1,24 @@
 @import "../../assets/stylesheets/application.css";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.tab-button {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.tab-button:hover {
+  background-color: #e5e7eb;
+}
+
+.content-tab {
+  display: none;
+}
+
+.content-tab:first-child {
+  display: block;
+}
