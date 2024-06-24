@@ -33,6 +33,9 @@ jobs:
           yarn install
           bundle install
 
+      - name: Install libvips
+        run: sudo apt-get install -y libvips42
+
       - name: Precompile assets
         env:
           RAILS_ENV: production
