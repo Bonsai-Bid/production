@@ -43,6 +43,8 @@ jobs:
         run: |
           yarn install
           bundle install
+      - name: Install libvips
+        run: sudo apt-get install -y libvips42
 
       - name: Precompile assets
         env:
@@ -50,8 +52,6 @@ jobs:
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         run: bin/rails assets:precompile
 
-      - name: Install libvips
-        run: sudo apt-get install -y libvips42
 
       - name: Set up database schema
         run: bin/rails db:schema:load
