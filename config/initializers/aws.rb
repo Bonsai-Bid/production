@@ -1,10 +1,8 @@
 # config/initializers/aws.rb
-region = Rails.application.credentials.dig(:aws, :region)
-access_key_id = Rails.application.credentials.dig(:aws, :access_key_id)
-secret_access_key = Rails.application.credentials.dig(:aws, :secret_access_key)
+region = ENV['AWS_REGION'] || Rails.application.credentials.dig(:aws, :region)
+access_key_id = ENV['AWS_ACCESS_KEY_ID'] || Rails.application.credentials.dig(:aws, :access_key_id)
+secret_access_key = ENV['AWS_SECRET_ACCESS_KEY'] || Rails.application.credentials.dig(:aws, :secret_access_key)
 
-Rails.logger.info "AWS Region: #{region}"
-Rails.logger.info "AWS Access Key ID: #{access_key_id}"
 
 Aws.config.update({
   region: region,
