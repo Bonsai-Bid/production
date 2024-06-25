@@ -36,6 +36,12 @@ jobs:
       - name: Install libvips
         run: sudo apt-get install -y libvips42
 
+      - name: Verify AWS environment variables
+        run: |
+          echo $AWS_REGION
+          echo $AWS_ACCESS_KEY_ID
+          echo $AWS_SECRET_ACCESS_KEY
+
       - name: Precompile assets
         env:
           RAILS_ENV: production
