@@ -35,7 +35,10 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+
+  # Configure default URL options for the mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -64,7 +67,6 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
-  config.active_storage.service = :amazon
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
