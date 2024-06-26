@@ -52,7 +52,7 @@
   <% end %>
 
   <% if current_user && current_user.id != @auction.seller_id %>
-    <%= form_with model: [ @auction, @inquiry ], url: auction_inquiries_path(@auction), local: true, class: "mt-4" do |form| %>
+    <%= form_with model: [ @auction, @inquiry || Inquiry.new ], url: auction_inquiries_path(@auction), local: true, class: "mt-4" do |form| %>
       <% if @inquiry && @inquiry.errors.any? %>
         <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
           <h2 class="font-bold mb-2"><%= pluralize(@inquiry.errors.count, "error") %> prohibited this inquiry from being saved:</h2>
