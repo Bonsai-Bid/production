@@ -1,6 +1,7 @@
 class UserProfile < ApplicationRecord
   belongs_to :user
 
+  attr_accessor :time_zone
   
   validates :name, presence: true
   validates :phone, format: { 

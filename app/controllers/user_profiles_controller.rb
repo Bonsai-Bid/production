@@ -25,7 +25,7 @@ class UserProfilesController < ApplicationController
   end
 
   def user_profile_params
-    params.require(:user_profile).permit(:name, :about_me, :profile_picture, :banner_image, :seller_policy)
+    params.require(:user_profile).permit(:name, :about_me, :profile_picture, :banner_image, :seller_policy, :time_zone)
   end
 
   def attach_images
