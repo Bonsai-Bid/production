@@ -1,6 +1,6 @@
 <!-- app/views/shared/_newest_auctions.html.erb -->
 <div class="mb-4">
-  <h2 class="text-xl font-semibold">Newest Active Auctions</h2>
+  <h2 class="text-xl font-semibold">Just Listed</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
     <% @newest_auctions.each do |auction| %>
       <%= render 'shared/auction_info', auction: auction %>

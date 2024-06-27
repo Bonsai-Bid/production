@@ -21,10 +21,13 @@
       <% end %>
     <% end %>
   </div>
+  
   <div class="mt-2">
     <%= link_to auction.listing_name, auction_path(auction), class: "text-blue-500 hover:text-blue-700 block text-sm font-semibold" %>
-    <p class="text-gray-700"><%= number_to_currency(auction.current_highest_bid) %></p>
-    <p class="text-gray-700">Starting Price: <%= number_to_currency(auction.starting_price) %></p>
-    <p class="text-gray-700"><%= auction.end_date.strftime("%B %d, %Y %I:%M %p") %></p>
+    Price: <%= number_to_currency(auction.current_highest_bid || auction.starting_price) %>
+    <p class="text-gray-700" data-end-date="<%= auction.end_date.iso8601 %>" id="countdown-<%= auction.id %>">
+  <%= auction.time_left %>
+</p>
+
   </div>
 </div>
