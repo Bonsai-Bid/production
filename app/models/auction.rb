@@ -68,6 +68,20 @@ class Auction < ApplicationRecord
 
   scope :newest_active, -> { where(status: :active).order(created_at: :desc) }
 
+  def time_left
+    time_diff = end_date - Time.current
+
+    if time_diff > 24.hours
+      days_left = (time_diff / 1.day).floor
+      hours_left = ((time_diff % 1.day) / 1.hour).floor
+      "#{days_left} days, #{hours_left} remaining"
+    elsif time_diff > 0
+      "Less than 24 hours remaining"
+    else
+      "Auction ended"
+    end
+  end
+
   private
 
 
