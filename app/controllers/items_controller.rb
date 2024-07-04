@@ -92,13 +92,27 @@ class ItemsController < ApplicationController
 
   def attach_images
     return unless params[:item][:images].present?
-  
     @item.images.purge
     params[:item][:images].reject(&:blank?).each do |image|
       compressed_image = compress_image(image)
       @item.images.attach(compressed_image)
     end
   end
+  
+
+  # def attach_images
+    # return unless params[:item][:images].present?
+
+    # params[:item][:images].each do |image|
+    #   compressed_image = compress_image(image)
+    #   @item.images.attach(compressed_image)
+      #This is old, when it only accepted one image
+    # @item.images.purge
+    # params[:item][:images].reject(&:blank?).each do |image|
+    #   compressed_image = compress_image(image)
+    #   @item.images.attach(compressed_image)
+  #   end
+  # end
   
 
   def compress_image(image)
@@ -108,12 +122,13 @@ class ItemsController < ApplicationController
       .convert("jpg")
       .saver(quality: 80)
       .call
-
+  
     { io: File.open(compressed_tempfile.path), filename: image.original_filename, content_type: 'image/jpeg' }
   ensure
-    compressed_tempfile.close if compressed_tempfile
+    compressed_tempfile.close! if compressed_tempfile
     compressed_tempfile.unlink if compressed_tempfile
   end
+  
 
   def remove_images
     return unless params[:item][:remove_images].present?
