@@ -1,61 +1,62 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<!-- app/views/devise/registrations/edit.html.erb -->
+<div class="container mx-auto mt-8 px-4">
+  <h2 class="text-2xl font-bold mb-4">Edit <%= resource.name.to_s.humanize %>'s Information</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: "space-y-4") do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <!-- Email -->
+    <div class="mb-4">
+      <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div class="mb-4 text-sm text-gray-600">
+        Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+      </div>
     <% end %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <!-- Nested fields for UserProfile -->
-  <%= f.fields_for :user_profile_attributes do |profile_form| %>
-    <div class="field">
-      <%= profile_form.label :name %><br />
-      <%= profile_form.text_field :name, autocomplete: "name" %>
+    <!-- Password -->
+    <div class="mb-4">
+      <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+      <em class="text-xs text-gray-500">(leave blank if you don't want to change it)</em>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-input mt-1 block w-full p-2 border rounded" %>
+      <% if @minimum_password_length %>
+        <em class="text-xs text-gray-500"><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
     </div>
 
-    <div class="field">
-      <%= profile_form.label :phone %><br />
-      <%= profile_form.text_field :phone, autocomplete: "phone" %>
+    <!-- Password Confirmation -->
+    <div class="mb-4">
+      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input mt-1 block w-full p-2 border rounded" %>
     </div>
 
-    <div class="field">
-      <%= profile_form.label :time_zone %><br />
-      <%= profile_form.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, {}, class: "form-control" %>
+    <!-- Current Password -->
+    <div class="mb-4">
+      <%= f.label :current_password, class: "block text-sm font-medium text-gray-700" %>
+      <em class="text-xs text-gray-500">(we need your current password to confirm your changes)</em>
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    </div>
+
+    <%= render 'devise/registrations/address_fields', f: f %>
+
+    <!-- Nested fields for UserProfile -->
+    <%= f.fields_for :user_profile_attributes, resource.user_profile do |profile_form| %>
+      <%= render 'devise/registrations/user_profile_fields', profile_form: profile_form %>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Update", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+  <div class="mt-4">
+    <%= button_to "Cancel my account", registration_path(resource_name), class: "btn bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
   </div>
-<% end %>
 
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+  <div class="mt-4">
+    <%= link_to "Back", :back, class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+</div>
