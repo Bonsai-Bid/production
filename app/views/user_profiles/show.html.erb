@@ -31,38 +31,32 @@
   </div>
 
   <!-- Edit Button -->
-<% if current_user == @user_profile.user %>
-  <div class="flex justify-end mb-4 space-x-4">
-    <%= link_to 'Edit Profile', edit_user_profile_path(@user_profile), class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
-    <%= link_to 'Edit User Information', edit_user_registration_path, class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
-  </div>
-<% end %>
+  <% if current_user == @user_profile.user %>
+    <div class="flex justify-end mb-4 space-x-4">
+      <%= link_to 'Edit Profile', edit_user_profile_path(@user_profile), class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+      <%= link_to 'Edit User Information', edit_user_registration_path, class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+    </div>
+  <% end %>
 
-  <!-- Tabs -->
-  <div class="flex space-x-4 mb-4">
-    <button class="tab-button">Auctions</button>
-    <button class="tab-button">Seller Policy</button>
-    <button class="tab-button">Feedback</button>
-  </div>
-
-  <!-- Content -->
-  <div class="content-area p-4 bg-white border rounded">
-    <div id="auctions" class="content-tab">
-      <h3 class="text-lg font-bold mb-2">Auctions</h3>
-      <!-- Auction content goes here -->
-    </div>
-    <div id="seller-policy" class="content-tab hidden">
-      <h3 class="text-lg font-bold mb-2">Seller Policy</h3>
-      <p class="text-gray-700">Returns, General Terms, about, tax policies, shipping policy, etc.</p>
-    </div>
-    <div id="feedback" class="content-tab hidden">
-      <h3 class="text-lg font-bold mb-2">Feedback</h3>
-      <p class="text-gray-700">All, As Buyer, All Seller</p>
-    </div>
-  </div>
+<!-- Tabs -->
+<div class="flex space-x-4 mb-4">
+  <button class="tab-button active" data-tab="auctions">Auctions</button>
+  <button class="tab-button" data-tab="seller-policy">Seller Policy</button>
+  <button class="tab-button" data-tab="feedback">Feedback</button>
 </div>
 
-<!-- Pagination -->
-<div class="flex justify-center mt-4">
-  <button class="px-4 py-2 border rounded">Pages</button>
+<!-- Content -->
+<div class="content-area p-4 bg-white border rounded">
+  <div id="auctions" class="content-tab active" style="border: 1px solid red;">
+    <h3 class="text-lg font-bold mb-2">Auctions</h3>
+    <p>This is where the user's auctions will be listed.</p>
+  </div>
+  <div id="seller-policy" class="content-tab" style="border: 1px solid blue;">
+    <h3 class="text-lg font-bold mb-2">Seller Policy</h3>
+    <p class="text-gray-700">Returns, General Terms, about, tax policies, shipping policy, etc.</p>
+  </div>
+  <div id="feedback" class="content-tab" style="border: 1px solid green;">
+    <h3 class="text-lg font-bold mb-2">Feedback</h3>
+    <p class="text-gray-700">All, As Buyer, All Seller</p>
+  </div>
 </div>

@@ -19,6 +19,6 @@
   display: none;
 }
 
-.content-tab:first-child {
+.content-tab.active {
   display: block;
 }
