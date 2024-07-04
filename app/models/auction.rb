@@ -72,11 +72,18 @@ class Auction < ApplicationRecord
     time_diff = end_date - Time.current
 
     if time_diff > 24.hours
+      # require 'pry'; binding.pry
       days_left = (time_diff / 1.day).floor
       hours_left = ((time_diff % 1.day) / 1.hour).floor
-      "#{days_left} days, #{hours_left} remaining"
+        if hours_left != 0
+          "#{days_left} days, #{hours_left} hours remaining"
+        else 
+          "#{days_left} days remaining"
+        end
     elsif time_diff > 0
-      "Less than 24 hours remaining"
+      hours_left = (time_diff / 1.hour).floor
+      minutes_left = ((time_diff % 1.hour) / 1.minute).floor
+      "#{hours_left} hours, #{minutes_left} minutes remaining"
     else
       "Auction ended"
     end

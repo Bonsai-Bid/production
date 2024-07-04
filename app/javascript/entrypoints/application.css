@@ -22,3 +22,12 @@
 .content-tab.active {
   display: block;
 }
+
+#image-preview img {
+  height: 6rem; /* Adjust size as needed */
+  width: 6rem;
+  object-fit: cover;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
