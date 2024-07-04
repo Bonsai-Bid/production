@@ -74,7 +74,11 @@ class Auction < ApplicationRecord
     if time_diff > 24.hours
       days_left = (time_diff / 1.day).floor
       hours_left = ((time_diff % 1.day) / 1.hour).floor
-      "#{days_left} days, #{hours_left} remaining"
+        if hours_left != 0
+          "#{days_left} days, #{hours_left} remaining"
+        else 
+          "#{days_left} days remaining"
+        end
     elsif time_diff > 0
       "Less than 24 hours remaining"
     else
