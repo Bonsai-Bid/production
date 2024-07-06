@@ -1,18 +1,35 @@
 <!-- app/views/devise/registrations/_user_profile_fields.html.erb -->
-<div class="mb-4">
-  <%= profile_form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
-  <%= profile_form.text_field :name, value: profile_form.object.name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %>
-</div>
 
-<div class="mb-4">
-  <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
-  <%= profile_form.text_field :phone, value: profile_form.object.phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
-</div>
+<% if profile_form.object.nil? %>
+  <!-- New record specific fields or default values -->
+  <div class="mb-4">
+    <%= profile_form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
+    <%= profile_form.text_field :name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
 
-<div class="mb-4">
-  <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
-  <%= profile_form.select :time_zone, options_for_select(
-    ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] },
-    profile_form.object.time_zone
-  ), {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
-</div>
+  <div class="mb-4">
+    <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
+    <%= profile_form.text_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mb-4">
+    <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
+    <%= profile_form.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+<% else %>
+  <!-- Existing record specific fields or pre-filled values -->
+  <div class="mb-4">
+    <%= profile_form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
+    <%= profile_form.text_field :name, value: profile_form.object.name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mb-4">
+    <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
+    <%= profile_form.text_field :phone, value: profile_form.object.phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mb-4">
+    <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
+    <%= profile_form.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+<% end %>
