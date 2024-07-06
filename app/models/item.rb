@@ -31,7 +31,9 @@ class Item < ApplicationRecord
 
   def thumbnail
     images.map do |image|
-      image.variant(resize_to_limit: [300, 300]).processed
+      variant = image.variant(resize_to_limit: [300, 300]).processed
+      Rails.logger.debug "Thumbnail variant: #{variant.inspect}"
+      variant
     end
   end
 
@@ -43,7 +45,9 @@ class Item < ApplicationRecord
 
 
   def display_image
-    images.first.variant(resize_to_limit: [300, 300]).processed
+    variant = images.first.variant(resize_to_limit: [300, 300]).processed
+    Rails.logger.debug "Display image variant: #{variant.inspect}"
+    variant
   end
 
   def set_auction_times

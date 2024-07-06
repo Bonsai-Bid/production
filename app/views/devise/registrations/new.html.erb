@@ -28,9 +28,11 @@
   <%= render 'devise/registrations/address_fields', f: f %>
 
   <!-- Nested fields for UserProfile -->
-  <%= f.fields_for :user_profile_attributes do |profile_form| %>
+
+  <%= f.fields_for :profile do |profile_form| %>
     <%= render 'devise/registrations/user_profile_fields', profile_form: profile_form %>
   <% end %>
+  
 
   <div class="actions">
     <%= f.submit "Sign Up", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>

@@ -32,6 +32,8 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
+        Rails.logger.debug "Attached images: #{@item.images.attachments.inspect}"
+
         attach_images if params[:item][:images].present?
         format.html { redirect_to dashboard_user_path(current_user), notice: "Item and associated auction were successfully created." }
         format.json { render :show, status: :created, location: @item }
