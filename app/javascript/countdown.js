@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   function updateCountdown(element) {
     const endDate = new Date(element.dataset.endDate);
     const now = new Date();

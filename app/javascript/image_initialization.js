@@ -1,12 +1,16 @@
-// app/frontend/javascripts/image_preview.js
 document.addEventListener('turbolinks:load', () => {
   const imageUpload = document.getElementById('image-upload');
   const imagePreview = document.getElementById('image-preview');
   const form = document.querySelector('form');
   let filesArray = [];
 
-  imageUpload.addEventListener('change', handleFileSelect);
-  form.addEventListener('submit', handleFormSubmit);
+  if (imageUpload) {
+    imageUpload.addEventListener('change', handleFileSelect);
+  }
+
+  if (form) {
+    form.addEventListener('submit', handleFormSubmit);
+  }
 
   function handleFileSelect(event) {
     const newFiles = Array.from(event.target.files);
