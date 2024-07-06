@@ -20,6 +20,7 @@ class ItemsController < ApplicationController
   end
 
   def create
+    # require 'pry'; binding.pry
     Rails.logger.debug "Raw params: #{params.inspect}"
     @item = Item.new(item_params)
     @item.seller = current_user
@@ -32,7 +33,6 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        Rails.logger.debug "Attached images: #{@item.images.attachments.inspect}"
 
         attach_images if params[:item][:images].present?
         format.html { redirect_to dashboard_user_path(current_user), notice: "Item and associated auction were successfully created." }
@@ -79,8 +79,8 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential_type,
-      :species_other, :style_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type, :tool_type, :material_other, :size_other, images: [], remove_images: [],
+      :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential,
+      :species_other, :style_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire, :tool, :material_other, :size_other, images: [], remove_images: [],
       auction_attributes: [
         :starting_price, :bid_increment, :buy_it_now_price, :timing_option,
         :auction_length, :start_date, :start_time, :end_time, :id
@@ -92,6 +92,16 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  # def attach_images
+  #   return unless params[:item][:images].present?
+  #   @item.images.purge
+  #   params[:item][:images].reject(&:blank?).each do |image|
+  #     compressed_image = compress_image(image)
+  #     @item.images.attach(compressed_image)
+  #   end
+  # end
+  
+
   def attach_images
     return unless params[:item][:images].present?
     @item.images.purge
@@ -101,20 +111,6 @@ class ItemsController < ApplicationController
     end
   end
   
-
-  # def attach_images
-    # return unless params[:item][:images].present?
-
-    # params[:item][:images].each do |image|
-    #   compressed_image = compress_image(image)
-    #   @item.images.attach(compressed_image)
-      #This is old, when it only accepted one image
-    # @item.images.purge
-    # params[:item][:images].reject(&:blank?).each do |image|
-    #   compressed_image = compress_image(image)
-    #   @item.images.attach(compressed_image)
-  #   end
-  # end
   
 
   def compress_image(image)

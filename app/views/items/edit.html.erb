@@ -56,10 +56,11 @@
             </div>
 
             <!-- Add New Images -->
-            <div class="mb-4">
-                <%= form.label :images, 'Upload New Images', class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.file_field :images, multiple: true, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-            </div>
+<div class="mb-4">
+  <%= form.label :images, 'Upload Images', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.file_field :images, multiple: true, accept: "image/*", class: 'form-input mt-1 block w-full p-2 border rounded' %>
+  <div id="image-preview" class="mt-4 flex flex-wrap"></div>
+</div>
 
             <div>
                 <%= form.submit 'Update Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>

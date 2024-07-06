@@ -1,5 +1,4 @@
 document.addEventListener('turbolinks:load', () => {
-
   const initializeAttributes = () => {
     const handleSelectChange = (selectElement, otherElement) => {
       const selectedValue = selectElement.value;
@@ -29,6 +28,7 @@ document.addEventListener('turbolinks:load', () => {
         console.log(`Hiding other field for ${selectElement.id}`);
         otherElement.classList.add('hidden');
         otherElement.setAttribute('aria-hidden', 'true');
+        otherElement.value = ''; // Clear the value of the hidden field
         console.log(`Other field classes after hiding: ${otherElement.className}`);
       }
 
@@ -46,6 +46,7 @@ document.addEventListener('turbolinks:load', () => {
           if (toolsFields) {
             toolsFields.classList.add('hidden');
             toolsFields.setAttribute('aria-hidden', 'true');
+            clearFormFields(toolsFields); // Clear the values of the hidden fields
           }
         } else if (selectedValue === 'tools') {
           console.log('Showing tools fields');
@@ -56,15 +57,18 @@ document.addEventListener('turbolinks:load', () => {
           if (wireFields) {
             wireFields.classList.add('hidden');
             wireFields.setAttribute('aria-hidden', 'true');
+            clearFormFields(wireFields); // Clear the values of the hidden fields
           }
         } else {
           if (wireFields) {
             wireFields.classList.add('hidden');
             wireFields.setAttribute('aria-hidden', 'true');
+            clearFormFields(wireFields); // Clear the values of the hidden fields
           }
           if (toolsFields) {
             toolsFields.classList.add('hidden');
             toolsFields.setAttribute('aria-hidden', 'true');
+            clearFormFields(toolsFields); // Clear the values of the hidden fields
           }
         }
       }
@@ -101,7 +105,7 @@ document.addEventListener('turbolinks:load', () => {
         otherElementId = 'item_origin_other';
       } else if (selectElement.id.endsWith('essential_type')) {
         otherElementId = 'item_essential_other';
-      } else if (selectElement.id.endsWith('wire')) {
+      } else if (selectElement.id.endsWith('wire_type')) {
         otherElementId = 'item_wire_other';
       } else if (selectElement.id.endsWith('tool')) {
         otherElementId = 'item_tool_other';
@@ -158,6 +162,13 @@ document.addEventListener('turbolinks:load', () => {
           });
         }, 0); // Delay to allow form reset to complete
       });
+    });
+  };
+
+  const clearFormFields = (container) => {
+    const inputs = container.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+      input.value = '';
     });
   };
 

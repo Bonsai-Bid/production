@@ -19,17 +19,15 @@
       </div>
 
       <div class="mb-4">
-        <%= auction_form.label :auction_timing, 'Auction Timing', class: 'block text-sm font-medium text-gray-700' %>
-        <div>
+      <h3 class="mt-4 text-2xl font-semibold">When should the auction start?</h3>
           <%= auction_form.radio_button :timing_option, 'list_now', id: 'list_now', checked: true %>
           <%= auction_form.label :timing_option, 'List Now', for: 'list_now', class: 'ml-2' %>
         </div>
         <div>
           <%= auction_form.radio_button :timing_option, 'list_later', id: 'list_later' %>
           <%= auction_form.label :timing_option, 'List Later', for: 'list_later', class: 'ml-2' %>
-        </div>
+        
       </div>
-
 
       <div id="list_later_fields" class="mb-4 hidden">
         <div class="mb-2">
