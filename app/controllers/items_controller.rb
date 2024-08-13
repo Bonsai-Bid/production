@@ -22,6 +22,7 @@ class ItemsController < ApplicationController
   def create
     # require 'pry'; binding.pry
     Rails.logger.debug "Raw params: #{params.inspect}"
+    require 'pry'; binding.pry
     @item = Item.new(item_params)
     @item.seller = current_user
     if @item.auction

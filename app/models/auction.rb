@@ -21,7 +21,7 @@ class Auction < ApplicationRecord
 
   def current_highest_bid
     highest_bid = bids.order(bid_amount: :desc).first
-    highest_bid ? highest_bid.bid_amount : starting_price
+    highest_bid ? highest_bid.bid_amount : nil
   end
 
   def editable?
