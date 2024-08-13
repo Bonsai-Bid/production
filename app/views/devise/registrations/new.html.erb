@@ -4,10 +4,28 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), local: true, class: "space-y-4") do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+  <!-- First Name -->
+  <div class="mb-4">
+    <%= f.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :first_name, autocomplete: "given-name", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+
+  <!-- Last Name -->
+  <div class="mb-4">
+    <%= f.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :last_name, autocomplete: "family-name", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+
   <!-- Email -->
   <div class="mb-4">
     <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
     <%= f.email_field :email, autocomplete: "email", class: "form-input mt-1 block w-full p-2 border rounded" %>
+  </div>
+
+  <!-- Phone -->
+  <div class="mb-4">
+    <%= f.label :phone, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.phone_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
   </div>
 
   <!-- Password -->
@@ -27,12 +45,9 @@
 
   <%= render 'devise/registrations/address_fields', f: f %>
 
-  <!-- Nested fields for UserProfile -->
-
-  <%= f.fields_for :profile do |profile_form| %>
-    <%= render 'devise/registrations/user_profile_fields', profile_form: profile_form %>
-  <% end %>
-  
+  <!-- Time Zone -->
+  <%= f.label :time_zone %>
+  <%= f.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
 
   <div class="actions">
     <%= f.submit "Sign Up", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>

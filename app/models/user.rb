@@ -17,11 +17,16 @@ class User < ApplicationRecord
   has_many :received_inquiries, class_name: 'Inquiry', foreign_key: :seller_id
   has_many :auctions, foreign_key: :seller_id
 
-  # after_create :create_user_profile
+  after_create :create_user_profile
 
-
+  validates :first_name, :last_name, presence: true
   validates :street, :city, :state, :zip, presence: true
   validates :zip, format: { with: /\A\d{5}(-\d{4})?\z/, message: "invalid zip code" }
+  validates :phone, format: { 
+    with: /\A\+?1?\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})\z/, 
+    message: "must be a valid phone number" 
+  }, presence: true
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, presence: true
   
 
   def watchlist_auctions
@@ -33,12 +38,19 @@ class User < ApplicationRecord
     favorites
   end
 
-  # def create_user_profile
-  #   build_user_profile(user_profile_attributes) if user_profile_attributes.present?
-  #   user_profile.save(validate: false)
-  # end
+  def create_user_profile
+    display_name = "#{first_name} #{last_name}"
+    location = "#{city}, #{state}"
+    UserProfile.create!(user: self, name: display_name, location: location)
+  end
 
   def name
     user_profile.name
+  end
+
+  private
+
+  def normalize_phone_number
+    self.phone = PhonyRails.normalize_number(phone, default_country_code: 'US')
   end
 end

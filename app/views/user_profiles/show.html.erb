@@ -47,15 +47,15 @@
 
 <!-- Content -->
 <div class="content-area p-4 bg-white border rounded">
-  <div id="auctions" class="content-tab active" style="border: 1px solid red;">
-    <h3 class="text-lg font-bold mb-2">Auctions</h3>
-    <p>This is where the user's auctions will be listed.</p>
-  </div>
-  <div id="seller-policy" class="content-tab" style="border: 1px solid blue;">
+    <div id="auctions" class="content-tab active">
+      <h3 class="text-lg font-bold mb-2">Auctions</h3>
+      <%= render 'shared/user_auctions', user_profile: @user_profile %>
+    </div>
+  <div id="seller-policy" class="content-tab" >
     <h3 class="text-lg font-bold mb-2">Seller Policy</h3>
     <p class="text-gray-700">Returns, General Terms, about, tax policies, shipping policy, etc.</p>
   </div>
-  <div id="feedback" class="content-tab" style="border: 1px solid green;">
+  <div id="feedback" class="content-tab">
     <h3 class="text-lg font-bold mb-2">Feedback</h3>
     <p class="text-gray-700">All, As Buyer, All Seller</p>
   </div>

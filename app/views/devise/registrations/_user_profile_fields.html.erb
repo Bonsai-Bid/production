@@ -2,15 +2,15 @@
 
 <% if profile_form.object.nil? %>
   <!-- New record specific fields or default values -->
-  <div class="mb-4">
+  <%# <div class="mb-4">
     <%= profile_form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
-    <%= profile_form.text_field :name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %>
-  </div>
+    <%# <%= profile_form.text_field :name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %> 
+  <%# </div> %>
 
-  <div class="mb-4">
+  <%# <div class="mb-4">
     <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
-    <%= profile_form.text_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
-  </div>
+    <%# <%= profile_form.text_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %> 
+  <%# </div> %> 
 
   <div class="mb-4">
     <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
@@ -18,15 +18,15 @@
   </div>
 <% else %>
   <!-- Existing record specific fields or pre-filled values -->
-  <div class="mb-4">
-    <%= profile_form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
-    <%= profile_form.text_field :name, value: profile_form.object.name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %>
-  </div>
+  <%# <div class="mb-4"> %>
+    <%# <%= profile_form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %> 
+    <%# <%= profile_form.text_field :name, value: profile_form.object.name, autocomplete: "name", class: "form-input mt-1 block w-full p-2 border rounded" %> 
+  <%# </div> %>
 
-  <div class="mb-4">
-    <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %>
-    <%= profile_form.text_field :phone, value: profile_form.object.phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
-  </div>
+  <%# <div class="mb-4"> %>
+    <%# <%= profile_form.label :phone, "Phone", class: "block text-sm font-medium text-gray-700" %> 
+    <%# <%= profile_form.text_field :phone, value: profile_form.object.phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %> 
+  <%# </div> %>
 
   <div class="mb-4">
     <%= profile_form.label :time_zone, "Time Zone", class: "block text-sm font-medium text-gray-700" %>
