@@ -25,6 +25,7 @@
                 <p class="mb-2"><strong class="font-semibold">Other Style:</strong> <%= @item.style_other %></p>
             <% end %>
             <p class="mb-2"><strong class="font-semibold">Stage:</strong> <%= @item.stage.humanize %></p>
+            
         <% elsif @item.category_type_container? %>
             <h2 class="text-2xl font-semibold mb-2">Container Details</h2>
             <p class="mb-2"><strong class="font-semibold">Material:</strong> <%= @item.material.humanize %></p>

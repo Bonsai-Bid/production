@@ -4,23 +4,28 @@
   <p><strong>Seller:</strong> <%= link_to "#{item.seller.name}", user_profile_path(item.seller.user_profile), class: "text-blue-500 hover:text-blue-700 block mb-2" %></p>
   <p><strong>Category:</strong> <%= item.category_type %></p>
   <% if item.category_type == "plant" %>
-    <p><strong>Species:</strong> <%= item.species %></p>
-    <p><strong>Style:</strong> <%= item.style %></p>
-    <p><strong>Stage:</strong> <%= item.stage %></p>
+    <p><strong>Species:</strong> <%= format_enum(item.species) %></p>
+    <p><strong>Style:</strong> <%= format_enum(item.style) %></p>
+    <p><strong>Stage:</strong> <%= format_enum(item.stage) %></p>
+    <p><strong>Container Material:</strong> <%= format_enum(item.material) %></p>
+    <p><strong>Container Shape:</strong> <%= format_enum(item.shape) %></p>
+    <p><strong>Container Color:</strong> <%= format_enum(item.color) %></p>
+    <p><strong>Container Size:</strong> <%= format_enum(item.size) %></p>
+    <p><strong>Container Origin:</strong> <%= format_enum(item.origin) %></p>
   <% elsif item.category_type == "container" %>
-    <p><strong>Material:</strong> <%= item.material %></p>
-    <p><strong>Shape:</strong> <%= item.shape %></p>
-    <p><strong>Color:</strong> <%= item.color %></p>
-    <p><strong>Size:</strong> <%= item.size %></p>
-    <p><strong>Origin:</strong> <%= item.origin %></p>
+    <p><strong>Material:</strong> <%= format_enum(item.material) %></p>
+    <p><strong>Shape:</strong> <%= format_enum(item.shape) %></p>
+    <p><strong>Color:</strong> <%= format_enum(item.color) %></p>
+    <p><strong>Size:</strong> <%= format_enum(item.size) %></p>
+    <p><strong>Origin:</strong> <%= format_enum(item.origin) %></p>
   <% elsif item.category_type == "essential" %>
-    <p><strong>Essential Type:</strong> <%= item.essential_type %></p>
+    <p><strong>Essential Type:</strong> <%= format_enum(item.essential_type) %></p>
     <% if item.essential_type == "wire" %>
-      <p><strong>Wire Type:</strong> <%= item.wire_type %></p>
+      <p><strong>Wire Type:</strong> <%= format_enum(item.wire_type) %></p>
     <% elsif item.essential_type == "tools" %>
-      <p><strong>Tool Type:</strong> <%= item.tool_type %></p>
-      <p><strong>Brand:</strong> <%= item.brand %></p>
-      <p><strong>Condition:</strong> <%= item.condition %></p>
+      <p><strong>Tool Type:</strong> <%= format_enum(item.tool_type) %></p>
+      <p><strong>Brand:</strong> <%= format_enum(item.brand) %></p>
+      <p><strong>Condition:</strong> <%= format_enum(item.condition) %></p>
     <% end %>
   <% end %>
 </div>
