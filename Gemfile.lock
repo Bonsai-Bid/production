@@ -355,7 +355,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.9)
+    rexml (3.3.5)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -496,7 +496,7 @@ DEPENDENCIES
   rails-controller-testing
   redis
   redis-rails
-  rexml (>= 3.2.7)
+  rexml (>= 3.3.3)
   rspec-rails
   ruby-vips (~> 2.0)
   rubyzip (~> 2.3.0)

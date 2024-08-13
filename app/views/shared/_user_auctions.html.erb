@@ -1,0 +1,9 @@
+<!-- app/views/shared/_user_auctions.html.erb -->
+<div class="mb-4">
+  <h2 class="text-xl font-semibold"><%= @user_profile.name %>'s Auctions</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <% @user_profile.user.items.each do |item| %>
+      <%= render 'shared/auction_info', auction: item.auction %>
+    <% end %>
+  </div>
+</div>

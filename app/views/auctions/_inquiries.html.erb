@@ -3,13 +3,13 @@
   <strong>Inquiries:</strong>
   <% auction.inquiries.each do |inquiry| %>
     <div class="inquiry p-4 bg-gray-100 rounded mb-4">
-      <p class="font-semibold">User: <%= User.find(inquiry.commenter_id).email %></p>
+      <p class="font-semibold">User: <%= User.find(inquiry.commenter_id).name %></p>
       <p>Comment: <%= inquiry.comment %></p>
 
       <% if inquiry.replies.any? %>
         <% inquiry.replies.each do |reply| %>
           <div class="reply pl-4 ml-4 border-l-4 border-gray-300 mt-2">
-            <p class="font-semibold">User: <%= User.find(reply.user_id).email %></p>
+            <p class="font-semibold">User: <%= User.find(reply.user_id).name %></p>
             <p>Comment: <%= reply.content %></p>
           </div>
         <% end %>

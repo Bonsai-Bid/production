@@ -6,9 +6,7 @@ Rails.application.routes.draw do
 
   resources :users do
     get 'dashboard', on: :member
-    # get 'profile', on: :member
     resources :watchlists
-    # resources :sale_transactions, only: [:index]  
   end
   resources :watchlists
 
