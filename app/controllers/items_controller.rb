@@ -80,10 +80,10 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential,
+      :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential, :essential_type,
       :species_other, :style_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire, :tool, :material_other, :size_other, images: [], remove_images: [],
       auction_attributes: [
-        :starting_price, :bid_increment, :buy_it_now_price, :timing_option,
+        :starting_price, :bid_increment, :enable_buy_it_now, :enable_reserve_price, :buy_it_now_price, :reserve_price, :timing_option,
         :auction_length, :start_date, :start_time, :end_time, :id
       ]
     )

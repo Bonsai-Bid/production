@@ -8,7 +8,6 @@ module ApplicationHelper
     end
   end
 
-  def format_enum(enum_value)
     def format_enum(enum_value)
       # Convert the enum value to a string
       formatted_value = enum_value.to_s
@@ -20,7 +19,6 @@ module ApplicationHelper
         # Default formatting: humanize and titleize
         formatted_value.humanize.titleize
       end
-    end
   end
 
 

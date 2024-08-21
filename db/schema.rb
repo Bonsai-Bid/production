@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_13_222822) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_21_045504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_222822) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "reserve_price"
+    t.boolean "enable_buy_it_now"
+    t.boolean "enable_reserve_price"
     t.index ["item_id"], name: "index_auctions_on_item_id"
     t.index ["seller_id"], name: "index_auctions_on_seller_id"
   end

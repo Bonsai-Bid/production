@@ -4,7 +4,16 @@
   <p><strong>End Date:</strong> <%= auction.end_date.strftime("%B %d, %Y %I:%M %p") %></p>
   <p><strong>Starting Price:</strong> <%= number_to_currency(auction.starting_price) %></p>
   <p><strong>Current Bid:</strong> <%= format_currency(auction.current_highest_bid) %></p>
-  <p><%= link_to 'View Bid History', auction_bids_path(auction) %></p>
-  <p><strong>Buy It Now Price:</strong> <%= number_to_currency(auction.buy_it_now_price) %></p>
+  <p><%= link_to 'View Bid History', auction_bids_path(auction), class: "text-blue-500 hover:text-blue-700" %></p>
+  <% if auction.respond_to?(:buy_it_now_price) && auction.buy_it_now_price.present? %>
+    <p><strong>Buy It Now Price:</strong> <%= number_to_currency(auction.buy_it_now_price) %></p>
+  <% end %>
+  <% if auction.respond_to?(:reserve_price) %>
+    <% if auction.reserve_met? %>
+      <p><strong>Reserve:</strong> Reserve met</p>
+    <% else %>
+      <p><strong>Reserve not met</strong></p>
+    <% end %>
+  <% end %>
   <p><strong>Status:</strong> <%= auction.status.capitalize %></p>
 </div>
