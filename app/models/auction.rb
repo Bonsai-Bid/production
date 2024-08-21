@@ -10,11 +10,16 @@ class Auction < ApplicationRecord
   has_many :inquiries
   has_one :sale_transaction
 
+  attribute :enable_buy_it_now, :boolean, default: false
+  attribute :enable_reserve_price, :boolean, default: false
+
   validates :start_date, :end_date, presence: true
   validates :starting_price, :bid_increment, numericality: { greater_than_or_equal_to: 0 }
   validate :end_date_after_start_date
   validate :start_date_not_in_past, if: :start_date_changed_or_new_record?
   validates :status, presence: true, inclusion: { in: Auction.statuses.keys }
+  validates :enable_buy_it_now, inclusion: { in: [true, false] }
+  validates :enable_reserve_price, inclusion: { in: [true, false] }
 
   after_initialize :set_default_status, if: :new_record?
   before_save :set_auction_times
@@ -26,6 +31,11 @@ class Auction < ApplicationRecord
 
   def editable?
     status.to_sym == :listed || status == :listed
+  end
+
+  def reserve_met?
+    return false unless respond_to?(:reserve_price) && reserve_price.present?
+    current_highest_bid.present? && current_highest_bid >= reserve_price
   end
 
   def auction_active?

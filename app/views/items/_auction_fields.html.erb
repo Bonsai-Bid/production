@@ -13,9 +13,28 @@
         <%= auction_form.number_field :bid_increment, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
       </div>
 
+ <!-- Buy It Now Checkbox -->
       <div class="mb-4">
+        <%= auction_form.check_box :enable_buy_it_now, id: 'enable_buy_it_now' %>
+        <%= auction_form.label :enable_buy_it_now, 'Would you like to add a Buy It Now price?', class: 'ml-2 text-sm font-medium text-gray-700' %>
+      </div>
+
+      <!-- Buy It Now Price Field -->
+      <div class="mb-4 hidden" id="buy_it_now_price_field">
         <%= auction_form.label :buy_it_now_price, 'Buy It Now Price', class: 'block text-sm font-medium text-gray-700' %>
         <%= auction_form.number_field :buy_it_now_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+      </div>
+
+      <!-- Reserve Price Checkbox -->
+      <div class="mb-4">
+        <%= auction_form.check_box :enable_reserve_price, id: 'enable_reserve_price' %>
+        <%= auction_form.label :enable_reserve_price, 'Would you like to add a Reserve price?', class: 'ml-2 text-sm font-medium text-gray-700' %>
+      </div>
+
+      <!-- Reserve Price Field -->
+      <div class="mb-4 hidden" id="reserve_price_field">
+        <%= auction_form.label :reserve_price, 'Reserve Price', class: 'block text-sm font-medium text-gray-700' %>
+        <%= auction_form.number_field :reserve_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
       </div>
 
       <div class="mb-4">

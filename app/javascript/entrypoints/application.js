@@ -16,3 +16,4 @@ import '../auction_initialization';
 import '../image_initialization';
 import '../user_profile';
 import '../countdown';
+import '../buy_now_reserve';
