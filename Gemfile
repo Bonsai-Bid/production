@@ -7,6 +7,8 @@ gem 'aws-sdk-s3', '~> 1.48'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', require: false
 gem 'devise'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-model'
 gem 'faraday'
 gem 'figaro'
 gem 'importmap-rails'

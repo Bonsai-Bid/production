@@ -20,7 +20,6 @@ class ItemsController < ApplicationController
   end
 
   def create
-    # require 'pry'; binding.pry
     Rails.logger.debug "Raw params: #{params.inspect}"
     # require 'pry'; binding.pry
     @item = Item.new(item_params)

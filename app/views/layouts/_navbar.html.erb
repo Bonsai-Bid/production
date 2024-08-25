@@ -6,7 +6,7 @@
 
         <div class="flex items-center space-x-4">
           <%= form_with url: search_path, method: :get, local: true, class: "flex items-center" do %>
-            <input type="text" name="query" placeholder="Search" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+            <input type="text" name="search" placeholder="Search" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
             <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Search</button>
           <% end %>
         </div>

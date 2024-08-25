@@ -1,4 +1,7 @@
 class Auction < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   enum status: { listed: 0, active: 1, sold: 2, ended: 3 }
 
   attr_accessor :timing_option, :auction_length, :start_time, :end_time
@@ -23,6 +26,19 @@ class Auction < ApplicationRecord
 
   after_initialize :set_default_status, if: :new_record?
   before_save :set_auction_times
+
+  def self.search(query)
+    __elasticsearch__.search(
+      {
+        query: {
+          multi_match: {
+            query: query,
+            fields: ['title^10', 'details']
+          }
+        }
+      }
+    )
+  end
 
   def current_highest_bid
     highest_bid = bids.order(bid_amount: :desc).first

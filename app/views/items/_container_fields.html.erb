@@ -1,22 +1,22 @@
 <fieldset id="container_fields" class="item_fields mb-4 hidden" aria-hidden="true">
   <legend class="text-lg font-semibold">Container Details</legend>
   <%= form.label :material, 'Material', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :material, options_for_select(Item.materials.keys.map { |key| [key == 'material_other' ? 'Other' : key.humanize, key] }, selected: form.object.material), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_material', data: { selected_value: form.object.material } %>
+  <%= form.select :material, options_for_select([['', '']] + Item.materials.keys.map { |key| [key == 'material_other' ? 'Other' : key.humanize, key] }, selected: form.object.material || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_material', data: { selected_value: form.object.material } %>
   <%= form.text_field :material_other, value: form.object.material_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Material', aria: { hidden: true } %>
 
   <%= form.label :shape, 'Shape', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :shape, options_for_select(Item.shapes.keys.map { |key| [key == 'shape_other' ? 'Other' : key.humanize, key] }, selected: form.object.shape), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_shape', data: { selected_value: form.object.shape } %>
+  <%= form.select :shape, options_for_select([['', '']] + Item.shapes.keys.map { |key| [key == 'shape_other' ? 'Other' : key.humanize, key] }, selected: form.object.shape), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_shape', data: { selected_value: form.object.shape || ""  } %>
   <%= form.text_field :shape_other, value: form.object.shape_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Shape', aria: { hidden: true } %>
 
   <%= form.label :color, 'Color', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :color, options_for_select(Item.colors.keys.map { |key| [key == 'color_other' ? 'Other' : key.humanize, key] }, selected: form.object.color), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_color', data: { selected_value: form.object.color } %>
+  <%= form.select :color, options_for_select([['', '']] + Item.colors.keys.map { |key| [key == 'color_other' ? 'Other' : key.humanize, key] }, selected: form.object.color || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_color', data: { selected_value: form.object.color } %>
   <%= form.text_field :color_other, value: form.object.color_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Color', aria: { hidden: true } %>
 
   <%= form.label :size, 'Size', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :size, options_for_select(Item.sizes.keys.map { |key| [key == 'size_other' ? 'Other' : key.humanize, key] }, selected: form.object.size), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_size', data: { selected_value: form.object.size } %>
+  <%= form.select :size, options_for_select([['', '']] + Item.sizes.keys.map { |key| [key == 'size_other' ? 'Other' : key.humanize, key] }, selected: form.object.size || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_size', data: { selected_value: form.object.size } %>
   <%= form.text_field :size_other, value: form.object.size_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Size', aria: { hidden: true } %>
 
   <%= form.label :origin, 'Origin', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :origin, options_for_select(Item.origins.keys.map { |key| [key == 'origin_other' ? 'Other' : key.humanize, key] }, selected: form.object.origin), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_origin', data: { selected_value: form.object.origin } %>
+  <%= form.select :origin, options_for_select([['', '']] + Item.origins.keys.map { |key| [key == 'origin_other' ? 'Other' : key.humanize, key] }, selected: form.object.origin || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded',  id: 'item_origin', data: { selected_value: form.object.origin } %>
   <%= form.text_field :origin_other, value: form.object.origin_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Origin', aria: { hidden: true } %>
 </fieldset>

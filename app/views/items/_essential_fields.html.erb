@@ -7,7 +7,13 @@
 
   <div id="wire_fields" class="mb-4 hidden">
     <%= form.label :wire, 'Wire Type', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :wire, options_for_select(Item.wire_types.keys.map { |key| [key == 'wire_other' ? 'Other' : key.humanize, key] }, selected: form.object.wire_type), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_wire', data: { selected_value: form.object.wire_type } %>
+  <%= form.select :wire_type, 
+                  options_for_select(Item.wire_types.keys.map { |key| [key == 'unselected' ? 'None' : key == 'wire_other' ? 'Other' : key.humanize, key] }, 
+                  selected: form.object.wire_type || "unselected"), 
+                  {}, 
+                  class: 'form-select mt-1 block w-full p-2 border rounded', 
+                  id: 'item_wire', 
+                  data: { selected_value: form.object.wire_type } %>
     <%= form.text_field :wire_other, value: form.object.wire_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', placeholder: 'Other Wire Type', aria: { hidden: true } %>
   </div>
 
