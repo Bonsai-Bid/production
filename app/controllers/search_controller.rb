@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   def index
+    require 'pry'; binding.pry
     @search_term = params[:search].downcase
     @results = search_items_and_auctions(@search_term)
 
