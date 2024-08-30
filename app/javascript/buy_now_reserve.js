@@ -4,7 +4,8 @@ document.addEventListener('turbolinks:load', () => {
   const reservePriceCheckbox = document.getElementById('enable_reserve_price');
   const reservePriceField = document.getElementById('reserve_price_field');
 
-  if (buyItNowCheckbox) {
+  // Only proceed if the elements are present on the page
+  if (buyItNowCheckbox && buyItNowPriceField) {
     buyItNowCheckbox.addEventListener('change', () => {
       if (buyItNowCheckbox.checked) {
         buyItNowPriceField.classList.remove('hidden');
@@ -12,9 +13,16 @@ document.addEventListener('turbolinks:load', () => {
         buyItNowPriceField.classList.add('hidden');
       }
     });
+
+    // Set initial visibility based on the checkbox state
+    if (buyItNowCheckbox.checked) {
+      buyItNowPriceField.classList.remove('hidden');
+    } else {
+      buyItNowPriceField.classList.add('hidden');
+    }
   }
 
-  if (reservePriceCheckbox) {
+  if (reservePriceCheckbox && reservePriceField) {
     reservePriceCheckbox.addEventListener('change', () => {
       if (reservePriceCheckbox.checked) {
         reservePriceField.classList.remove('hidden');
@@ -22,18 +30,12 @@ document.addEventListener('turbolinks:load', () => {
         reservePriceField.classList.add('hidden');
       }
     });
-  }
 
-  // Ensure that the fields are shown or hidden based on the initial state of the checkboxes
-  if (buyItNowCheckbox && buyItNowCheckbox.checked) {
-    buyItNowPriceField.classList.remove('hidden');
-  } else {
-    buyItNowPriceField.classList.add('hidden');
-  }
-
-  if (reservePriceCheckbox && reservePriceCheckbox.checked) {
-    reservePriceField.classList.remove('hidden');
-  } else {
-    reservePriceField.classList.add('hidden');
+    // Set initial visibility based on the checkbox state
+    if (reservePriceCheckbox.checked) {
+      reservePriceField.classList.remove('hidden');
+    } else {
+      reservePriceField.classList.add('hidden');
+    }
   }
 });

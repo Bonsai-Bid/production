@@ -10,10 +10,13 @@
 <div class="container mx-auto mt-5 px-4">
     <h1 class="mb-4 text-2xl font-bold">Search Results</h1>
     <%= form_tag(search_path, method: :get, class: "flex items-center mb-4") do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-input mr-2 p-2 border rounded" %>
-      <%= submit_tag "Search", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-input mr-2 p-2 border rounded" %>
+        <%= submit_tag "Search", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
     <% end %>
+
+    <!-- Current Items Section -->
     <% if @results.present? %>
+        <h2 class="mb-4 text-2xl font-bold">Current Items</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <% @results.each do |result| %>
                 <%= render 'shared/auction_info', auction: result.auction %>
@@ -21,8 +24,41 @@
         </div>
     <% else %>
         <div class="p-4 mb-3 text-yellow-800 bg-yellow-100 border border-yellow-400 rounded" role="alert">
-            No results found
+            No current items found
         </div>
+    <% end %>
+
+    <!-- Auctions That Are Over Section -->
+    <% if @ended_results.present? %>
+        <h2 class="mt-10 mb-4 text-2xl font-bold">Auctions That Are Over</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <% @ended_results.each do |result| %>
+                <%= render 'shared/auction_info', auction: result.auction %>
+            <% end %>
+        </div>
+    <% end %>
+
+    <!-- My Items Section -->
+    <% if @my_items.present? || @my_ended_items.present? %>
+        <h2 class="mt-10 mb-4 text-2xl font-bold">My Items</h2>
+
+        <% if @my_items.present? %>
+            <h3 class="mb-4 text-xl font-semibold">Active Items</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <% @my_items.each do |item| %>
+                    <%= render 'shared/auction_info', auction: item.auction %>
+                <% end %>
+            </div>
+        <% end %>
+
+        <% if @my_ended_items.present? %>
+            <h3 class="mt-6 mb-4 text-xl font-semibold">Ended Items</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <% @my_ended_items.each do |item| %>
+                    <%= render 'shared/auction_info', auction: item.auction %>
+                <% end %>
+            </div>
+        <% end %>
     <% end %>
 </div>
 </body>
