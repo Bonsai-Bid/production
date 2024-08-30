@@ -32,7 +32,17 @@ end
 RSpec.configure do |config|
 
   config.before(:each, type: :system) do
-    driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
+    driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {
+      browser: :remote,
+      desired_capabilities: :chrome,
+      options: Selenium::WebDriver::Chrome::Options.new.tap { |opts|
+        opts.add_argument('--headless')
+        opts.add_argument('--disable-gpu')
+        opts.add_argument('--no-sandbox')
+        opts.add_argument('--disable-dev-shm-usage')
+        opts.add_argument('--remote-debugging-port=9222')
+      }
+    }
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
