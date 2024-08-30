@@ -1,21 +1,22 @@
-# config/elasticsearch.yml
+# # config/elasticsearch.yml
 
-default: &default
-  host: 'http://localhost:9200'
-  transport_options:
-    request:
-      timeout: 5
+# default: &default
+#   host: 'http://localhost:9200'
+#   transport_options:
+#     request:
+#       timeout: 5
 
-development:
-  <<: *default
+# development:
+#   <<: *default
 
-test:
-  <<: *default
-  host: 'http://localhost:9201'  # Running a separate instance for test environment (optional)
+# test:
+#   <<: *default
+#   host: 'http://localhost:9201'  # Running a separate instance for test environment (optional)
 
-production:
-  <<: *default
-  host: <%= ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200' %>
-  transport_options:
-    request:
-      timeout: 10  # You might want to have a longer timeout in production
+# production:
+#   <<: *default
+#   host: <%= ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200' %>
+#   transport_options:
+#     request:
+#       timeout: 10  # You might want to have a longer timeout in production
+# # 

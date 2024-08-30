@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
   include EnumNilHandler
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  # include Elasticsearch::Model
+  # include Elasticsearch::Model::Callbacks
 
 
   enum category_type: { container: 1, essential: 2, plant: 3 }, _prefix: true
@@ -26,26 +26,46 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  def self.search(query)
-    __elasticsearch__.search(
-      {
-        query: {
-          multi_match: {
-            query: query,
-            fields: ['name^10', 'description']
-          }
-        }
-      }
-    )
-  end
+  # def self.search(query)
+  #   __elasticsearch__.search(
+  #     {
+  #       query: {
+  #         multi_match: {
+  #           query: query,
+  #           fields: [
+  #             'name^10',            # Boost name field to prioritize name matches
+  #             'description^5',      # Boost description field to make it more important than others
+  #             'brand', 
+  #             'condition', 
+  #             'material_other', 
+  #             'shape_other', 
+  #             'color_other', 
+  #             'origin_other', 
+  #             'essential_other', 
+  #             'wire_other', 
+  #             'species_other', 
+  #             'style_other', 
+  #             'size_other', 
+  #             'tool_other'
+  #           ],
+  #           type: 'best_fields',   # Use best_fields to prioritize the best matching field
+  #           fuzziness: 'AUTO',     # Enable fuzzy matching to account for typos and near matches
+  #           operator: 'or',        # Use 'or' to allow partial matches across fields
+  #           minimum_should_match: '75%' # Require at least 75% of the terms to match
+  #         }
+  #       }
+  #     }
+  #   )
+  # end
+  
 
   def auction_show_page
     Auction.find_by(item_id: self.id, seller_id: self.seller_id)
   end
 
-  def self.search(query, user_id)
-    where("name LIKE ?", "%#{query}%").where.not(seller_id: user_id)
-  end
+  # def self.search(query, user_id)
+  #   where("name LIKE ?", "%#{query}%").where.not(seller_id: user_id)
+  # end
 
   def thumbnail
     images.map do |image|

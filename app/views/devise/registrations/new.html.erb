@@ -7,25 +7,25 @@
   <!-- First Name -->
   <div class="mb-4">
     <%= f.label :first_name, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :first_name, autocomplete: "given-name", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.text_field :first_name, autocomplete: "given-name", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded" %>
   </div>
 
   <!-- Last Name -->
   <div class="mb-4">
     <%= f.label :last_name, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :last_name, autocomplete: "family-name", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.text_field :last_name, autocomplete: "family-name", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded" %>
   </div>
 
   <!-- Email -->
   <div class="mb-4">
     <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.email_field :email, autocomplete: "email", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.email_field :email, autocomplete: "email", maxlength: 255, class: "form-input mt-1 block w-full p-2 border rounded" %>
   </div>
 
   <!-- Phone -->
   <div class="mb-4">
     <%= f.label :phone, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.phone_field :phone, autocomplete: "phone", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.phone_field :phone, autocomplete: "tel", maxlength: 15, class: "form-input mt-1 block w-full p-2 border rounded" %>
   </div>
 
   <!-- Password -->
@@ -46,7 +46,7 @@
   <%= render 'devise/registrations/address_fields', f: f %>
 
   <!-- Time Zone -->
-  <%= f.label :time_zone %>
+  <%= f.label :time_zone, class: "block text-sm font-medium text-gray-700" %>
   <%= f.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
 
   <div class="actions">

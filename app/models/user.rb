@@ -18,16 +18,18 @@ class User < ApplicationRecord
   has_many :auctions, foreign_key: :seller_id
 
   after_create :create_user_profile
-
-  validates :first_name, :last_name, presence: true
-  validates :street, :city, :state, :zip, presence: true
-  validates :zip, format: { with: /\A\d{5}(-\d{4})?\z/, message: "invalid zip code" }
-  validates :phone, format: { 
+  validate :reject_suspicious_sql_patterns
+  validate :password_complexity
+  validates :first_name, :last_name, presence: true, length: { maximum: 50 }
+  validates :street, :city, presence: true, length: { maximum: 100 }
+  validates :state, presence: true, length: { maximum: 50 } 
+  validates :zip, presence: true, length: { maximum: 10 }, format: { with: /\A\d{5}(-\d{4})?\z/, message: "invalid zip code" }
+  validates :phone, presence: true, length: { maximum: 15 }, format: { 
     with: /\A\+?1?\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})\z/, 
     message: "must be a valid phone number" 
-  }, presence: true
+  }
   validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, presence: true
-  
+  validates :email, length: { maximum: 255 }
 
   def watchlist_auctions
     favorites = []
@@ -49,6 +51,38 @@ class User < ApplicationRecord
   end
 
   private
+
+  def password_complexity
+    # Regex to check for at least one special character
+    return if password.blank? || password =~ /[^A-Za-z0-9]/
+
+    errors.add :password, 'must include at least one special character (e.g. !@#$%^&*)'
+  end
+
+  def reject_suspicious_sql_patterns
+    # Expanded list of patterns to match common SQL injection techniques
+    patterns = [
+      /['"]+/,             # Single or double quotes
+      /--|#/,              # SQL comment indicators
+      /;/,                 # Semicolons for query termination
+      /\b(SELECT|UNION|INSERT|UPDATE|DELETE|DROP|ALTER)\b/i, # SQL keywords
+      /\b(OR|AND)\b.*\b(=|LIKE|IS)\b/i, # Logical operators with conditions
+      /\b(=|LIKE|IS)\b/,   # Equality and comparison operators
+      /[\(\)]/,            # Parentheses for SQL functions
+      /\/\*|\*\//          # Inline comments or concatenation
+    ]
+    
+    # Check fields for patterns
+    fields_to_check = [first_name, last_name, street, city, zip] # Add other fields as needed
+
+    fields_to_check.each do |field|
+      patterns.each do |pattern|
+        if field.present? && field.match?(pattern)
+          errors.add(:base, 'contains invalid characters')
+        end
+      end
+    end
+  end
 
   def normalize_phone_number
     self.phone = PhonyRails.normalize_number(phone, default_country_code: 'US')

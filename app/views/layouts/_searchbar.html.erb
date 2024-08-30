@@ -1,0 +1,67 @@
+<!-- app/views/shared/_navbar.html.erb -->
+<nav class="bg-white py-2 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <!-- Left Side: Quick Search Categories -->
+    <div class="flex space-x-6 text-gray-700">
+
+      <!-- Category Type Buttons -->
+      <a href="<%= search_path(search: 'plant') %>" class="block px-4 py-2 hover:bg-gray-100 capitalize focus:outline-none">
+        Plant
+      </a>
+      <a href="<%= search_path(search: 'container') %>" class="block px-4 py-2 hover:bg-gray-100 capitalize focus:outline-none">
+        Container
+      </a>
+      <a href="<%= search_path(search: 'essential') %>" class="block px-4 py-2 hover:bg-gray-100 capitalize focus:outline-none">
+        Essential
+      </a>
+
+      <!-- Species Dropdown -->
+      <div class="relative group">
+        <button class="block px-4 py-2 hover:bg-gray-100 capitalize focus:outline-none">
+          Species
+        </button>
+        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded mt-1 z-10">
+          <ul class="py-1">
+            <% Item.species.keys.each do |species| %>
+              <li>
+                <a href="<%= search_path(search: species) %>" class="block px-4 py-2 hover:bg-gray-100 capitalize"><%= species.humanize %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Species Category Dropdown -->
+      <div class="relative group">
+        <button class="block px-4 py-2 hover:bg-gray-100 capitalize focus:outline-none">
+          Species Category
+        </button>
+        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded mt-1 z-10">
+          <ul class="py-1">
+            <% Item.species_categories.keys.each do |category| %>
+              <li>
+                <a href="<%= search_path(search: category) %>" class="block px-4 py-2 hover:bg-gray-100 capitalize"><%= category.humanize %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Essential Type Dropdown -->
+      <div class="relative group">
+        <button class="block px-4 py-2 hover:bg-gray-100 capitalize focus:outline-none">
+          Essential Types
+        </button>
+        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded mt-1 z-10">
+          <ul class="py-1">
+            <% Item.essential_types.keys.each do |essential| %>
+              <li>
+                <a href="<%= search_path(search: essential) %>" class="block px-4 py-2 hover:bg-gray-100 capitalize"><%= essential.humanize %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

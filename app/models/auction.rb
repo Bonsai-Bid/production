@@ -1,6 +1,7 @@
 class Auction < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  # include Elasticsearch::Model
+  # include Elasticsearch::Model::Callbacks
+  # index_name 'auctions'
 
   enum status: { listed: 0, active: 1, sold: 2, ended: 3 }
 
@@ -27,18 +28,37 @@ class Auction < ApplicationRecord
   after_initialize :set_default_status, if: :new_record?
   before_save :set_auction_times
 
-  def self.search(query)
-    __elasticsearch__.search(
-      {
-        query: {
-          multi_match: {
-            query: query,
-            fields: ['title^10', 'details']
-          }
+  def self.search(query, filters = {})
+  filter_conditions = []
+
+  # Add filters conditionally
+  filter_conditions << { range: { start_date: { lte: filters[:start_date] || 'now' } } } # Filter auctions that started on or before now
+  filter_conditions << { range: { end_date: { gte: filters[:end_date] || 'now' } } }    # Filter auctions that end on or after now
+  filter_conditions << { range: { starting_price: { gte: filters[:min_price] || 0, lte: filters[:max_price] || Float::INFINITY } } } # Price range filter
+  filter_conditions << { term: { enable_buy_it_now: filters[:enable_buy_it_now] } } if filters[:enable_buy_it_now].present? # 'Buy it Now' filter
+  filter_conditions << { term: { enable_reserve_price: filters[:enable_reserve_price] } } if filters[:enable_reserve_price].present? # 'Reserve Price' filter
+
+  # Build the Elasticsearch query
+  __elasticsearch__.search(
+    {
+      query: {
+        bool: {
+          must: [
+            {
+              multi_match: {
+                query: query,
+                fields: ['status']
+              }
+            }
+          ],
+          filter: filter_conditions # Use the built filter conditions array
         }
       }
-    )
-  end
+    }
+  )
+end
+
+
 
   def current_highest_bid
     highest_bid = bids.order(bid_amount: :desc).first

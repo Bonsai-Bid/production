@@ -1,33 +1,38 @@
 class SearchController < ApplicationController
   def index
-    require 'pry'; binding.pry
     @search_term = params[:search].downcase
-    @results = search_items_and_auctions(@search_term)
-
+    results = search_items(@search_term)
+  
+    @results = results[:items]        # Active items excluding the current user's items
+    @ended_results = results[:ended_items]  # Ended items excluding the current user's items
+    @my_items = results[:my_items]    # Active items belonging to the current user
+    @my_ended_items = results[:my_ended_items] # Ended items belonging to the cur
   end
 
   private
 
-  # def search_items(search_term)
-  #   category_terms = map_search_term_to_category(search_term)
-  #   Item.where("LOWER(name) LIKE :term OR LOWER(description) LIKE :term OR species_category IN (:categories)", 
-  #             term: "%#{search_term}%", categories: category_terms)
-  #       .where.not(seller_id: current_user.id)
-  # end
-
-  def search_items_and_auctions(search_term)
+  def search_items(search_term)
     category_terms = map_search_term_to_category(search_term)
-
-    # Use Elasticsearch to search both Item and Auction models
-    item_results = Item.search(search_term).records.to_a
-    auction_results = Auction.search(search_term).records.to_a
-
-    # Filter out results where the seller is the current user
-    filtered_items = item_results.reject { |item| item.seller_id == current_user.id }
-    
-    # Combine results
-    filtered_items + auction_results
+  
+    # Fetch all relevant items in one query
+    items = Item.where("LOWER(name) LIKE :term OR LOWER(description) LIKE :term", term: "%#{search_term}%")
+    items = items.where("species_category IN (:categories)", categories: category_terms) unless category_terms.empty?
+  
+    # Partition the items into those belonging to the current user and those that don't
+    my_items, other_items = items.partition { |item| item.seller_id == current_user.id }
+  
+    # Further partition items by auction status (assuming auction status 3 means 'ended')
+    my_active_items, my_ended_items = my_items.partition { |item| item.auction.status != 2 && item.auction.status != 3 }
+    other_active_items, other_ended_items = other_items.partition { |item| item.auction.status != 2 && item.auction.status != 3 }
+  
+    {
+      items: other_active_items,
+      ended_items: other_ended_items,
+      my_items: my_active_items,
+      my_ended_items: my_ended_items
+    }
   end
+  
 
   def map_search_term_to_category(term)
     category_mapping = {
