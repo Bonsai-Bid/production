@@ -41,6 +41,7 @@ class User < ApplicationRecord
   end
 
   def create_user_profile
+    return if user_profile.present? #Avoid duplications
     display_name = "#{first_name} #{last_name}"
     location = "#{city}, #{state}"
     UserProfile.create!(user: self, name: display_name, location: location)

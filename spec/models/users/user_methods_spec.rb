@@ -17,10 +17,7 @@ RSpec.describe User, type: :model do
 
     describe '#create_user_profile' do
       it 'creates a user profile with name and location' do
-        expect {
-          user.create_user_profile
-        }.to change(UserProfile, :count).by(1)
-
+        user.reload
         expect(user.user_profile.name).to eq("#{user.first_name} #{user.last_name}")
         expect(user.user_profile.location).to eq("#{user.city}, #{user.state}")
       end
