@@ -1,12 +1,12 @@
 <!-- app/views/devise/registrations/_address_fields.html.erb -->
 <div class="mb-4">
   <%= f.label :street, "Street", class: "block text-sm font-medium text-gray-700" %>
-  <%= f.text_field :street, value: f.object.street, autocomplete: "street-address", maxlength: 100, class: "form-input mt-1 block w-full p-2 border rounded" %>
+  <%= f.text_field :street, value: f.object.street, autocomplete: "street-address", maxlength: 100, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
 </div>
 
 <div class="mb-4">
   <%= f.label :city, "City", class: "block text-sm font-medium text-gray-700" %>
-  <%= f.text_field :city, value: f.object.city, autocomplete: "address-level2", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded" %>
+  <%= f.text_field :city, value: f.object.city, autocomplete: "address-level2", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
 </div>
 
 <div class="mb-4">
@@ -22,10 +22,10 @@
     ['Ohio', 'OH'], ['Oklahoma', 'OK'], ['Oregon', 'OR'], ['Pennsylvania', 'PA'], ['Rhode Island', 'RI'],
     ['South Carolina', 'SC'], ['South Dakota', 'SD'], ['Tennessee', 'TN'], ['Texas', 'TX'], ['Utah', 'UT'],
     ['Vermont', 'VT'], ['Virginia', 'VA'], ['Washington', 'WA'], ['West Virginia', 'WV'], ['Wisconsin', 'WI'], ['Wyoming', 'WY']
-  ], f.object.state), { prompt: "Select a state" }, autocomplete: "address-level1", class: "form-select mt-1 block w-full p-2 border rounded" %>
+  ], f.object.state), { prompt: "Select a state" }, autocomplete: "address-level1", class: "form-select mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
 </div>
 
 <div class="mb-4">
   <%= f.label :zip, "Zip", class: "block text-sm font-medium text-gray-700" %>
-  <%= f.text_field :zip, value: f.object.zip, autocomplete: "postal-code", maxlength: 10, class: "form-input mt-1 block w-full p-2 border rounded" %>
+  <%= f.text_field :zip, value: f.object.zip, autocomplete: "postal-code", maxlength: 10, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
 </div>

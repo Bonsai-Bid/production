@@ -51,15 +51,41 @@ RSpec.describe User, type: :model do
 
     context 'SQL injection patterns' do
       it 'rejects fields with SQL injection patterns' do
-        user = User.new(first_name: "John'; DROP TABLE users; --")
+        user = User.new(first_name: "John; DROP TABLE users; --")
         user.valid?
         expect(user.errors[:base]).to include('contains invalid characters')
+      end
+
+      it 'accepts names with single quotes' do
+        user = User.new(first_name: "O'Brien", last_name: 'Doe')
+        user.valid?
+        expect(user.errors[:base]).to be_empty
+      end
+
+      it 'allows double quotes in names' do
+        user = User.new(first_name: 'John "Johnny" Doe')
+        user.valid?
+        expect(user.errors[:base]).to be_empty
       end
 
       it 'accepts normal input without SQL injection patterns' do
         user = User.new(first_name: 'John')
         user.valid?
         expect(user.errors[:base]).to be_empty
+      end
+    end
+
+    context 'dealing with time zones' do
+      it 'is invalid with an unsupported time zone' do
+        user2 = build(:user, time_zone: 'Invalid Time Zone')
+        expect(user2).not_to be_valid
+        expect(user2.errors[:time_zone]).to include('is not included in the list')
+      end
+
+      it 'is invalid when time zone is blank' do
+        user = build(:user, time_zone: nil)
+        expect(user).not_to be_valid
+        expect(user.errors[:time_zone]).to include("can't be blank")
       end
     end
   end

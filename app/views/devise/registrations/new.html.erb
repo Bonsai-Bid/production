@@ -7,25 +7,25 @@
   <!-- First Name -->
   <div class="mb-4">
     <%= f.label :first_name, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :first_name, autocomplete: "given-name", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.text_field :first_name, autocomplete: "given-name", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
   </div>
 
   <!-- Last Name -->
   <div class="mb-4">
     <%= f.label :last_name, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :last_name, autocomplete: "family-name", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.text_field :last_name, autocomplete: "family-name", maxlength: 50, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
   </div>
 
   <!-- Email -->
   <div class="mb-4">
     <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.email_field :email, autocomplete: "email", maxlength: 255, class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.email_field :email, autocomplete: "email", maxlength: 255, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
   </div>
 
   <!-- Phone -->
   <div class="mb-4">
     <%= f.label :phone, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.phone_field :phone, autocomplete: "tel", maxlength: 15, class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.phone_field :phone, autocomplete: "tel", maxlength: 15, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
   </div>
 
   <!-- Password -->
@@ -34,20 +34,22 @@
     <% if @minimum_password_length %>
       <em class="text-xs text-gray-500">(<%= @minimum_password_length %> characters minimum)</em>
     <% end %>
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
   </div>
 
   <!-- Password Confirmation -->
   <div class="mb-4">
     <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input mt-1 block w-full p-2 border rounded" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
   </div>
 
   <%= render 'devise/registrations/address_fields', f: f %>
 
   <!-- Time Zone -->
-  <%= f.label :time_zone, class: "block text-sm font-medium text-gray-700" %>
-  <%= f.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded" %>
+  <div class="mb-4">
+    <%= f.label :time_zone, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :time_zone, ActiveSupport::TimeZone.all.select { |tz| ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"].include?(tz.name) }.map { |tz| [tz.name, tz.name] }, {}, class: "form-input mt-1 block w-full p-2 border rounded", required: true, aria: { required: 'true' } %>
+  </div>
 
   <div class="actions">
     <%= f.submit "Sign Up", class: "btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
