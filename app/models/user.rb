@@ -41,6 +41,7 @@ class User < ApplicationRecord
   end
 
   def create_user_profile
+    return if user_profile.present? #Avoid duplications
     display_name = "#{first_name} #{last_name}"
     location = "#{city}, #{state}"
     UserProfile.create!(user: self, name: display_name, location: location)
@@ -59,30 +60,49 @@ class User < ApplicationRecord
     errors.add :password, 'must include at least one special character (e.g. !@#$%^&*)'
   end
 
-  def reject_suspicious_sql_patterns
-    # Expanded list of patterns to match common SQL injection techniques
-    patterns = [
-      /['"]+/,             # Single or double quotes
-      /--|#/,              # SQL comment indicators
-      /;/,                 # Semicolons for query termination
-      /\b(SELECT|UNION|INSERT|UPDATE|DELETE|DROP|ALTER)\b/i, # SQL keywords
-      /\b(OR|AND)\b.*\b(=|LIKE|IS)\b/i, # Logical operators with conditions
-      /\b(=|LIKE|IS)\b/,   # Equality and comparison operators
-      /[\(\)]/,            # Parentheses for SQL functions
-      /\/\*|\*\//          # Inline comments or concatenation
-    ]
-    
-    # Check fields for patterns
-    fields_to_check = [first_name, last_name, street, city, zip] # Add other fields as needed
 
-    fields_to_check.each do |field|
-      patterns.each do |pattern|
-        if field.present? && field.match?(pattern)
-          errors.add(:base, 'contains invalid characters')
-        end
+# This seems expensive?
+def reject_suspicious_sql_patterns
+  # Refined list of patterns to catch SQL injection without blocking common name patterns
+  patterns = [
+    /<script.*?>.*?<\/script>/i,        # XSS detection for script tags
+    /--|#/,                             # SQL comment indicators
+    /;/,                                # Semicolons for query termination
+    /\b(SELECT|UNION|INSERT|UPDATE|DELETE|DROP|ALTER)\b/i, # SQL keywords
+    /\b(OR|AND)\b\s+['"][^'"]+['"]/i,   # Specific SQL injection sequences like ' OR '
+    /\b(=|LIKE|IS)\b/,                  # Equality and comparison operators
+    /[\(\)]/,                           # Parentheses for SQL functions
+    /\/\*|\*\//                         # Inline comments or concatenation
+  ]
+
+  # Allow single quotes if they're not in suspicious contexts
+  single_quote_pattern = /(\b\w+'+\w+\b)/ # Allows words like O'Brien
+
+  # Fields to check for suspicious patterns
+  fields_to_check = [first_name, last_name, street, city, zip]
+
+  fields_to_check.each do |field|
+    next if field.blank? # Skip empty fields
+
+    # First, allow common patterns like names with single quotes
+    if field.match?(single_quote_pattern)
+      next # Skip further checks for fields that match safe single quote use
+    end
+
+    # Check against other suspicious patterns
+    patterns.each do |pattern|
+      if field.match?(pattern)
+        errors.add(:base, 'contains invalid characters')
+        break # Stop checking if one pattern matches
       end
     end
   end
+end
+
+
+  
+  
+  
 
   def normalize_phone_number
     self.phone = PhonyRails.normalize_number(phone, default_country_code: 'US')

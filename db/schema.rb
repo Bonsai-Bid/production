@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_30_192100) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_03_035144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -174,7 +174,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_30_192100) do
     t.text "about_me"
     t.text "seller_policy"
     t.string "location"
-    t.index ["user_id"], name: "index_user_profiles_on_user_id"
+    t.index ["user_id"], name: "index_user_profiles_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
