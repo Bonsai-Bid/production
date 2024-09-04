@@ -109,7 +109,7 @@ class Item < ApplicationRecord
     validates :species, presence: true
     validates :style, presence: true
     validates :stage, presence: true
-    # Also validate required container fields if the item is a plant
+    # Validate container too
     validates :material, presence: true
     validates :shape, presence: true
     validates :color, presence: true
@@ -131,7 +131,7 @@ class Item < ApplicationRecord
     validates :tool_type, presence: true, if: -> { essential_type == 'tools' }
   end
 
-  # Validate "other" fields when the corresponding main field is set to "other"
+  # Validate other fields when needed
   validates :material_other, presence: true, if: -> { material == 'material_other' }
   validates :shape_other, presence: true, if: -> { shape == 'shape_other' }
   validates :color_other, presence: true, if: -> { color == 'color_other' }

@@ -28,35 +28,33 @@ FactoryBot.define do
     style_other { nil }
     size_other { nil }
     tool_other { nil }
-
     # Custom logic for setting attributes based on category_type
     after(:build) do |item|
       case item.category_type
       when 'plant'
-        item.species ||= Item.species.keys.sample
-        item.style ||= Item.styles.keys.sample
-        item.stage ||= Item.stages.keys.sample
+        item.species = Item.species.keys.sample unless item.species.present?
+        item.style = Item.styles.keys.sample unless item.style.present?
+        item.stage = Item.stages.keys.sample unless item.stage.present?
 
-        # Add validation for required container fields for plants
-        item.material ||= Item.materials.keys.sample
-        item.shape ||= Item.shapes.keys.sample
-        item.color ||= Item.colors.keys.sample
-        item.origin ||= Item.origins.keys.sample
-        item.size ||= Item.sizes.keys.sample
-
+        # Set required container fields for plants
+        item.material = Item.materials.keys.sample unless item.material.present?
+        item.shape = Item.shapes.keys.sample unless item.shape.present?
+        item.color = Item.colors.keys.sample unless item.color.present?
+        item.origin = Item.origins.keys.sample unless item.origin.present?
+        item.size = Item.sizes.keys.sample unless item.size.present?
       when 'container'
-        item.material ||= Item.materials.keys.sample
-        item.shape ||= Item.shapes.keys.sample
-        item.color ||= Item.colors.keys.sample
-        item.origin ||= Item.origins.keys.sample
-        item.size ||= Item.sizes.keys.sample
+        item.material = Item.materials.keys.sample unless item.material.present?
+        item.shape = Item.shapes.keys.sample unless item.shape.present?
+        item.color = Item.colors.keys.sample unless item.color.present?
+        item.origin = Item.origins.keys.sample unless item.origin.present?
+        item.size = Item.sizes.keys.sample unless item.size.present?
 
       when 'essential'
-        item.essential_type ||= Item.essential_types.keys.sample
+        item.essential_type = Item.essential_types.keys.sample unless item.essential_type.present?
         if item.essential_type == 'wire'
-          item.wire_type ||= Item.wire_types.keys.sample
+          item.wire_type = Item.wire_types.keys.sample unless item.wire_type.present?
         elsif item.essential_type == 'tools'
-          item.tool_type ||= Item.tool_types.keys.sample
+          item.tool_type = Item.tool_types.keys.sample unless item.tool_type.present?
         end
       end
 
