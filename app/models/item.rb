@@ -26,6 +26,11 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  def species=(value)
+    super(value)
+    assign_species_category if species.present?
+  end
+
   # def self.search(query)
   #   __elasticsearch__.search(
   #     {
@@ -99,6 +104,44 @@ class Item < ApplicationRecord
       auction.end_date = combine_date_and_time(auction.end_date, auction.end_time)
     end
   end
+
+  with_options if: -> { category_type == 'plant' } do
+    validates :species, presence: true
+    validates :style, presence: true
+    validates :stage, presence: true
+    # Also validate required container fields if the item is a plant
+    validates :material, presence: true
+    validates :shape, presence: true
+    validates :color, presence: true
+    validates :origin, presence: true
+    validates :size, presence: true
+  end
+
+  with_options if: -> { category_type == 'container' } do
+    validates :material, presence: true
+    validates :shape, presence: true
+    validates :color, presence: true
+    validates :origin, presence: true
+    validates :size, presence: true
+  end
+
+  with_options if: -> { category_type == 'essential' } do
+    validates :essential_type, presence: true
+    validates :wire_type, presence: true, if: -> { essential_type == 'wire' }
+    validates :tool_type, presence: true, if: -> { essential_type == 'tools' }
+  end
+
+  # Validate "other" fields when the corresponding main field is set to "other"
+  validates :material_other, presence: true, if: -> { material == 'material_other' }
+  validates :shape_other, presence: true, if: -> { shape == 'shape_other' }
+  validates :color_other, presence: true, if: -> { color == 'color_other' }
+  validates :origin_other, presence: true, if: -> { origin == 'origin_other' }
+  validates :essential_other, presence: true, if: -> { essential_type == 'essential_other' }
+  validates :wire_other, presence: true, if: -> { wire_type == 'wire_other' }
+  validates :species_other, presence: true, if: -> { species == 'species_other' }
+  validates :style_other, presence: true, if: -> { style == 'style_other' }
+  validates :size_other, presence: true, if: -> { size == 'size_other' }
+  validates :tool_other, presence: true, if: -> { tool_type == 'tool_other' }
 
 
 
