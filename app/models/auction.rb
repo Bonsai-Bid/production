@@ -92,6 +92,7 @@ class Auction < ApplicationRecord
   end
 
   def set_auction_times
+    # require 'pry'; binding.pry
     auction_length_in_days = auction_length.to_i
 
     case timing_option
@@ -100,6 +101,7 @@ class Auction < ApplicationRecord
       self.end_date = start_date + auction_length_in_days.days
       self.status = :active
     when 'list_later'
+      # require 'pry'; binding.pry
       self.start_date = combine_date_and_time(start_date, start_time)
       self.end_date = start_date + auction_length_in_days.days
       self.status = :listed

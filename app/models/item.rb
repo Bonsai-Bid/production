@@ -26,43 +26,7 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  def species=(value)
-    super(value)
-    assign_species_category if species.present?
-  end
-
-  # def self.search(query)
-  #   __elasticsearch__.search(
-  #     {
-  #       query: {
-  #         multi_match: {
-  #           query: query,
-  #           fields: [
-  #             'name^10',            # Boost name field to prioritize name matches
-  #             'description^5',      # Boost description field to make it more important than others
-  #             'brand', 
-  #             'condition', 
-  #             'material_other', 
-  #             'shape_other', 
-  #             'color_other', 
-  #             'origin_other', 
-  #             'essential_other', 
-  #             'wire_other', 
-  #             'species_other', 
-  #             'style_other', 
-  #             'size_other', 
-  #             'tool_other'
-  #           ],
-  #           type: 'best_fields',   # Use best_fields to prioritize the best matching field
-  #           fuzziness: 'AUTO',     # Enable fuzzy matching to account for typos and near matches
-  #           operator: 'or',        # Use 'or' to allow partial matches across fields
-  #           minimum_should_match: '75%' # Require at least 75% of the terms to match
-  #         }
-  #       }
-  #     }
-  #   )
-  # end
-  
+  before_validation :assign_species_category, if: -> { species.present? }
 
   def auction_show_page
     Auction.find_by(item_id: self.id, seller_id: self.seller_id)
@@ -153,12 +117,13 @@ class Item < ApplicationRecord
 
   def assign_species_category
     category_map = {
-      1 => :broadleaf_evergreen, 2 => :broadleaf_evergreen, 3 => :coniferous,
-      4 => :deciduous, 5 => :tropical, 6 => :deciduous, 7 => :coniferous,
-      8 => :deciduous, 9 => :deciduous, 10 => :broadleaf_evergreen,
-      11 => :coniferous, 12 => :tropical, 13 => :tropical, 14 => :other
+      azalea: :broadleaf_evergreen, boxwood: :broadleaf_evergreen, cypress: :coniferous,
+      elm: :deciduous, ficus: :tropical, gingko: :deciduous, juniper: :coniferous,
+      maple: :deciduous, oak: :deciduous, olive: :broadleaf_evergreen,
+      pine: :coniferous, schefflera: :tropical, tea: :tropical, species_other: :species_category_other
     }
-    self.species_category = category_map[self.species_before_type_cast] if self.species
+
+      self.species_category = category_map[species.to_sym] if self.species
   end
 
   def image_type

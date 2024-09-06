@@ -25,14 +25,14 @@ RSpec.describe Item, type: :model do
 
     it 'sets auction times correctly for list_later option' do
       item = create(:item)
-      start_date = '2024-09-05'
+      start_date = '2050-09-05'
       start_time = '14:00'
-      auction = build(:auction, item: item, timing_option: 'list_later', start_date: start_date, start_time: start_time, auction_length: 5)
+      combined_start = DateTime.parse("#{start_date} #{start_time}")
+      auction = build(:auction, item: item, timing_option: 'list_later', start_date: combined_start, auction_length: 5)
 
       item.auction = auction
-      item.set_auction_times
+      item.auction.set_auction_times
 
-      combined_start = DateTime.parse("#{start_date} #{start_time}")
       expect(item.auction.start_date).to eq(combined_start)
       expect(item.auction.end_date).to eq(combined_start + 5.days)
     end
@@ -52,6 +52,7 @@ RSpec.describe Item, type: :model do
   describe '#assign_species_category' do
     it 'assigns correct species category based on species before validation' do
       item = build(:item, category_type: 'plant', species: :azalea)
+      item.validate
       expect(item.species_category).to eq('broadleaf_evergreen')
     end
 
