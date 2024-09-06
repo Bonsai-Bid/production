@@ -7,7 +7,8 @@ RSpec.describe Item, type: :model do
     end
 
     it 'handles nil species gracefully when assigning species category' do
-      item = build(:item, species: nil)
+      item = build(:item)
+      item.species = nil
       expect { item.send(:assign_species_category) }.not_to raise_error
       expect(item.species_category).to be_nil
     end

@@ -116,15 +116,22 @@ class Item < ApplicationRecord
   end
 
   def assign_species_category
+      return if species.blank? || !Item.species.keys.include?(species)
+  
     category_map = {
       azalea: :broadleaf_evergreen, boxwood: :broadleaf_evergreen, cypress: :coniferous,
       elm: :deciduous, ficus: :tropical, gingko: :deciduous, juniper: :coniferous,
       maple: :deciduous, oak: :deciduous, olive: :broadleaf_evergreen,
       pine: :coniferous, schefflera: :tropical, tea: :tropical, species_other: :species_category_other
     }
+  
+    species_symbol = species.to_sym
 
-      self.species_category = category_map[species.to_sym] if self.species
+    if category_map.key?(species_symbol)
+      self.species_category = category_map[species_symbol]
+    end
   end
+  
 
   def image_type
     images.each do |image|
