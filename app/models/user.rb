@@ -100,10 +100,6 @@ def reject_suspicious_sql_patterns
 end
 
 
-  
-  
-  
-
   def normalize_phone_number
     self.phone = PhonyRails.normalize_number(phone, default_country_code: 'US')
   end

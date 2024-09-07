@@ -37,5 +37,54 @@ RSpec.describe User, type: :model do
         expect(user.name).to eq(user_profile.name)
       end
     end
+    describe '#normalize_phone_number' do
+    context 'with valid US phone numbers' do
+      it 'normalizes a standard 10-digit number' do
+        user.phone = '3031234567'
+        user.send(:normalize_phone_number)
+        expect(user.phone).to eq('+13031234567')
+      end
+
+      it 'normalizes a number with US country code' do
+        user.phone = '+13031234567'
+        user.send(:normalize_phone_number)
+        expect(user.phone).to eq('+13031234567')
+      end
+
+      it 'normalizes a number with formatting characters' do
+        user.phone = '(303) 123-4567'
+        user.send(:normalize_phone_number)
+        expect(user.phone).to eq('+13031234567')
+      end
+    end
+
+    context 'with invalid phone numbers' do
+      it 'returns nil for empty phone numbers' do
+        user.phone = ''
+        user.send(:normalize_phone_number)
+        expect(user.phone).to eq(nil)
+      end
+
+      it 'returns nil for non-numeric values' do
+        user.phone = 'invalidphone'
+        user.send(:normalize_phone_number)
+        expect(user.phone).to eq(nil)
+      end
+
+      it 'does not normalize nil values' do
+        user.phone = nil
+        user.send(:normalize_phone_number)
+        expect(user.phone).to be_nil
+      end
+    end
+
+    context 'with edge cases' do
+      it 'handles too short numbers gracefully' do
+        user.phone = '123'
+        user.send(:normalize_phone_number)
+        expect(user.phone).to eq('+123') # Based on how PhonyRails handles short input
+      end
+    end
+  end
   end
 end

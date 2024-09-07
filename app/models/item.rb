@@ -26,38 +26,7 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  # def self.search(query)
-  #   __elasticsearch__.search(
-  #     {
-  #       query: {
-  #         multi_match: {
-  #           query: query,
-  #           fields: [
-  #             'name^10',            # Boost name field to prioritize name matches
-  #             'description^5',      # Boost description field to make it more important than others
-  #             'brand', 
-  #             'condition', 
-  #             'material_other', 
-  #             'shape_other', 
-  #             'color_other', 
-  #             'origin_other', 
-  #             'essential_other', 
-  #             'wire_other', 
-  #             'species_other', 
-  #             'style_other', 
-  #             'size_other', 
-  #             'tool_other'
-  #           ],
-  #           type: 'best_fields',   # Use best_fields to prioritize the best matching field
-  #           fuzziness: 'AUTO',     # Enable fuzzy matching to account for typos and near matches
-  #           operator: 'or',        # Use 'or' to allow partial matches across fields
-  #           minimum_should_match: '75%' # Require at least 75% of the terms to match
-  #         }
-  #       }
-  #     }
-  #   )
-  # end
-  
+  before_validation :assign_species_category, if: -> { species.present? }
 
   def auction_show_page
     Auction.find_by(item_id: self.id, seller_id: self.seller_id)
@@ -100,6 +69,44 @@ class Item < ApplicationRecord
     end
   end
 
+  with_options if: -> { category_type == 'plant' } do
+    validates :species, presence: true
+    validates :style, presence: true
+    validates :stage, presence: true
+    # Validate container too
+    validates :material, presence: true
+    validates :shape, presence: true
+    validates :color, presence: true
+    validates :origin, presence: true
+    validates :size, presence: true
+  end
+
+  with_options if: -> { category_type == 'container' } do
+    validates :material, presence: true
+    validates :shape, presence: true
+    validates :color, presence: true
+    validates :origin, presence: true
+    validates :size, presence: true
+  end
+
+  with_options if: -> { category_type == 'essential' } do
+    validates :essential_type, presence: true
+    validates :wire_type, presence: true, if: -> { essential_type == 'wire' }
+    validates :tool_type, presence: true, if: -> { essential_type == 'tools' }
+  end
+
+  # Validate other fields when needed
+  validates :material_other, presence: true, if: -> { material == 'material_other' }
+  validates :shape_other, presence: true, if: -> { shape == 'shape_other' }
+  validates :color_other, presence: true, if: -> { color == 'color_other' }
+  validates :origin_other, presence: true, if: -> { origin == 'origin_other' }
+  validates :essential_other, presence: true, if: -> { essential_type == 'essential_other' }
+  validates :wire_other, presence: true, if: -> { wire_type == 'wire_other' }
+  validates :species_other, presence: true, if: -> { species == 'species_other' }
+  validates :style_other, presence: true, if: -> { style == 'style_other' }
+  validates :size_other, presence: true, if: -> { size == 'size_other' }
+  validates :tool_other, presence: true, if: -> { tool_type == 'tool_other' }
+
 
 
   private
@@ -109,14 +116,22 @@ class Item < ApplicationRecord
   end
 
   def assign_species_category
+      return if species.blank? || !Item.species.keys.include?(species)
+  
     category_map = {
-      1 => :broadleaf_evergreen, 2 => :broadleaf_evergreen, 3 => :coniferous,
-      4 => :deciduous, 5 => :tropical, 6 => :deciduous, 7 => :coniferous,
-      8 => :deciduous, 9 => :deciduous, 10 => :broadleaf_evergreen,
-      11 => :coniferous, 12 => :tropical, 13 => :tropical, 14 => :other
+      azalea: :broadleaf_evergreen, boxwood: :broadleaf_evergreen, cypress: :coniferous,
+      elm: :deciduous, ficus: :tropical, gingko: :deciduous, juniper: :coniferous,
+      maple: :deciduous, oak: :deciduous, olive: :broadleaf_evergreen,
+      pine: :coniferous, schefflera: :tropical, tea: :tropical, species_other: :species_category_other
     }
-    self.species_category = category_map[self.species_before_type_cast] if self.species
+  
+    species_symbol = species.to_sym
+
+    if category_map.key?(species_symbol)
+      self.species_category = category_map[species_symbol]
+    end
   end
+  
 
   def image_type
     images.each do |image|
