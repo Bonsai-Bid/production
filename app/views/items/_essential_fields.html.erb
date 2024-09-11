@@ -22,6 +22,6 @@
     <%= form.text_field :brand, value: form.object.brand, class: 'form-input mt-1 block w-full p-2 border rounded' %>
 
     <%= form.label :condition, 'Condition', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.text_field :condition, value: form.object.condition, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+    <%= form.select :condition, options_for_select(Item.conditions.keys.map { |key| [key.humanize, key] }, selected: form.object.condition), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_condition' %>
   </fieldset>
 </fieldset>
