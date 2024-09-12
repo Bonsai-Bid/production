@@ -17,6 +17,8 @@ class Item < ApplicationRecord
   enum style: { broom: 1, cascade: 2, clump: 3, formal_upright: 4, forest: 5, informal_upright: 6, style_other: 7 }, _prefix: true
   enum stage: { pre_bonsai: 1, development: 2, refinement: 3, specimen: 4, seeds_seedlings: 5 }, _prefix: true
   enum tool_type: { branch_splitters: 1, cutters: 2, pliers: 3, rakes: 4, shears: 5, tool_other: 6 }, _prefix: true
+  enum condition: { new: 1, good: 2, fair: 3, poor: 4 }, _prefix: true 
+
   
   has_many_attached :images
   belongs_to :seller, class_name: 'User'
@@ -93,6 +95,8 @@ class Item < ApplicationRecord
     validates :essential_type, presence: true
     validates :wire_type, presence: true, if: -> { essential_type == 'wire' }
     validates :tool_type, presence: true, if: -> { essential_type == 'tools' }
+    validates :brand, presence: true, if: -> { essential_type == 'tools' }
+    validates :condition, presence: true, if: -> { essential_type == 'tools' }
   end
 
   # Validate other fields when needed
