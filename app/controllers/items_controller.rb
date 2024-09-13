@@ -39,6 +39,7 @@ class ItemsController < ApplicationController
         format.json { render :show, status: :created, location: @item }
       else
         logger.debug @item.errors.full_messages
+        @auction = @item.auction || @item.build_auction(seller_id: current_user.id)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end

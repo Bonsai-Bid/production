@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 /.coverage
 /coverage/
+coverage/
 
 # Ignore bundler config.
 /.bundle

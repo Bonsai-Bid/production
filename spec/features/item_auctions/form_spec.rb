@@ -10,7 +10,7 @@ RSpec.describe 'Form Validation', type: :feature, js: true do
   end
 
   context 'when submitting forms with missing or incorrect data' do
-    it 'shows appropriate validation messages for missing required fields' do
+    it 'shows appropriate validation messages when name is empty' do
       visit new_item_path
 
       # Attempt to submit the form without filling any fields
@@ -20,15 +20,41 @@ RSpec.describe 'Form Validation', type: :feature, js: true do
       name_valid = page.evaluate_script("document.querySelector('#item_name').validity.valid")
       name_validation_message = page.evaluate_script("document.querySelector('#item_name').validationMessage")
 
-      description_valid = page.evaluate_script("document.querySelector('#item_description').validity.valid")
-      description_validation_message = page.evaluate_script("document.querySelector('#item_description').validationMessage")
 
       # Expectations
       expect(name_valid).to be false
       expect(name_validation_message).to include('Please fill out this field')
 
+    end
+
+    it 'shows appropriate validation messages when description is empty' do
+      visit new_item_path
+      fill_in 'Name', with: "No Description"
+      # Attempt to submit the form without filling any fields
+      click_button 'Create Item'
+
+      description_valid = page.evaluate_script("document.querySelector('#item_description').validity.valid")
+      description_validation_message = page.evaluate_script("document.querySelector('#item_description').validationMessage")
+
+
       expect(description_valid).to be false
       expect(description_validation_message).to include('Please fill out this field')
+    end
+
+    it 'shows appropriate validation messages when Category is empty' do
+      visit new_item_path
+      fill_in 'Name', with: "No Category"
+      fill_in 'Description', with: "No Category"
+      # Attempt to submit the form without filling any fields
+      click_button 'Create Item'
+
+      category_valid = page.evaluate_script("document.querySelector('select[name=\"item[category_type]\"]').validity.valid")
+      category_validation_message = page.evaluate_script("document.querySelector('select[name=\"item[category_type]\"]').validationMessage")
+      
+
+
+      expect(category_valid).to be false
+      expect(category_validation_message).to include('Please select an item in the list.')
     end
 
     it 'persists entered data when validation fails' do
@@ -87,13 +113,10 @@ RSpec.describe 'Form Validation', type: :feature, js: true do
     it 'shows validation messages for empty strings when fields are required' do
       visit new_item_path
 
-      # Input empty strings for required fields
       fill_in 'Name', with: ''
       fill_in 'Description', with: ''
 
       click_button 'Create Item'
-
-      # Check validation messages
       name_valid = page.evaluate_script("document.querySelector('#item_name').validity.valid")
       name_validation_message = page.evaluate_script("document.querySelector('#item_name').validationMessage")
 

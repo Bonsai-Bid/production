@@ -150,6 +150,8 @@ class Auction < ApplicationRecord
     errors.add(:start_date, "cannot be in the past") if start_date < Date.today
   end
 
+
+
   def start_date_changed_or_new_record?
     new_record? || start_date_changed?
   end
