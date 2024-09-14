@@ -1,16 +1,35 @@
 <!-- app/views/items/_auction_fields.html.erb -->
-<h2 class="mt-4 text-2xl font-semibold">Auction Details</h2>
+
+
+<% if @auction && @auction.errors.any? %>
+  <!-- Errors for auction -->
+  <% @auction.errors.full_messages.uniq.each do |message| %>
+    <div class="error-message"><%= message %></div>
+  <% end %>
+<% end %>
+
+
 <% if form.object.auction.present? %>
   <% if form.object.auction.editable? %>
     <%= form.fields_for :auction do |auction_form| %>
       <div class="mb-4">
         <%= auction_form.label :starting_price, 'Starting Price', class: 'block text-sm font-medium text-gray-700' %>
         <%= auction_form.number_field :starting_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+          <% if @auction != nil && @auction.errors[:starting_price].any? %>
+    <div class="error-message">
+      <%= @auction.errors[:starting_price].first %>
+    </div>
+  <% end %>
       </div>
 
       <div class="mb-4">
         <%= auction_form.label :bid_increment, 'Minimum Bid Increment', class: 'block text-sm font-medium text-gray-700' %>
         <%= auction_form.number_field :bid_increment, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+          <% if @auction != nil && @auction.errors[:bid_increment].any? %>
+    <div class="error-message">
+      <%= @auction.errors[:bid_increment].first %>
+    </div>
+  <% end %>
       </div>
 
  <!-- Buy It Now Checkbox -->

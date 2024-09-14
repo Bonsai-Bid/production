@@ -20,7 +20,7 @@ class Auction < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validates :starting_price, :bid_increment, numericality: { greater_than_or_equal_to: 0 }
   validate :end_date_after_start_date
-  validate :start_date_not_in_past, if: :start_date_changed_or_new_record?
+  validate :start_datetime_not_in_past, if: :start_date_changed_or_new_record?
   validates :status, presence: true, inclusion: { in: Auction.statuses.keys }
   validates :enable_buy_it_now, inclusion: { in: [true, false] }
   validates :enable_reserve_price, inclusion: { in: [true, false] }
@@ -145,10 +145,14 @@ class Auction < ApplicationRecord
     errors.add(:end_date, "must be after the start date") if end_date < start_date
   end
 
-  def start_date_not_in_past
-    return if start_date.blank?
-    errors.add(:start_date, "cannot be in the past") if start_date < Date.today
+  def start_datetime_not_in_past
+    auction_start_datetime = combine_date_and_time(start_date, start_time)
+    if auction_start_datetime && auction_start_datetime < Time.current
+      errors.add(:base, "The auction cannot start in the past.")
+    end
   end
+
+
 
   def start_date_changed_or_new_record?
     new_record? || start_date_changed?
