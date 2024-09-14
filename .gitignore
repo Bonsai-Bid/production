@@ -6,7 +6,7 @@
 /.coverage
 /coverage/
 coverage/
-
+coverage
 # Ignore bundler config.
 /.bundle
 
