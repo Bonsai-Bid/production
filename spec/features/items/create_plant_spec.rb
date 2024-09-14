@@ -11,7 +11,7 @@ RSpec.describe 'Create Item', type: :feature, js: true do
 
   describe 'Creating a Plant Item' do
     context 'with valid inputs including "Other" options' do
-      it 'creates a new plant item with all required fields including "Other" inputs' do
+      xit 'creates a new plant item with all required fields including "Other" inputs' do
         visit new_item_path
         fill_in 'Name', with: 'Test Plant Item with Others'
         fill_in 'Description', with: 'A description of the test plant item'

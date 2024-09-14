@@ -1,5 +1,14 @@
 <!-- app/views/items/_auction_fields.html.erb -->
-<h2 class="mt-4 text-2xl font-semibold">Auction Details</h2>
+
+
+<% if @auction && @auction.errors.any? %>
+  <!-- Errors for auction -->
+  <% @auction.errors.full_messages.uniq.each do |message| %>
+    <div class="error-message"><%= message %></div>
+  <% end %>
+<% end %>
+
+
 <% if form.object.auction.present? %>
   <% if form.object.auction.editable? %>
     <%= form.fields_for :auction do |auction_form| %>

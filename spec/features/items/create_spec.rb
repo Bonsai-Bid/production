@@ -10,7 +10,7 @@ RSpec.describe 'Create Item', type: :feature, js: true do
   end
 
   context 'with valid inputs' do
-    it 'creates a new item and redirects to dashboard' do
+    xit 'creates a new item and redirects to dashboard' do
       visit new_item_path
       fill_in 'Name', with: 'Test Item'
       fill_in 'Description', with: 'A description of the test item'

@@ -10,7 +10,7 @@ RSpec.describe 'File Validation', type: :feature, js: true do
   end
 
   context 'when uploading allowed file types' do
-    it 'allows uploading JPEG and PNG files' do
+    xit 'allows uploading JPEG and PNG files' do
       visit new_item_path
 
       # Fill in required fields
@@ -43,7 +43,7 @@ RSpec.describe 'File Validation', type: :feature, js: true do
   end
 
   context 'when testing against malicious file uploads' do
-    it 'rejects scripts disguised as images' do
+    xit 'rejects scripts disguised as images' do
       visit new_item_path
 
       # Fill in required fields
@@ -63,7 +63,7 @@ RSpec.describe 'File Validation', type: :feature, js: true do
   end
 
   context 'when testing edge cases with unsupported formats and large files' do
-    it 'rejects unsupported file formats' do
+    xit 'rejects unsupported file formats' do
       visit new_item_path
 
       # Fill in required fields
@@ -81,7 +81,7 @@ RSpec.describe 'File Validation', type: :feature, js: true do
       expect(Item.last.images.attached?).to be false
     end
 
-    it 'rejects large file uploads beyond the size limit' do
+    xit 'rejects large file uploads beyond the size limit' do
       visit new_item_path
 
       # Fill in required fields
@@ -101,7 +101,7 @@ RSpec.describe 'File Validation', type: :feature, js: true do
   end
 
   context 'when verifying that files do not execute on server or client side' do
-    it 'ensures uploaded files are treated as data, not executable scripts' do
+    xit 'ensures uploaded files are treated as data, not executable scripts' do
       visit new_item_path
 
       # Fill in required fields

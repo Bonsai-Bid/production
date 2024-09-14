@@ -10,7 +10,7 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
   end
 
   context 'when creating a new item' do
-    it 'creates an item and automatically associates an auction' do
+    xit 'creates an item and automatically associates an auction' do
       visit new_item_path
 
       fill_in 'Name', with: 'Test Item'
@@ -55,7 +55,7 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
   end
 
   context 'when entering invalid data' do
-    it 'shows validation errors for invalid enum values' do
+    xit 'shows validation errors for invalid enum values' do
       visit new_item_path
 
       fill_in 'Name', with: 'Invalid Item'

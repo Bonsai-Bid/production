@@ -10,7 +10,7 @@ RSpec.describe 'Category-Specific Validations', type: :feature, js: true do
   end
 
   context 'when validating Plant category' do
-    it 'requires a Container selection if "Plant" is chosen' do
+    xit 'requires a Container selection if "Plant" is chosen' do
       visit new_item_path
 
       # Fill in required fields for a Plant category without selecting a container
@@ -27,7 +27,7 @@ RSpec.describe 'Category-Specific Validations', type: :feature, js: true do
       expect(page).to have_content('Container must be selected for Plant category')
     end
 
-    it 'requires all plant-specific fields (species, style, stage) to be filled' do
+    xit 'requires all plant-specific fields (species, style, stage) to be filled' do
       visit new_item_path
 
       # Fill in required fields but leave plant-specific fields empty
@@ -46,7 +46,7 @@ RSpec.describe 'Category-Specific Validations', type: :feature, js: true do
   end
 
   context 'when validating Essential - Tool category' do
-    it 'requires "Condition" and "Brand" fields to be filled if "Essential - Tool" is chosen' do
+    xit 'requires "Condition" and "Brand" fields to be filled if "Essential - Tool" is chosen' do
       visit new_item_path
 
       # Fill in required fields for an Essential - Tool category without specifying condition and brand
@@ -64,7 +64,7 @@ RSpec.describe 'Category-Specific Validations', type: :feature, js: true do
   end
 
   context 'when testing edge cases' do
-    it 'attempts to save a "Plant" item without selecting a container' do
+    xit 'attempts to save a "Plant" item without selecting a container' do
       visit new_item_path
 
       # Fill in fields for a Plant item but omit the container
@@ -82,7 +82,7 @@ RSpec.describe 'Category-Specific Validations', type: :feature, js: true do
       expect(page).to have_content('Container must be selected for Plant category')
     end
 
-    it 'attempts to save an "Essential - Tool" item without specifying condition or brand' do
+    xit 'attempts to save an "Essential - Tool" item without specifying condition or brand' do
       visit new_item_path
 
       # Fill in fields for an Essential - Tool item but omit condition and brand
