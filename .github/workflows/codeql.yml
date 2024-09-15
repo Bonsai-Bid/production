@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: ["main"]
   schedule:
-    - cron: '18 7 * * 6'  # Weekly scan on Saturday at 7:18 UTC
+    - cron: '18 7 * * 6'  # Weekly scan - Saturday, 7:18 UTC
 
 jobs:
   analyze:
@@ -54,7 +54,7 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-        # Adding custom queries or using more detailed query packs
+        # Add custom queries here, if necessary
         queries: +security-extended,security-and-quality
 
     # This step runs only if a manual build mode is required

@@ -4,7 +4,7 @@ document.addEventListener('turbolinks:load', () => {
       const selectedValue = selectElement.value;
       console.log(`Selected value for ${selectElement.id}: ${selectedValue}`);
 
-      // Show or hide "Other" fields
+      // Show or hide "Other"
       const showOther = (
         selectedValue === 'material_other' ||
         selectedValue === 'shape_other' ||
@@ -28,11 +28,10 @@ document.addEventListener('turbolinks:load', () => {
         console.log(`Hiding other field for ${selectElement.id}`);
         otherElement.classList.add('hidden');
         otherElement.setAttribute('aria-hidden', 'true');
-        otherElement.value = ''; // Clear the value of the hidden field
+        otherElement.value = ''; // Clear value of the hidden field
         console.log(`Other field classes after hiding: ${otherElement.className}`);
       }
 
-      // Show or hide wire and tool fields based on essential_type selection
       if (selectElement.id === 'item_essential_type') {
         const wireFields = document.getElementById('wire_fields');
         const toolsFields = document.getElementById('tools_fields');
@@ -46,7 +45,7 @@ document.addEventListener('turbolinks:load', () => {
           if (toolsFields) {
             toolsFields.classList.add('hidden');
             toolsFields.setAttribute('aria-hidden', 'true');
-            clearFormFields(toolsFields); // Clear the values of the hidden fields
+            clearFormFields(toolsFields); 
           }
         } else if (selectedValue === 'tools') {
           console.log('Showing tools fields');
@@ -57,18 +56,18 @@ document.addEventListener('turbolinks:load', () => {
           if (wireFields) {
             wireFields.classList.add('hidden');
             wireFields.setAttribute('aria-hidden', 'true');
-            clearFormFields(wireFields); // Clear the values of the hidden fields
+            clearFormFields(wireFields); 
           }
         } else {
           if (wireFields) {
             wireFields.classList.add('hidden');
             wireFields.setAttribute('aria-hidden', 'true');
-            clearFormFields(wireFields); // Clear the values of the hidden fields
+            clearFormFields(wireFields); 
           }
           if (toolsFields) {
             toolsFields.classList.add('hidden');
             toolsFields.setAttribute('aria-hidden', 'true');
-            clearFormFields(toolsFields); // Clear the values of the hidden fields
+            clearFormFields(toolsFields); 
           }
         }
       }
