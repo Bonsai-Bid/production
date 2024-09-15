@@ -1,0 +1,51 @@
+name: "Run Migrations on Heroku"
+
+on:
+  workflow_dispatch: 
+  push:
+    branches:
+      - main
+    paths:
+      - db/migrate/**  
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Install Yarn
+        run: npm install -g yarn@1.22.22
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.2
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: |
+          yarn install
+          bundle install
+
+      - name: Set up Heroku credentials
+        run: |
+          echo "machine api.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" > ~/.netrc
+          echo "machine git.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+
+      - name: Add Heroku remote
+        run: git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+
+      - name: Run Migrations on Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku run rails db:migrate --app ${{ secrets.HEROKU_APP_NAME }}

@@ -13,7 +13,7 @@ RSpec.describe Item, type: :model do
 
   describe '#set_auction_times' do
     it 'sets auction start and end times based on timing options' do
-      item = create(:item) # Use `create` to ensure the item is persisted
+      item = create(:item) 
       auction = build(:auction, item: item, timing_option: 'list_now', auction_length: 7)
 
       item.auction = auction
