@@ -147,7 +147,8 @@ class Auction < ApplicationRecord
 
   def start_datetime_not_in_past
     auction_start_datetime = combine_date_and_time(start_date, start_time)
-    if auction_start_datetime && auction_start_datetime < Time.current
+    buffer_time = 30.second #This works right now, but may want a more elegant solution
+    if auction_start_datetime && auction_start_datetime < (Time.zone.now - buffer_time)
       errors.add(:base, "The auction cannot start in the past.")
     end
   end

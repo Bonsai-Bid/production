@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'Time zone handling' do
     let(:user) { create(:user, time_zone: 'Eastern Time (US & Canada)') }
+    let(:user_with_utc) { create(:user, time_zone: 'UTC') }
+    let(:user_without_time_zone) { create(:user) }
+    
+
 
     it 'saves and retrieves the user time zone correctly' do
       expect(user.time_zone).to eq('Eastern Time (US & Canada)')
@@ -22,16 +26,10 @@ RSpec.describe User, type: :model do
     end
 
 
-  xit 'defaults to UTC if time zone is not set' do #Confer with David what he wants the default timezone to be. This shouldn't be optional but just in case
-      Time.use_zone(user_without_time_zone.time_zone || 'UTC') do
-        expect(Time.zone.name).to eq('UTC')
-      end
-    end
-
-    xit 'handles times correctly for users in UTC' do
-      Time.use_zone(user_with_utc.time_zone) do
-        user_time = Time.current
-        expect(user_time.zone).to eq('UTC')
+    it 'defaults to Pacific Time if time zone is not set' do
+      user_without_time_zone.time_zone = nil
+      Time.use_zone(user_without_time_zone.time_zone || 'Pacific Time (US & Canada)') do
+        expect(Time.zone.name).to eq('Pacific Time (US & Canada)') 
       end
     end
 

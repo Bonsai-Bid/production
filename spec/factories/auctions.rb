@@ -11,5 +11,6 @@ FactoryBot.define do
     reserve_price { [true, false].sample ? starting_price + rand(30.0..70.0).round(2) : nil } 
     enable_buy_it_now { [true, false].sample }
     enable_reserve_price { reserve_price.present? } 
+    
   end
 end
