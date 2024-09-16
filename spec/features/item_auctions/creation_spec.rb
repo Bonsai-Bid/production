@@ -10,7 +10,7 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
   end
 
   context 'when creating a new item' do
-    xit 'creates an item and automatically associates an auction' do
+    it 'creates an item and automatically associates an auction' do
       visit new_item_path
 
       fill_in 'Name', with: 'Test Item'
