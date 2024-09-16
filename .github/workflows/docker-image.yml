@@ -31,7 +31,7 @@ jobs:
           
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository }}/bonsaibid:${{ env.branch_name }} --tag ghcr.io/${{ github.repository }}/bonsaibid:latest
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository,, }}/bonsaibid:${{ env.branch_name }} --tag ghcr.io/${{ github.repository,, }}/bonsaibid:latest
 
       - name: Push Docker image
         run: |
