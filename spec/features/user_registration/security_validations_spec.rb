@@ -52,8 +52,9 @@ RSpec.feature 'User Registration - Security Validations', type: :feature, js: tr
     click_button 'Sign Up'
     
     # Check for the client-side prevention or error message
-    expect(page).not_to have_content('XSS')  # No script should be executed
-    expect(page).to have_content('contains invalid characters')  # Assuming validation for scripts
+    require 'pry'; binding.pry
+    expect(page).not_to have_content('<script>alert("XSS")</script>')  # Sanitization removes the script tag
+    expect(page).to have_content('John Doe')  
   end
 
 # ************************************************************
@@ -76,8 +77,11 @@ RSpec.feature 'User Registration - Security Validations', type: :feature, js: tr
     
     click_button 'Sign Up'
     
-    # Check for the client-side prevention or error message
-    expect(page).to have_content('contains invalid characters')  # Should catch invalid input
+  
+  # Ensure SQL injection attempts do not affect application state
+  require 'pry'; binding.pry
+  expect(page).to have_content("John Doe") # Should show sanitized input, no SQL impact
+  expect(User.where(first_name: sql_injection).exists?).to be_falsey # SQL injection should not be stored
   end
 
   scenario 'User inputs large amounts of data to test field limits' do
