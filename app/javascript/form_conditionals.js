@@ -53,8 +53,6 @@ document.addEventListener('turbolinks:load', () => {
         if (speciesField) speciesField.required = true;
         if (styleField) styleField.required = true;
         if (stageField) stageField.required = true;
-
-        // Also validate container fields for plant category
         if (materialField) materialField.required = true;
         if (shapeField) shapeField.required = true;
         if (colorField) colorField.required = true;
@@ -106,6 +104,7 @@ document.addEventListener('turbolinks:load', () => {
       });
     };
 
+    
     // Handle the category type selection
     const categoryTypeSelect = document.getElementById('item_category_type');
     if (categoryTypeSelect) {
@@ -116,8 +115,8 @@ document.addEventListener('turbolinks:load', () => {
     // Handle essential type field
     const essentialTypeSelect = document.getElementById('item_essential_type');
     if (essentialTypeSelect) {
-      essentialTypeSelect.addEventListener('change', () => handleSelectChange(essentialTypeSelect));
-      handleSelectChange(essentialTypeSelect); // Call this on load to initialize the correct visibility
+      essentialTypeSelect.addEventListener('change', () => handleSelectChange(categoryTypeSelect));  // Ensure this triggers the main category handler
+      handleSelectChange(categoryTypeSelect); // Call this on load to initialize the correct visibility
     }
   };
 
