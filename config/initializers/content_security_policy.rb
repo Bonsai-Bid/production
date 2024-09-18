@@ -1,4 +1,12 @@
-# Be sure to restart your server when you modify this file.
+# # Be sure to restart your server when you modify this file.
+
+Rails.application.config.content_security_policy do |policy|
+    policy.connect_src :self, "ws://localhost:3036", "http://localhost:3036"
+    policy.style_src :self, :unsafe_inline
+
+    # Add other sources as needed
+  end
+  
 
 # Define an application-wide content security policy.
 # See the Securing Rails Applications Guide for more information:

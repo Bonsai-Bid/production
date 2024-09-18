@@ -3,7 +3,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable,  :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :validatable, :timeoutable
-  before_save :sanitize_fields
   
   has_one :user_profile, dependent: :destroy
   accepts_nested_attributes_for :user_profile
@@ -62,23 +61,7 @@ class User < ApplicationRecord
 
 
 
-  def sanitize_fields
-    # Sanitize anything that may have user input? 
-    self.first_name = sanitize(first_name)
-    self.last_name = sanitize(last_name)
-    self.street = sanitize(street)
-    self.city = sanitize(city)
-    self.zip = sanitize(zip)
-    self.state = sanitize(state)
-  end
 
-  def sanitize(input)
-    sanitized = ActionController::Base.helpers.sanitize(input, tags: [], attributes: [])
-    sanitized.gsub(/['";]/, '')
-    sanitized.gsub!(/(alert|DROP TABLE|SELECT|INSERT|DELETE|UPDATE|--)/i, '') # Remove common attack patterns
-  
-    sanitized.strip
-  end
 
 # This seems expensive but was a good exercise
 # def reject_suspicious_sql_patterns

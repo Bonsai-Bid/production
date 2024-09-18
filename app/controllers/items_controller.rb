@@ -1,9 +1,9 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
 
-  def index
-    @items = Item.all
-  end
+  # def index
+  #   @items = Item.all
+  # end
 
   def show
     @inquiry = Inquiry.new
@@ -20,31 +20,31 @@ class ItemsController < ApplicationController
   end
 
   def create
-    Rails.logger.debug "Raw params: #{params.inspect}"
-    # require 'pry'; binding.pry
     @item = Item.new(item_params)
     @item.seller = current_user
-    if @item.auction
-      @item.auction.seller_id = current_user.id
-      @item.auction.set_auction_times
-    else
-      @item.build_auction(seller_id: current_user.id)
+    if @item.auction.valid?
+      if @item.auction
+        @item.auction.seller_id = current_user.id
+        @item.auction.set_auction_times
+      else
+        @item.build_auction(seller_id: current_user.id)
+      end
     end
-
     respond_to do |format|
       if @item.save
-
+        # Handle successful save
         attach_images if params[:item][:images].present?
-        format.html { redirect_to dashboard_user_path(current_user), notice: "Item and associated auction were successfully created." }
+        format.html { redirect_to dashboard_user_path(current_user), notice: "Item was successfully created." }
         format.json { render :show, status: :created, location: @item }
       else
-        logger.debug @item.errors.full_messages
-        @auction = @item.auction || @item.build_auction(seller_id: current_user.id)
+        # Render form with errors
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
   end
+  
+  
 
   def edit
     @item = Item.find(params[:id])
@@ -79,7 +79,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    # require 'pry'; binding.pry
     params.require(:item).permit(
       :name, :description, :category_type, :species, :style, :stage, :material, :shape, :color, :size, :origin, :essential, :essential_type,
       :species_other, :style_other, :shape_other, :color_other, :origin_other, :essential_other, :wire_other, :tool_other, :brand, :condition, :wire_type, :tool_type, :material_other, :size_other, images: [], remove_images: [],

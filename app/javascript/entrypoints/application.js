@@ -9,6 +9,9 @@ Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
+
+// document.addEventListener('turbolinks:load', setCSRFToken);
+
 import '../category_initialization';
 import '../attribute_initialization';
 import '../form_submission';
@@ -18,3 +21,4 @@ import '../list_later';
 import '../user_profile';
 import '../countdown';
 import '../buy_now_reserve';
+import '../form_conditionals';

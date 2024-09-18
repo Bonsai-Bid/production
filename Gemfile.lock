@@ -488,6 +488,7 @@ DEPENDENCIES
   jbuilder
   jsonapi-serializer
   launchy
+  loofah (~> 2.21)
   mini_magick (~> 4.10)
   nokogiri (>= 1.16.5)
   pg (~> 1.1)
