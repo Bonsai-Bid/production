@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :watchlists
 
 
-  resources :items do
+  resources :items  do
     # resources :inquiries do
     #   resources :replies
     # end

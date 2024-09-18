@@ -18,7 +18,6 @@ class User < ApplicationRecord
   has_many :auctions, foreign_key: :seller_id
 
   after_create :create_user_profile
-  validate :reject_suspicious_sql_patterns
   validate :password_complexity
   validates :first_name, :last_name, presence: true, length: { maximum: 50 }
   validates :street, :city, presence: true, length: { maximum: 100 }
@@ -61,43 +60,46 @@ class User < ApplicationRecord
   end
 
 
-# This seems expensive?
-def reject_suspicious_sql_patterns
-  # Refined list of patterns to catch SQL injection without blocking common name patterns
-  patterns = [
-    /<script.*?>.*?<\/script>/i,        # XSS detection for script tags
-    /--|#/,                             # SQL comment indicators
-    /;/,                                # Semicolons for query termination
-    /\b(SELECT|UNION|INSERT|UPDATE|DELETE|DROP|ALTER)\b/i, # SQL keywords
-    /\b(OR|AND)\b\s+['"][^'"]+['"]/i,   # Specific SQL injection sequences like ' OR '
-    /\b(=|LIKE|IS)\b/,                  # Equality and comparison operators
-    /[\(\)]/,                           # Parentheses for SQL functions
-    /\/\*|\*\//                         # Inline comments or concatenation
-  ]
 
-  # Allow single quotes if they're not in suspicious contexts
-  single_quote_pattern = /(\b\w+'+\w+\b)/ # Allows words like O'Brien
 
-  # Fields to check for suspicious patterns
-  fields_to_check = [first_name, last_name, street, city, zip]
 
-  fields_to_check.each do |field|
-    next if field.blank? # Skip empty fields
+# This seems expensive but was a good exercise
+# def reject_suspicious_sql_patterns
+#   # Refined list of patterns to catch SQL injection without blocking common name patterns
+#   patterns = [
+#     /<script.*?>.*?<\/script>/i,        # XSS detection for script tags
+#     /--|#/,                             # SQL comment indicators
+#     /;/,                                # Semicolons for query termination
+#     /\b(SELECT|UNION|INSERT|UPDATE|DELETE|DROP|ALTER)\b/i, # SQL keywords
+#     /\b(OR|AND)\b\s+['"][^'"]+['"]/i,   # Specific SQL injection sequences like ' OR '
+#     /\b(=|LIKE|IS)\b/,                  # Equality and comparison operators
+#     /[\(\)]/,                           # Parentheses for SQL functions
+#     /\/\*|\*\//                         # Inline comments or concatenation
+#   ]
 
-    # First, allow common patterns like names with single quotes
-    if field.match?(single_quote_pattern)
-      next # Skip further checks for fields that match safe single quote use
-    end
+#   # Allow single quotes if they're not in suspicious contexts
+#   single_quote_pattern = /(\b\w+'+\w+\b)/ # Allows words like O'Brien
 
-    # Check against other suspicious patterns
-    patterns.each do |pattern|
-      if field.match?(pattern)
-        errors.add(:base, 'contains invalid characters')
-        break # Stop checking if one pattern matches
-      end
-    end
-  end
-end
+#   # Fields to check for suspicious patterns
+#   fields_to_check = [first_name, last_name, street, city, zip]
+
+#   fields_to_check.each do |field|
+#     next if field.blank? # Skip empty fields
+
+#     # First, allow common patterns like names with single quotes
+#     if field.match?(single_quote_pattern)
+#       next # Skip further checks for fields that match safe single quote use
+#     end
+
+#     # Check against other suspicious patterns
+#     patterns.each do |pattern|
+#       if field.match?(pattern)
+#         errors.add(:base, 'contains invalid characters')
+#         break # Stop checking if one pattern matches
+#       end
+#     end
+#   end
+# end
 
 
   def normalize_phone_number

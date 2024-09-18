@@ -1,0 +1,15 @@
+<!-- app/views/items/_basic_info.html.erb -->
+<div class="mb-4">
+  <%= form.label :name, 'Name', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.text_field :name, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
+</div>
+
+<div class="mb-4">
+  <%= form.label :description, 'Description', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded', required: true %>
+</div>
+
+<div class="mb-4">
+  <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.select :category_type, options_for_select(Item.category_types.keys.map { |key| [key.humanize, key] }, selected: form.object.category_type), {}, class: 'form-select mt-1 block w-full p-2 border rounded', required: true, data: { selected_value: form.object.category_type } %>
+</div>

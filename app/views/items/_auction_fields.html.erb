@@ -14,7 +14,7 @@
     <%= form.fields_for :auction do |auction_form| %>
       <div class="mb-4">
         <%= auction_form.label :starting_price, 'Starting Price', class: 'block text-sm font-medium text-gray-700' %>
-        <%= auction_form.number_field :starting_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+        <%= auction_form.number_field :starting_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
           <% if @auction != nil && @auction.errors[:starting_price].any? %>
     <div class="error-message">
       <%= @auction.errors[:starting_price].first %>
@@ -24,7 +24,7 @@
 
       <div class="mb-4">
         <%= auction_form.label :bid_increment, 'Minimum Bid Increment', class: 'block text-sm font-medium text-gray-700' %>
-        <%= auction_form.number_field :bid_increment, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+        <%= auction_form.number_field :bid_increment, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
           <% if @auction != nil && @auction.errors[:bid_increment].any? %>
     <div class="error-message">
       <%= @auction.errors[:bid_increment].first %>
@@ -32,10 +32,10 @@
   <% end %>
       </div>
 
- <!-- Buy It Now Checkbox -->
+  <!-- Buy It Now Checkbox -->
       <div class="mb-4">
-        <%= auction_form.check_box :enable_buy_it_now, id: 'enable_buy_it_now' %>
-        <%= auction_form.label :enable_buy_it_now, 'Would you like to set a Buy It Now price?', class: 'ml-2 text-sm font-medium text-gray-700' %>
+        <%= auction_form.check_box :enable_buy_it_now, id: 'item_auction_enable_buy_it_now' %>
+        <%= auction_form.label :enable_buy_it_now, 'Would you like to set a Buy It Now price?', for: 'item_auction_enable_buy_it_now', class: 'ml-2 text-sm font-medium text-gray-700' %>
       </div>
 
       <!-- Buy It Now Price Field -->
@@ -45,10 +45,11 @@
       </div>
 
       <!-- Reserve Price Checkbox -->
-      <div class="mb-4">
-        <%= auction_form.check_box :enable_reserve_price, id: 'enable_reserve_price' %>
-        <%= auction_form.label :enable_reserve_price, 'Would you like to set a minimum price?', class: 'ml-2 text-sm font-medium text-gray-700' %>
-      </div>
+<div class="mb-4">
+  <%= auction_form.check_box :enable_reserve_price, id: 'item_auction_enable_reserve_price' %>
+  <%= auction_form.label :enable_reserve_price, 'Would you like to set a minimum price?', for: 'item_auction_enable_reserve_price', class: 'ml-2 text-sm font-medium text-gray-700' %>
+</div>
+
 
       <!-- Reserve Price Field -->
       <div class="mb-4 hidden" id="reserve_price_field">

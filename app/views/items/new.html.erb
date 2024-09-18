@@ -11,33 +11,23 @@
 <body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
     <div class="container mx-auto mt-5 px-4">
         <%= form_with(model: @item, local: true, html: { enctype: "multipart/form-data", class: "bg-white p-6 rounded shadow-md" }) do |form| %>
-            <h1 id="form-title" class="mb-4 text-2xl font-bold">Create Item</h1>
-            <div class="mb-4">
-                <%= form.label :name, 'Name', class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.text_field :name, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
-            </div>
-            <div class="mb-4">
-                <%= form.label :description, 'Description', class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded', required: true %>
-            </div>
-<div class="mb-4">
-    <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :category_type, options_for_select(Item.category_types.keys.map { |key| [key.humanize, key] }), {}, class: 'form-select mt-1 block w-full p-2 border rounded', required: true %>
-</div>
-            <%= render 'items/plant_fields', form: form %>
-            <%= render 'items/container_fields', form: form %>
-            <%= render 'items/essential_fields', form: form %>
-            <%= render 'items/auction_fields', form: form %>
+            <h1 id="form-title" class="mb-6 text-3xl font-bold">Create Item</h1>
+            <div class="space-y-4">
+                <%= render 'items/basic_info', form: form %>
+                <%= render 'items/plant_fields', form: form %>
+                <%= render 'items/container_fields', form: form %>
+                <%= render 'items/essential_fields', form: form %>
+                <%= render 'items/auction_fields', form: form %>
 
-<div class="mb-4">
-    <%= form.label :images, 'Upload Images', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.file_field :images, multiple: true, accept: "image/*", class: 'form-input mt-1 block w-full p-2 border rounded' %>
-    <div id="image-preview" class="mt-4 flex flex-wrap"></div>
-</div>
+                <div class="mb-4">
+                    <%= form.label :images, 'Upload Images', class: 'block text-sm font-medium text-gray-700' %>
+                    <%= form.file_field :images, multiple: true, accept: "image/*", class: 'form-input mt-1 block w-full p-2 border rounded' %>
+                    <div id="image-preview" class="mt-4 flex flex-wrap"></div>
+                </div>
 
-
-            <div>
-                <%= form.submit 'Create Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+                <div class="mt-6">
+                    <%= form.submit 'Create Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+                </div>
             </div>
         <% end %>
     </div>
