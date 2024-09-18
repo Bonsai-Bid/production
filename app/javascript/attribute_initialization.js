@@ -104,7 +104,7 @@ document.addEventListener('turbolinks:load', () => {
         otherElementId = 'item_origin_other';
       } else if (selectElement.id.endsWith('essential_type')) {
         otherElementId = 'item_essential_other';
-      } else if (selectElement.id.endsWith('wire_type')) {
+      } else if (selectElement.id.endsWith('wire')) {
         otherElementId = 'item_wire_other';
       } else if (selectElement.id.endsWith('tool')) {
         otherElementId = 'item_tool_other';

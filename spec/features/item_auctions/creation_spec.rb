@@ -10,6 +10,25 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
   end
 
   context 'when creating a new item' do
+    scenario 'form should not submit when no fields are filled' do
+      visit new_item_path
+  
+      # Submit form without filling any fields
+      click_button 'Create Item'
+  
+      # Check validation for missing name
+      name_valid = page.evaluate_script("document.querySelector('#item_name').validity.valid")
+      name_validation_message = page.evaluate_script("document.querySelector('#item_name').validationMessage")
+      expect(name_valid).to be false
+      expect(name_validation_message).to include('Please fill out this field')
+  
+      # Check validation for missing category
+      category_type_valid = page.evaluate_script("document.querySelector('#item_category_type').validity.valid")
+      category_type_validation_message = page.evaluate_script("document.querySelector('#item_category_type').validationMessage")
+      expect(category_type_valid).to be false
+      expect(category_type_validation_message).to include('Please select a category')
+    end
+
     xit 'creates an item and automatically associates an auction' do
       visit new_item_path
 
@@ -37,6 +56,101 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
       expect(page).to have_content('Item and associated auction were successfully created.')
       expect(Item.last.auction).to be_present
     end
+
+    scenario 'form submits successfully with valid input for plant category' do
+      visit new_item_path
+    
+      # Fill out valid data for plant category
+      fill_in 'item_name', with: 'Beautiful Bonsai'
+      select 'Plant', from: 'item_category_type'
+      select 'Maple', from: 'item_species'
+      select 'Formal Upright', from: 'item_style'
+      select 'Development', from: 'item_stage'
+      select 'Handmade', from: 'item_material'
+      select 'Round', from: 'item_shape'
+      select 'Green', from: 'item_color'
+      select 'Japan', from: 'item_origin'
+      select 'Medium', from: 'item_size'
+    
+      # Submit form
+      click_button 'Create Item'
+    
+      # Expect successful submission message
+      expect(page).to have_content('Item was successfully created')
+    end
+
+    scenario 'form submits successfully with valid input for container category' do
+      visit new_item_path
+    
+      # Fill out valid data for container category
+      fill_in 'item_name', with: 'Ceramic Pot'
+      select 'Container', from: 'item_category_type'
+      select 'Ceramic', from: 'item_material'
+      select 'Round', from: 'item_shape'
+      select 'Blue', from: 'item_color'
+      select 'China', from: 'item_origin'
+      select 'Small', from: 'item_size'
+    
+      # Submit form
+      click_button 'Create Item'
+    
+      # Expect successful submission message
+      expect(page).to have_content('Item was successfully created')
+    end
+
+    scenario 'form submits successfully with valid input for essential type wire' do
+      visit new_item_path
+    
+      # Fill out valid data for essential wire type
+      fill_in 'item_name', with: 'Bonsai Wire'
+      select 'Essential', from: 'item_category_type'
+      select 'Wire', from: 'item_essential_type'
+      select 'Aluminum', from: 'item_wire'
+    
+      # Submit form
+      click_button 'Create Item'
+    
+      # Expect successful submission message
+      expect(page).to have_content('Item was successfully created')
+    end
+
+    scenario 'form submits successfully with valid input for essential type tools' do
+      visit new_item_path
+    
+      # Fill out valid data for essential tools type
+      fill_in 'item_name', with: 'Bonsai Shears'
+      select 'Essential', from: 'item_category_type'
+      select 'Tools', from: 'item_essential_type'
+      select 'Shears', from: 'item_tool'
+      fill_in 'item_brand', with: 'BonsaiMaster'
+      select 'New', from: 'item_condition'
+    
+      # Submit form
+      click_button 'Create Item'
+    
+      # Expect successful submission message
+      expect(page).to have_content('Item was successfully created')
+    end
+    
+    
+  end
+
+  scenario 'form submits successfully with valid input for essential type tools' do
+    visit new_item_path
+  
+    # Fill out valid data for essential tools type
+    fill_in 'item_name', with: 'Bonsai Shears'
+    select 'Essential', from: 'item_category_type'
+    select 'Tools', from: 'item_essential_type'
+    select 'Shears', from: 'item_tool'
+    fill_in 'item_brand', with: 'BonsaiMaster'
+    select 'New', from: 'item_condition'
+  
+    # Submit form
+    click_button 'Create Item'
+  
+    # Expect successful submission message
+    expect(page).to have_content('Item was successfully created')
   end
 
   context 'when mandatory fields are missing' do
