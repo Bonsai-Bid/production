@@ -1,7 +1,7 @@
-export const handleSelectChange = (selectElement) => {
+export function handleSelectChange(selectElement, otherElement) {
   const selectedValue = selectElement.value;
+  console.log(`Selected value for ${selectElement.id}: ${selectedValue}`);
 
-  // Field references for plant, container, and material categories
   const fields = {
     species: document.getElementById('item_species'),
     style: document.getElementById('item_style'),
@@ -20,7 +20,6 @@ export const handleSelectChange = (selectElement) => {
     condition: document.getElementById('item_condition')
   };
 
-  // "Other" fields
   const otherFields = {
     material: document.getElementById('item_material_other'),
     shape: document.getElementById('item_shape_other'),
@@ -34,7 +33,7 @@ export const handleSelectChange = (selectElement) => {
     tool: document.getElementById('item_tool_other')
   };
 
-  // Reset all fields to not required and hide other-specific fields
+  // Reset all fields
   Object.values(fields).forEach(field => {
     if (field) field.required = false;
   });
@@ -42,56 +41,53 @@ export const handleSelectChange = (selectElement) => {
     if (field) {
       field.classList.add('hidden');
       field.required = false;
-      field.value = ''; // Clear the value when hidden
+      field.value = '';
     }
   });
 
-  // Show relevant fields based on category type
-  if (selectedValue === 'plant') {
-    fields.species.required = true;
-    fields.style.required = true;
-    fields.stage.required = true;
-    fields.material.required = true;
-    fields.shape.required = true;
-    fields.color.required = true;
-    fields.origin.required = true;
-    fields.size.required = true;
-  } else if (selectedValue === 'container') {
-    fields.material.required = true;
-    fields.shape.required = true;
-    fields.color.required = true;
-    fields.origin.required = true;
-    fields.size.required = true;
-  } else if (selectedValue === 'essential') {
-    if (fields.essentialType.value === 'wire') {
-      fields.wireFields.classList.remove('hidden');
-      fields.wire.required = true;
-    } else if (fields.essentialType.value === 'tools') {
-      fields.toolsFields.classList.remove('hidden');
-      fields.tool.required = true;
-      fields.brand.required = true;
-      fields.condition.required = true;
+  // Handle "Other" fields
+  const showOtherValues = [
+    'material_other', 'shape_other', 'color_other', 'size_other',
+    'origin_other', 'essential_other', 'wire_other', 'tool_other',
+    'species_other', 'style_other', 'stage_other'
+  ];
+
+  if (showOtherValues.includes(selectedValue) && otherElement) {
+    otherElement.classList.remove('hidden');
+    otherElement.removeAttribute('aria-hidden');
+    otherElement.required = true;
+  }
+
+  // Handle category-specific fields
+  if (selectElement.id === 'item_category_type') {
+    const categoryFields = {
+      'plant': ['species', 'style', 'stage', 'material', 'shape', 'color', 'origin', 'size'],
+      'container': ['material', 'shape', 'color', 'origin', 'size'],
+      'essential': []
+    };
+
+    if (categoryFields[selectedValue]) {
+      categoryFields[selectedValue].forEach(fieldName => {
+        if (fields[fieldName]) fields[fieldName].required = true;
+      });
     }
   }
 
-  // Handle visibility of "Other" fields
-  const otherFieldMappings = [
-    { select: fields.material, other: otherFields.material, value: 'material_other' },
-    { select: fields.shape, other: otherFields.shape, value: 'shape_other' },
-    { select: fields.color, other: otherFields.color, value: 'color_other' },
-    { select: fields.origin, other: otherFields.origin, value: 'origin_other' },
-    { select: fields.size, other: otherFields.size, value: 'size_other' },
-    { select: fields.species, other: otherFields.species, value: 'species_other' },
-    { select: fields.style, other: otherFields.style, value: 'style_other' },
-    { select: fields.wire, other: otherFields.wire, value: 'wire_other' },
-    { select: fields.tool, other: otherFields.tool, value: 'tool_other' },
-    { select: fields.essentialType, other: otherFields.essential, value: 'essential_other' }
-  ];
-
-  otherFieldMappings.forEach(({ select, other, value }) => {
-    if (select && other && select.value === value) {
-      other.classList.remove('hidden');
-      other.required = true;
+  // Handle essential type
+  if (selectElement.id === 'item_essential_type') {
+    if (selectedValue === 'wire') {
+      fields.wireFields.classList.remove('hidden');
+      fields.toolsFields.classList.add('hidden');
+      fields.wire.required = true;
+    } else if (selectedValue === 'tools') {
+      fields.toolsFields.classList.remove('hidden');
+      fields.wireFields.classList.add('hidden');
+      fields.tool.required = true;
+      fields.brand.required = true;
+      fields.condition.required = true;
+    } else {
+      fields.wireFields.classList.add('hidden');
+      fields.toolsFields.classList.add('hidden');
     }
-  });
-};
+  }
+}

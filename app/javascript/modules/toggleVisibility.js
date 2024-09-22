@@ -1,16 +1,13 @@
-export function toggleVisibility(checkbox, field) {
-  checkbox.addEventListener('change', () => {
-    if (checkbox.checked) {
-      field.classList.remove('hidden');
-    } else {
-      field.classList.add('hidden');
-    }
+export function toggleVisibility(condition, elementsToShow = [], elementsToHide = []) {
+  // Hide all fields in the elementsToHide array
+  elementsToHide.forEach(element => {
+    if (element) element.classList.add('hidden');
   });
 
-  // Set initial visibility based on the checkbox state
-  if (checkbox.checked) {
-    field.classList.remove('hidden');
-  } else {
-    field.classList.add('hidden');
+  // Show all fields in the elementsToShow array if the condition is met
+  if (condition) {
+    elementsToShow.forEach(element => {
+      if (element) element.classList.remove('hidden');
+    });
   }
 }
