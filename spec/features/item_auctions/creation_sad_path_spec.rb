@@ -31,8 +31,8 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
   scenario 'form should not submit when material is missing for container category' do
     visit new_item_path
   
-    # Fill out data for container category but leave material blank
     fill_in 'item_name', with: 'Ceramic Pot'
+    fill_in 'item_description', with: 'Ceramic Pot that has no material'
     select 'Container', from: 'item_category_type'
     select 'Round', from: 'item_shape'
     select 'Blue', from: 'item_color'
@@ -95,6 +95,7 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
   
     # Select essential category and wire type
     fill_in 'item_name', with: 'Bonsai Wire'
+    fill_in 'item_description', with: 'Bonsai Wire Description'
     select 'Essential', from: 'item_category_type'
     select 'Wire', from: 'item_essential_type'
   
