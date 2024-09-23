@@ -1,26 +1,19 @@
-// Entry point for the build script in your package.json
-import "@hotwired/turbo-rails"
-import "./controllers"
+// app/javascript/application.js
 
-// Import necessary modules
-import { initializeAttributes } from './modules/initializeAttributes';
-import { initializeImageUpload } from './modules/initializeImageUpload';
-import { initializeFormSubmission } from './modules/initializeFormSubmission';
-import { initializeCategorySelection } from './modules/initializeCategorySelection';
-import { initializeListToggle } from './modules/initializeListToggle';
-import { initializeCountdown } from './modules/initializeCountdown';
-import { initializeBuyItNow } from './modules/initializeBuyItNow';
-import { initializeReservePrice } from './modules/initializeReservePrice';
-import { initializeTabs } from './modules/initializeTabs';
+// Import core dependencies that should be globally available across the entire app
+import Rails from '@rails/ujs';
+import Turbolinks from 'turbolinks';
+import * as ActiveStorage from '@rails/activestorage';
+import './application.css'; // Global CSS like Tailwind
 
-document.addEventListener('turbo:load', () => {
-  initializeAttributes();
-  initializeImageUpload();
-  initializeFormSubmission();
-  initializeCategorySelection();
-  initializeListToggle();
-  initializeCountdown();
-  initializeBuyItNow();
-  initializeReservePrice();
-  initializeTabs();
-});
+// Initialize Rails UJS, Turbolinks, and ActiveStorage globally
+Rails.start();
+Turbolinks.start();
+ActiveStorage.start();
+
+// Any other global utilities or configuration settings
+// Example: You could set up any global variables, polyfills, or configurations here
+
+console.log('Global application.js is loaded');
+
+// Optionally export modules for use elsewhere if needed
