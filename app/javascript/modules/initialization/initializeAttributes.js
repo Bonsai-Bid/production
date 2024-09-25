@@ -1,4 +1,4 @@
-import { handleSelectChange } from './handleSelectChange';
+
 
 export const initializeAttributes = () => {
   const categoryTypeSelect = document.getElementById('item_category_type');

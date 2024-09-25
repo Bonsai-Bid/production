@@ -1,4 +1,4 @@
-function resetField(field) {
+export function resetFields(field) {
   if (field) {
     field.classList.add('hidden');
     field.required = false;

@@ -1,4 +1,4 @@
-function updateCountdown(element) {
+export function updateCountdown(element) {
   const endDate = new Date(element.dataset.endDate);
   const now = new Date();
   const timeDiff = endDate - now;

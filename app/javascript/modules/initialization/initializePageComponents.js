@@ -1,16 +1,12 @@
-import { initializeCountdown } from './initializeCountdown';
-import { initializePriceVisibility } from './initializePriceVisibility';
-import { initializeTabs } from './initializeTabs';
-import { toggleVisibility } from '../visibility/toggleVisibility';
-// import { initializeCategorySelection } from '../visibility/initializeCategorySelection';
+
 
 export function initializePageComponents() {
   // Initialize countdowns
   initializeCountdown();
 
   // Initialize price visibility for "Buy it Now" and "Reserve Price"
-  initializePriceVisibility('enable_buy_it_now', 'buy_it_now_price_field');
-  initializePriceVisibility('enable_reserve_price', 'reserve_price_field');
+  initializeBuyNowReserve('enable_buy_it_now', 'buy_it_now_price_field');
+  initializeBuyNowReserve('enable_reserve_price', 'reserve_price_field');
 
   // Initialize tabs
   initializeTabs();

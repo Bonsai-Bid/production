@@ -1,4 +1,4 @@
-import { prepareFormForSubmission } from './prepareFormForSubmission';
+
 
 export function initializeFormSubmission(fieldsToConvert) {
   const form = document.querySelector('form');

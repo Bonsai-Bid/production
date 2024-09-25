@@ -1,6 +1,3 @@
-// import { toggleVisibility } from './toggleVisibility'; // Assuming toggleVisibility is in the same directory
-import { handleEssentialTypeVisibility } from './handleEssentialTypeVisibility'; // Ensure this is imported
-import { handleCategoryVisibility } from './handleCategoryVisibility'; // Ensure this is imported
 
 export function handleCategoryChange(selectElement, otherElement) {
   const selectedValue = selectElement.value;

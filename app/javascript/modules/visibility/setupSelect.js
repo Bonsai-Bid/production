@@ -1,4 +1,3 @@
-import { handleSelectChange } from './handleSelectChange';
 
 export function setupSelect(selectElement, otherElement) {
   handleSelectChange(selectElement, otherElement);

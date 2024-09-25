@@ -1,5 +1,5 @@
 // Handles essential type-specific visibility logic
-function handleEssentialTypeVisibility(selectedValue) {
+export function handleEssentialTypeVisibility(selectedValue) {
   const wireFields = document.getElementById('wire_fields');
   const toolsFields = document.getElementById('tools_fields');
   const wire = document.getElementById('item_wire');

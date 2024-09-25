@@ -1,6 +1,5 @@
-import { toggleVisibility } from './toggleVisibility'; // Assuming you have this utility
 
-export function initializePriceVisibility(checkboxId, priceFieldId) {
+export function initializeBuyNowReserve(checkboxId, priceFieldId) {
   const checkbox = document.getElementById(checkboxId);
   const priceField = document.getElementById(priceFieldId);
 

@@ -11,24 +11,70 @@ Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
+// Import specific modules from 'forms'
+import { handleFormSubmit } from '../modules/forms/handleFormSubmit';
+import { initializeFormSubmission } from '../modules/forms/initializeFormSubmission';
+import { prepareFormForSubmission } from '../modules/forms/prepareFormForSubmission';
+import { clearFormFields } from '../modules/helper/clearFormFields'; // Added
+import { resetFields } from '../modules/visibility/resetFields'; // Added
+
+// Import specific modules from 'imageUpload'
+import { createImagePreview } from '../modules/imageUpload/createImagePreview';
+import { handleFileSelect } from '../modules/imageUpload/handleFileSelect';
+import { initializeImageUpload } from '../modules/imageUpload/initializeImageUpload'; // Added
+import { updateImagePreview } from '../modules/imageUpload/updateImagePreview'; // Added
+
+// Import specific modules from 'initialization'
+import { initializeAttributes } from '../modules/initialization/initializeAttributes';
+import { initializeBuyNowReserve } from '../modules/initialization/initializeBuyNowReserve';
+import { initializeCountdown } from '../modules/initialization/initializeCountdown';
+import { initializeListToggle } from '../modules/initialization/initializeListToggle'; // Added
+import { initializePageComponents } from '../modules/initialization/initializePageComponents';
+import { initializeTabs } from '../modules/initialization/initializeTabs';
+import { updateCountdown } from '../modules/initialization/updateCountdown';
+
+// Import specific modules from 'visibility'
+import { handleCategoryChange } from '../modules/visibility/handleCategoryChange';
+import { handleCategoryVisibility } from '../modules/visibility/handleCategoryVisibility';
+import { handleEssentialTypeVisibility } from '../modules/visibility/handleEssentialTypeVisibility';
+import { setupSelect } from '../modules/visibility/setupSelect';
+import { showOtherField } from '../modules/visibility/showOtherField';
+import { toggleVisibility } from '../modules/visibility/toggleVisibility';
+
 // Ensure that everything re-initializes properly on Turbolinks page load
 document.addEventListener('turbolinks:load', () => {
-  // Initialize any additional JavaScript that needs to re-run after navigation
-  initializeFormSubmission(['price', 'quantity']);
-  initializeImageUpload();
+  // Initialize forms
+  handleFormSubmit();
+  initializeFormSubmission();
+  prepareFormForSubmission();
+  clearFormFields(); // Added
+  resetFields(); // Added
+
+  // Initialize image upload features
+  createImagePreview();
+  handleFileSelect();
+  initializeImageUpload(); // Added
+  updateImagePreview(); // Added
+
+  // Initialize general page components and attributes
   initializeAttributes();
+  initializeBuyNowReserve();
   initializeCountdown();
-  initializeListToggle();
+  initializeListToggle(); // Added
   initializePageComponents();
+  initializeTabs();
+  updateCountdown();
+
+  // Initialize visibility logic
+  handleCategoryChange();
+  handleCategoryVisibility();
+  handleEssentialTypeVisibility();
+  setupSelect();
+  showOtherField();
+  toggleVisibility();
 });
 
-// Import application-specific modules
-import { initializeFormSubmission } from '../form_submission'; // Adjust paths as needed
-import { initializeImageUpload } from '../image_initialization';
-import { initializeAttributes } from '../attribute_initialization';
-import { initializeCountdown } from '../countdown';
-import { initializeListToggle } from '../list_later';
-import { initializePageComponents } from '../auction_initialization'; // Assuming it includes auction-related component logic
+
 
 // Other imports for user profile, conditionals, etc., as needed
 import '../user_profile';

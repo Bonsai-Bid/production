@@ -1,4 +1,4 @@
-export function createImagePreviewElement(src, index) {
+export function createImagePreview(src, index) {
   const imgElement = document.createElement('div');
   imgElement.classList.add('relative', 'h-24', 'w-24', 'm-2');
 
