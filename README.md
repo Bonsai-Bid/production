@@ -1,8 +1,10 @@
 <br></br>
 ## Status
+Testing is broken at the moment. If you want to see the branch where it works, let me know
+
 This app is still in development. While a testing model is deployed to Heroku, it has not implemented most of the designers ideas. I am happy to provide a link if you would like to look around. 
 
-A lot of my original ideas started in another repo, but as we prepared for production, I have been migrating old ideas here as well as implementing refined ideas. I am currently (Early Sept, 2024) migrating the testing suite in RSpec over, and adding more edge case tests. Once that is done, I will migrate the Cucumber tests as well.
+A lot of my original ideas started in another repo, but as we prepared for production, I have been migrating old ideas here as well as implementing refined ideas. I am currently (Late Sept 2024) refactoring and fixing the JavaScript, while fixing tests. Once that is done, I will migrate the Cucumber tests as well. 
 
 Normally this repo is private but I have it open right now for presentation purposes, when this launches this will be private again - Brendan
 <br></br>
