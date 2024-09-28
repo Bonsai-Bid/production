@@ -1,8 +1,8 @@
-export function initializeFormSubmission(fieldsToConvert) {
-  const form = document.querySelector('form');
-  if (form) {
-    form.addEventListener('submit', (event) => {
-      prepareFormForSubmission(fieldsToConvert, form);
-    });
-  }
+import { handleFormSubmit } from './handleFormSubmit'; // Existing function
+import { prepareFormForSubmission } from './prepareFormForSubmission'; // Existing function
+
+export function initializeFormSubmission(form) {
+  form.addEventListener('submit', handleFormSubmit);
+  const fieldsToConvert = ['field1', 'field2']; // Replace with actual field IDs
+  prepareFormForSubmission(fieldsToConvert, form);
 }
