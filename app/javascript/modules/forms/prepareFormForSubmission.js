@@ -1,4 +1,8 @@
 export function prepareFormForSubmission(fieldsToConvert, form) {
+  if (!fieldsToConvert || fieldsToConvert.length === 0) {
+    console.error("No fields provided to convert.");
+    return;
+  }
   // Convert specified fields to integers
   fieldsToConvert.forEach(fieldId => {
     const field = document.getElementById(fieldId);

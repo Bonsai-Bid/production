@@ -1,4 +1,6 @@
 export function handleCategoryVisibility(selectedCategory) {
+  console.log("Handling visibility for category:", selectedCategory);
+
   const categoryFieldsMapping = {
     'plant': ['species', 'style', 'stage', 'material', 'shape', 'color', 'origin', 'size'],
     'container': ['material', 'shape', 'color', 'origin', 'size'],
@@ -10,6 +12,8 @@ export function handleCategoryVisibility(selectedCategory) {
   // Reset visibility and required status for all fields first
   allFieldIds.forEach(fieldId => {
     const field = document.getElementById(`item_${fieldId}`);
+    console.log(`Showing field: ${fieldId}`);
+
     if (field) {
       field.classList.add('hidden');
       field.required = false;

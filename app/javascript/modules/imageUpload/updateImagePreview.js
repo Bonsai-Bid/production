@@ -1,4 +1,4 @@
-
+import { getFilesArray } from './handleFileSelect';
 
 export function updateImagePreview() {
   const filesArray = getFilesArray(); // Access the global filesArray via the getter

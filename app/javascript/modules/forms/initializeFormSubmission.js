@@ -1,5 +1,3 @@
-
-
 export function initializeFormSubmission(fieldsToConvert) {
   const form = document.querySelector('form');
   if (form) {

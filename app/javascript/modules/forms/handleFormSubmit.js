@@ -1,4 +1,8 @@
 export async function handleFormSubmit(event) {
+  if (!event) {
+    console.error("No event detected. Is the form element correct?");
+    return;
+  }
   event.preventDefault();
 
   const form = event.target;

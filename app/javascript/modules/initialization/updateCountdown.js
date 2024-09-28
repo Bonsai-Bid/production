@@ -1,4 +1,9 @@
 export function updateCountdown(element) {
+  if (!element || !element.dataset || !element.dataset.endDate) {
+    console.error("Element or dataset.endDate is undefined or null.");
+    return;
+  }
+
   const endDate = new Date(element.dataset.endDate);
   const now = new Date();
   const timeDiff = endDate - now;

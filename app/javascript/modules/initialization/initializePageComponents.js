@@ -1,4 +1,6 @@
-
+import { initializeCountdown } from "./initializeCountdown";
+import { initializeBuyNowReserve } from "./initializeBuyNowReserve";
+import { initializeTabs } from "./initializeTabs";
 
 export function initializePageComponents() {
   // Initialize countdowns

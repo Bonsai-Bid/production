@@ -37,44 +37,75 @@ import { updateCountdown } from '../modules/initialization/updateCountdown';
 import { handleCategoryChange } from '../modules/visibility/handleCategoryChange';
 import { handleCategoryVisibility } from '../modules/visibility/handleCategoryVisibility';
 import { handleEssentialTypeVisibility } from '../modules/visibility/handleEssentialTypeVisibility';
+import { handleSelectChange } from '../modules/visibility/handleSelectChange';
 import { setupSelect } from '../modules/visibility/setupSelect';
-import { showOtherField } from '../modules/visibility/showOtherField';
 import { toggleVisibility } from '../modules/visibility/toggleVisibility';
 
 // Ensure that everything re-initializes properly on Turbolinks page load
 document.addEventListener('turbolinks:load', () => {
-  // Initialize forms
-  handleFormSubmit();
-  initializeFormSubmission();
-  prepareFormForSubmission();
-  clearFormFields(); // Added
-  resetFields(); // Added
+  console.log("Turbolinks page load");
 
-  // Initialize image upload features
+  // Form submission handling
+  const form = document.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', handleFormSubmit);
+
+    const fieldsToConvert = ['field1', 'field2']; // Replace with actual field IDs
+    initializeFormSubmission(fieldsToConvert);
+    prepareFormForSubmission(fieldsToConvert, form);
+  }
+
+  // Category select handling (item_category_type)
+  const categorySelect = document.getElementById('item_category_type');
+  if (categorySelect) {
+    console.log("Category select initialized:", categorySelect);
+    categorySelect.addEventListener('change', () => handleCategoryChange(categorySelect));
+    handleCategoryChange(categorySelect); // Initialize visibility logic on page load
+  } else {
+    console.error("Category select element not found.");
+  }
+
+  // Handling "Other" fields
+  const otherElement = document.getElementById('some_other_field'); // Replace with your actual ID
+  if (otherElement) {
+    console.log('Other element found:', otherElement);
+    // Add any additional handling for "Other" fields here
+  } else {
+    console.error('Other element is not found in the DOM.');
+  }
+
+  // Initialize image upload features (if the input exists)
+  const imageUpload = document.getElementById('image-upload');
+  if (imageUpload) {
+    initializeImageUpload();
+  } else {
+    console.error("Image upload input not found.");
+  }
+
+  // Initialize countdown if the element with data-end-date exists
+  const countdownElement = document.querySelector('[data-end-date]');
+  if (countdownElement) {
+    updateCountdown(countdownElement);
+  } else {
+    console.error("Countdown element with data-end-date not found.");
+  }
+
+  // General page component initialization
+  clearFormFields();
+  resetFields();
   createImagePreview();
+  updateImagePreview();
   handleFileSelect();
-  initializeImageUpload(); // Added
-  updateImagePreview(); // Added
+  handleSelectChange();
 
-  // Initialize general page components and attributes
   initializeAttributes();
   initializeBuyNowReserve();
-  initializeCountdown();
-  initializeListToggle(); // Added
+  initializeListToggle();
   initializePageComponents();
   initializeTabs();
-  updateCountdown();
-
-  // Initialize visibility logic
-  handleCategoryChange();
-  handleCategoryVisibility();
-  handleEssentialTypeVisibility();
-  setupSelect();
-  showOtherField();
-  toggleVisibility();
+  setupSelect(); // Handles dynamic selects
+  toggleVisibility(); // General visibility toggling
 });
-
-
 
 // Other imports for user profile, conditionals, etc., as needed
 import '../user_profile';
