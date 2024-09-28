@@ -2,6 +2,10 @@ import { handleCategoryChange } from './handleCategoryChange'; // Existing funct
 
 export function initializeCategorySelect(categorySelect) {
   console.log("Category select initialized:", categorySelect);
-  categorySelect.addEventListener('change', () => handleCategoryChange(categorySelect));
-  handleCategoryChange(categorySelect); // Initialize visibility logic on page load
+  if (categorySelect && categorySelect.value) {
+    categorySelect.addEventListener('change', () => handleCategoryChange(categorySelect));
+    handleCategoryChange(categorySelect); // Initialize visibility logic on page load
+  } else {
+    console.log("Category select is not yet set.");
+  }
 }
