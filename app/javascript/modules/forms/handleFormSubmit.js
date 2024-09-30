@@ -13,6 +13,7 @@ export async function handleFormSubmit(event) {
   }
 
   const formData = new FormData(form);
+  console.log("Form data before submission:", Object.fromEntries(formData)); // Log all form data before submission
 
   // Append files to form data, if applicable
   if (filesArray.length > 0) {

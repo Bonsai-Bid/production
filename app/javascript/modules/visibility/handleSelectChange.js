@@ -9,7 +9,7 @@ export function handleSelectChange(selectElement) {
   }
   
   const selectedValue = selectElement.value;
-  console.log("Handling select change, new value:", selectedValue);
+  console.log("Handling category change. Selected value:", selectedValue || "No value selected");
 
   // Trigger the visibility logic for categories
   handleCategoryVisibility(selectedValue);

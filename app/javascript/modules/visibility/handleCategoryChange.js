@@ -1,11 +1,12 @@
+import { handleCategoryVisibility } from './handleCategoryVisibility';
 
 export function handleCategoryChange(selectElement, otherElement) {
   if (!selectElement || !selectElement.value) {
     console.error("Select element is undefined or does not have a value.");
     return;
   }
-  console.log("Select element found, handling category change.");
-
+  console.log("Category changed to:", selectElement.value);
+  
   const selectedValue = selectElement.value;
 
   // Mapping for category-specific fields

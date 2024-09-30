@@ -8,6 +8,7 @@ import { initializeCategorySelect } from '../modules/visibility/initializeCatego
 import { initializeOtherField } from '../modules/visibility/initializeOtherField';
 import { initializeImageUpload } from '../modules/imageUpload/initializeImageUpload';
 import { initializeCountdown } from '../modules/initialization/initializeCountdown';
+import { handleCategoryVisibility } from '../modules/visibility/handleCategoryVisibility';
 
 // Initialize Rails, Turbolinks, and ActiveStorage
 Rails.start();
@@ -17,6 +18,7 @@ ActiveStorage.start();
 // Turbolinks: load event to ensure all features re-initialize on page change
 document.addEventListener('turbolinks:load', () => {
   console.log("Turbolinks page load");
+  
 
   const form = document.querySelector('form');
   if (form) {
@@ -25,7 +27,14 @@ document.addEventListener('turbolinks:load', () => {
 
   const categorySelect = document.getElementById('item_category_type');
   if (categorySelect) {
+    console.log("Category select element found:", categorySelect.value);
     initializeCategorySelect(categorySelect);
+    categorySelect.addEventListener('change', () => {
+      console.log("Category changed to:", categorySelect.value);
+      handleCategoryVisibility(categorySelect.value); // Handle visibility for the newly selected category
+    });
+  } else {
+    console.error("Category select element not found");
   }
 
   const otherElement = document.getElementById('some_other_field'); // Replace with actual ID
