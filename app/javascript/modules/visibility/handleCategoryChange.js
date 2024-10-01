@@ -1,4 +1,6 @@
 import { handleCategoryVisibility } from './handleCategoryVisibility';
+import { handleOtherFieldVisibility } from './handleOtherFieldVisibility';
+import { handleEssentialTypeVisibility} from './handleEssentialTypeVisibility';
 
 export function handleCategoryChange(selectElement, otherElement) {
   if (!selectElement || !selectElement.value) {
@@ -13,28 +15,17 @@ export function handleCategoryChange(selectElement, otherElement) {
   const categoryFields = {
     'plant': ['species', 'style', 'stage', 'material', 'shape', 'color', 'origin', 'size'],
     'container': ['material', 'shape', 'color', 'origin', 'size'],
-    'essential': [] // Add other fields if needed later
+    'essential': ['essential_type', 'wire', 'tool', 'brand', 'condition']
   };
 
-  // Handle essential-specific field visibility
-  if (selectElement.id === 'item_essential_type') {
-    handleEssentialTypeVisibility(selectedValue);
-  }
-
-  // Handle category-specific field visibility
   if (selectElement.id === 'item_category_type') {
     handleCategoryVisibility(selectedValue, categoryFields);
   }
 
-  // Handle "Other" field visibility (e.g., material_other, shape_other)
-  if (otherElement) {
-    const showOtherValues = ['material_other', 'shape_other', 'color_other', 'size_other', 'origin_other', 'essential_other', 'wire_other', 'tool_other', 'species_other', 'style_other', 'stage_other'];
-    showOtherFieldVisibility(selectedValue, otherElement, showOtherValues);
+  if (selectElement.id === 'item_essential_type') {
+    handleEssentialTypeVisibility(selectedValue);
   }
-}
 
-// Reusable toggle logic for "Other" fields
-function showOtherFieldVisibility(selectedValue, otherElement, showOtherValues) {
-  otherElement.classList.toggle('hidden', !showOtherValues.includes(selectedValue));
-  otherElement.required = showOtherValues.includes(selectedValue);
+  // Handle "Other" field visibility using the new module
+  handleOtherFieldVisibility(selectElement, otherElement);
 }
