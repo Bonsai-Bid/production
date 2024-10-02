@@ -10,7 +10,7 @@ class Item < ApplicationRecord
   enum color: { black: 1, blue: 2, green: 3, natural: 4, white: 5, color_other: 6 }, _prefix: true
   enum origin: { china: 1, japan: 2, us: 3, origin_other: 4 }, _prefix: true
   enum size: { extra_small: 1, small: 2, medium: 3, large: 4, extra_large: 5, extraextra_large: 6, size_other: 7 }, _prefix: true
-  enum essential_type: { books: 1, decorations: 2, soil: 3, stands: 4, supplements: 5, tools: 6, wire: 7, essential_other: 8 }, _prefix: true
+  enum essential_type: { books: 1, decorations: 2, soil: 3, stands: 4, supplements: 5, tool: 6, wire: 7, essential_other: 8 }, _prefix: true
   enum wire_type: { aluminum: 1, copper: 2, wire_other: 3 }, _prefix: true
   enum species: { azalea: 1, boxwood: 2, cypress: 3, elm: 4, ficus: 5, gingko: 6, juniper: 7, maple: 8, oak: 9, olive: 10, pine: 11, schefflera: 12, tea: 13, species_other: 14 }, _prefix: true
   enum species_category: { broadleaf_evergreen: 1, coniferous: 2, deciduous: 3, tropical: 4, species_category_other: 5 }, _prefix: true
