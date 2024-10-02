@@ -3,18 +3,16 @@
 
   <div class="mb-4">
     <%= form.label :species, 'Species', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :species, options_for_select([['', '']] + Item.species.keys.map { |key| [key.humanize, key] }, selected: form.object.species || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_species', data: { selected_value: form.object.species } %>
-    <%= form.text_field :species_other, value: form.object.species_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', id: 'item_species_other', placeholder: 'Other Species', aria: { hidden: true }, data: { selected_value: form.object.species_other } %>
+    <%= form.text_field :species, class: 'form-input mt-1 block w-full p-2 border rounded' %>
   </div>
 
   <div class="mb-4">
     <%= form.label :style, 'Style', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :style, options_for_select([['', '']] + Item.styles.keys.map { |key| [key.humanize, key] }, selected: form.object.style || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_style', data: { selected_value: form.object.style } %>
-    <%= form.text_field :style_other, value: form.object.style_other, class: 'form-input mt-2 block w-full p-2 border rounded hidden', id: 'item_style_other', placeholder: 'Other Style', aria: { hidden: true }, data: { selected_value: form.object.style_other } %>
+    <%= form.text_field :style, class: 'form-input mt-1 block w-full p-2 border rounded' %>
   </div>
 
   <div class="mb-4">
     <%= form.label :stage, 'Stage', class: 'block text-sm font-medium text-gray-700' %>
-    <%= form.select :stage, options_for_select([['', '']] + Item.stages.keys.map { |key| [key.humanize, key] }, selected: form.object.stage || "" ), {}, class: 'form-select mt-1 block w-full p-2 border rounded', id: 'item_stage', data: { selected_value: form.object.stage } %>
+    <%= form.text_field :stage, class: 'form-input mt-1 block w-full p-2 border rounded' %>
   </div>
 </fieldset>

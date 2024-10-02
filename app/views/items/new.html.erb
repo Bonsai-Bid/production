@@ -11,8 +11,8 @@
 
 <body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
     <div class="container mx-auto mt-5 px-4">
-        <%= form_with model: @item, local: true, html: { enctype: "multipart/form-data", class: "bg-white p-6 rounded shadow-md" } do |form| %>
-            <h1 id="form-title" class="mb-4 text-2xl font-bold">Edit Item</h1>
+        <%= form_with(model: @item, data: { controller: "category-visibility" }) do |form| %>
+            <h1 id="form-title" class="mb-4 text-2xl font-bold">New Item</h1>
 
             <div class="mb-4">
                 <%= form.label :name, 'Name', class: 'block text-sm font-medium text-gray-700' %>
@@ -26,12 +26,29 @@
 
             <div class="mb-4">
                 <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.select :category_type, Item.category_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-select mt-1 block w-full p-2 border rounded', required: true, id: 'item_category_type', data: { selected_value: form.object.category_type }, aria: { required: true } %>
+                <%= form.select :category_type, 
+                               options_for_select(Item.category_types.keys, @item.category_type), 
+                               { include_blank: true }, 
+                               { 
+                                 data: { 
+                                   category_visibility_target: "category",
+                                   action: "change->category-visibility#updateVisibility"
+                                 }
+                               } %>
             </div>
 
-            <%= render 'items/plant_fields', form: form %>
-            <%= render 'items/container_fields', form: form %>
-            <%= render 'items/essential_fields', form: form %>
+            <div data-category-visibility-target="plant" class="hidden">
+                <%= render 'items/plant_fields', form: form %>
+            </div>
+
+            <div data-category-visibility-target="container" class="hidden">
+                <%= render 'items/container_fields', form: form %>
+            </div>
+
+            <div data-category-visibility-target="essential" class="hidden">
+                <%= render 'items/essential_fields', form: form %>
+            </div>
+
             <%= render 'items/auction_fields', form: form %>
 
             <!-- Existing Images with Remove Option -->

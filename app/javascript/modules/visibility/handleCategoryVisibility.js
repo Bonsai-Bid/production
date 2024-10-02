@@ -1,38 +1,32 @@
-// import { handleEssentialTypeVisibility} from './handleEssentialTypeVisibility';
+// const categoryFields = {
+//   'plant': ['species', 'style', 'stage', 'material', 'shape', 'color', 'origin', 'size'],
+//   'container': ['material', 'shape', 'color', 'origin', 'size'],
+//   'essential': ['essential_type', 'wire', 'tool', 'brand', 'condition']
+// };
 
+// export function handleCategoryVisibility(selectedCategory) {
+//   console.log("Handling visibility for category:", selectedCategory);
+  
+//   const allFields = ['plant_fields', 'container_fields', 'essential_fields'];
+  
+//   // Hide all fields first
+//   allFields.forEach(fieldId => {
+//     const field = document.getElementById(fieldId);
+//     if (field) {
+//       field.classList.add('hidden');
+//     }
+//   });
 
-
-export function handleCategoryVisibility(selectedCategory) {
-  console.log("Handling visibility for category:", selectedCategory);
-
-  const categoryFieldsMapping = {
-    'plant': ['species', 'style', 'stage', 'material', 'shape', 'color', 'origin', 'size'],
-    'container': ['material', 'shape', 'color', 'origin', 'size'],
-    'essential': ['essential_type', 'wire', 'tool', 'brand', 'condition']
-  };
-
-  const allFieldIds = ['species', 'style', 'stage', 'material', 'shape', 'color', 'origin', 'size', 'essential_type', 'wire', 'tool', 'brand', 'condition'];
-
-  // Hide all fields initially
-  allFieldIds.forEach(fieldId => {
-    const field = document.getElementById(`item_${fieldId}`);
-    if (field) {
-      field.classList.add('hidden');
-      field.required = false;
-    }
-  });
-
-  // Show the relevant fields based on the selected category
-  if (categoryFieldsMapping[selectedCategory]) {
-    categoryFieldsMapping[selectedCategory].forEach(fieldId => {
-      const field = document.getElementById(`item_${fieldId}`);
-      if (field) {
-        console.log(`Showing field: ${fieldId}`);
-        field.classList.remove('hidden');
-        field.required = true;
-      }
-    });
-  } else {
-    console.log("No fields to show for selected category:", selectedCategory);
-  }
-}
+//   // Show relevant fields based on selected category
+//   if (selectedCategory in categoryFields) {
+//     const categoryContainer = document.getElementById(`${selectedCategory}_fields`);
+//     if (categoryContainer) {
+//       categoryContainer.classList.remove('hidden');
+      
+//       // Show all direct child divs of the category container
+//       categoryContainer.querySelectorAll(':scope > div').forEach(div => {
+//         div.classList.remove('hidden');
+//       });
+//     }
+//   }
+// }

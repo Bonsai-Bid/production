@@ -3,6 +3,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+.hidden {
+  display: none;
+}
+
 .tab-button {
   background-color: #f3f4f6;
   border: 1px solid #d1d5db;

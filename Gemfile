@@ -37,6 +37,7 @@ gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'vite_rails', '~> 3.0'
+gem 'vite_ruby'
 
 group :development, :test do
   gem 'awesome_nested_set'

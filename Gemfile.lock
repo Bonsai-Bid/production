@@ -515,6 +515,7 @@ DEPENDENCIES
   tzinfo-data
   vcr
   vite_rails (~> 3.0)
+  vite_ruby
   web-console
   webdrivers
   webmock
