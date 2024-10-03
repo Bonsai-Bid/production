@@ -1,40 +1,21 @@
 <div data-category-visibility-target="plant">
   <%= form.label :species, 'Species', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.text_field :species, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+  <%= form.select :species, options_for_select(Item.species.keys.map { |k| [k.humanize, k] }, @item.species), { include_blank: true }, { id: "item_plant_species", data: { action: "change->category-visibility#updateOtherField" } } %>
+  <div data-category-visibility-target="species_other" class="hidden">
+    <%= form.text_field :species_other, id: "item_plant_species_other", class: 'form-input mt-1 block w-full p-2 border rounded' %>
+  </div>
 
   <%= form.label :style, 'Style', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.text_field :style, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+  <%= form.select :style, options_for_select(Item.styles.keys.map { |k| [k.humanize, k] }, @item.style), { include_blank: true }, { id: "item_plant_style", data: { action: "change->category-visibility#updateOtherField" } } %>
+  <div data-category-visibility-target="style_other" class="hidden">
+    <%= form.text_field :style_other, id: "item_plant_style_other", class: 'form-input mt-1 block w-full p-2 border rounded' %>
+  </div>
 
   <%= form.label :stage, 'Stage', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.text_field :stage, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-
-  <%= form.label :material, 'Material', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :material, options_for_select(Item.materials.keys.map { |k| [k.humanize, k] }, @item.material), { include_blank: true }, { data: { action: "change->category-visibility#updateOtherField" } } %>
-  <div data-category-visibility-target="material_other" class="hidden">
-    <%= form.text_field :material_other, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <%= form.label :shape, 'Shape', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :shape, options_for_select(Item.shapes.keys.map { |k| [k.humanize, k] }, @item.shape), { include_blank: true }, { data: { action: "change->category-visibility#updateOtherField" } } %>
-  <div data-category-visibility-target="shape_other" class="hidden">
-    <%= form.text_field :shape_other, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <%= form.label :color, 'Color', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :color, options_for_select(Item.colors.keys.map { |k| [k.humanize, k] }, @item.color), { include_blank: true }, { data: { action: "change->category-visibility#updateOtherField" } } %>
-  <div data-category-visibility-target="color_other" class="hidden">
-    <%= form.text_field :color_other, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <%= form.label :origin, 'Origin', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :origin, options_for_select(Item.origins.keys.map { |k| [k.humanize, k] }, @item.origin), { include_blank: true }, { data: { action: "change->category-visibility#updateOtherField" } } %>
-  <div data-category-visibility-target="origin_other" class="hidden">
-    <%= form.text_field :origin_other, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-
-  <%= form.label :size, 'Size', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :size, options_for_select(Item.sizes.keys.map { |k| [k.humanize, k] }, @item.size), { include_blank: true }, { data: { action: "change->category-visibility#updateOtherField" } } %>
-  <div data-category-visibility-target="size_other" class="hidden">
-    <%= form.text_field :size_other, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+  <%= form.select :stage, options_for_select(Item.stages.keys.map { |k| [k.humanize, k] }, @item.stage), { include_blank: true }, { id: "item_plant_stage", data: { action: "change->category-visibility#updateOtherField" } } %>
+  <div data-category-visibility-target="stage_other" class="hidden">
+    <%= form.text_field :stage_other, id: "item_plant_stage_other", class: 'form-input mt-1 block w-full p-2 border rounded' %>
   </div>
 </div>
+
+
