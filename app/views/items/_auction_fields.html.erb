@@ -1,106 +1,109 @@
 <!-- app/views/items/_auction_fields.html.erb -->
 
-<% if @auction && @auction.errors.any? %>
-  <!-- Errors for auction -->
-  <% @auction.errors.full_messages.uniq.each do |message| %>
-    <div class="error-message"><%= message %></div>
-  <% end %>
-<% end %>
-
-<% if form.object.auction.present? %>
-  <% if form.object.auction.editable? %>
-    <%= form.fields_for :auction do |auction_form| %>
-
-      <!-- Starting Price -->
-      <div class="mb-4">
-        <%= auction_form.label :starting_price, 'Starting Price', class: 'block text-sm font-medium text-gray-700' %>
-        <%= auction_form.number_field :starting_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
-        <% if @auction && @auction.errors[:starting_price].any? %>
-          <div class="error-message">
-            <%= @auction.errors[:starting_price].first %>
-          </div>
-        <% end %>
-      </div>
-
-      <!-- Minimum Bid Increment -->
-      <div class="mb-4">
-        <%= auction_form.label :bid_increment, 'Minimum Bid Increment', class: 'block text-sm font-medium text-gray-700' %>
-        <%= auction_form.number_field :bid_increment, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
-        <% if @auction && @auction.errors[:bid_increment].any? %>
-          <div class="error-message">
-            <%= @auction.errors[:bid_increment].first %>
-          </div>
-        <% end %>
-      </div>
-
-      <!-- Buy It Now Checkbox -->
-      <div class="mb-4" data-controller="auction">
-        <%= auction_form.check_box :enable_buy_it_now, id: 'item_auction_enable_buy_it_now', data: { action: "change->auction#toggleBuyItNowPrice" } %>
-        <%= auction_form.label :enable_buy_it_now, 'Would you like to set a Buy It Now price?', for: 'item_auction_enable_buy_it_now', class: 'ml-2 text-sm font-medium text-gray-700' %>
-        
-        <!-- Buy It Now Price Field -->
-        <div class="mb-4 hidden" id="buy_it_now_price_field" data-auction-target="buyItNowPriceField">
-          <%= auction_form.label :buy_it_now_price, 'Buy It Now Price', class: 'block text-sm font-medium text-gray-700' %>
-          <%= auction_form.number_field :buy_it_now_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-        </div>
-      </div>
-
-<!-- Reserve Price Checkbox -->
 <div class="mb-4" data-controller="auction">
-  <%= auction_form.check_box :enable_reserve_price, id: 'item_auction_enable_reserve_price', data: { action: "change->auction#toggleReservePrice" } %>
-  <%= auction_form.label :enable_reserve_price, 'Would you like to set a minimum price?', for: 'item_auction_enable_reserve_price', class: 'ml-2 text-sm font-medium text-gray-700' %>
+  <% if @auction && @auction.errors.any? %>
+    <!-- Errors for auction -->
+    <% @auction.errors.full_messages.uniq.each do |message| %>
+      <div class="error-message"><%= message %></div>
+    <% end %>
+  <% end %>
 
-  <!-- Reserve Price Field -->
-  <div class="mb-4 hidden" id="reserve_price_field" data-auction-target="reservePriceField">
-    <%= auction_form.label :reserve_price, 'Reserve Price', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.number_field :reserve_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
+  <% if form.object.auction.present? %>
+    <% if form.object.auction.editable? %>
+      <%= form.fields_for :auction do |auction_form| %>
+
+        <!-- Starting Price -->
+        <div class="mb-4">
+          <%= auction_form.label :starting_price, 'Starting Price', class: 'block text-sm font-medium text-gray-700' %>
+          <%= auction_form.number_field :starting_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
+          <% if @auction && @auction.errors[:starting_price].any? %>
+            <div class="error-message">
+              <%= @auction.errors[:starting_price].first %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Minimum Bid Increment -->
+        <div class="mb-4">
+          <%= auction_form.label :bid_increment, 'Minimum Bid Increment', class: 'block text-sm font-medium text-gray-700' %>
+          <%= auction_form.number_field :bid_increment, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
+          <% if @auction && @auction.errors[:bid_increment].any? %>
+            <div class="error-message">
+              <%= @auction.errors[:bid_increment].first %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Buy It Now Checkbox and Price Field -->
+        <div class="mb-4">
+          <%= auction_form.check_box :enable_buy_it_now, id: 'item_auction_enable_buy_it_now', data: { action: "change->auction#toggleBuyItNowPrice" } %>
+          <%= auction_form.label :enable_buy_it_now, 'Would you like to set a Buy It Now price?', for: 'item_auction_enable_buy_it_now', class: 'ml-2 text-sm font-medium text-gray-700' %>
+
+          <!-- Buy It Now Price Field -->
+          <div class="mb-4 hidden" id="buy_it_now_price_field" data-auction-target="buyItNowPriceField">
+            <%= auction_form.label :buy_it_now_price, 'Buy It Now Price', class: 'block text-sm font-medium text-gray-700' %>
+            <%= auction_form.number_field :buy_it_now_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+          </div>
+        </div>
+
+        <!-- Reserve Price Checkbox and Field -->
+        <div class="mb-4">
+          <%= auction_form.check_box :enable_reserve_price, id: 'item_auction_enable_reserve_price', data: { action: "change->auction#toggleReservePrice" } %>
+          <%= auction_form.label :enable_reserve_price, 'Would you like to set a minimum price?', for: 'item_auction_enable_reserve_price', class: 'ml-2 text-sm font-medium text-gray-700' %>
+
+          <!-- Reserve Price Field -->
+          <div class="mb-4 hidden" id="reserve_price_field" data-auction-target="reservePriceField">
+            <%= auction_form.label :reserve_price, 'Reserve Price', class: 'block text-sm font-medium text-gray-700' %>
+            <%= auction_form.number_field :reserve_price, step: 1, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+          </div>
+        </div>
+
+        <!-- When should the auction start? -->
+        <div class="mb-4">
+          <h3 class="mt-4 text-2xl font-semibold">When should the auction start?</h3>
+
+          <!-- List Now Radio Button -->
+          <%= auction_form.radio_button :timing_option, 'list_now', id: 'list_now', data: { action: "change->auction#toggleListLaterFields" }, checked: true %>
+          <%= auction_form.label :timing_option, 'List Now', for: 'list_now', class: 'ml-2' %>
+
+          <!-- List Later Radio Button -->
+          <%= auction_form.radio_button :timing_option, 'list_later', id: 'list_later', data: { action: "change->auction#toggleListLaterFields" } %>
+          <%= auction_form.label :timing_option, 'List Later', for: 'list_later', class: 'ml-2' %>
+        </div>
+
+        <!-- List Later Fields -->
+        <div id="list_later_fields" class="mb-4 hidden" data-auction-target="listLaterFields">
+          <div class="mb-2">
+            <%= auction_form.label :start_date, 'Start Date', class: 'block text-sm font-medium text-gray-700' %>
+            <%= auction_form.date_field :start_date, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+          </div>
+          <div>
+            <%= auction_form.label :start_time, 'Start Time', class: 'block text-sm font-medium text-gray-700' %>
+            <%= auction_form.time_field :start_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
+          </div>
+        </div>
+
+        <!-- Auction Length -->
+<div id="length" class="mb-4">
+  <%= auction_form.label :auction_length, 'Auction Length (days)', class: 'block text-sm font-medium text-gray-700' %>
+  <%= auction_form.select :auction_length, options_for_select(3..14, auction_form.object.auction_length || 7), {}, class: 'form-select mt-1 block w-full p-2 border rounded' %>
 </div>
 
-      <!-- When should the auction start? -->
-<div class="mb-4">
-  <h3 class="mt-4 text-2xl font-semibold">When should the auction start?</h3>
-  
-  <%= auction_form.radio_button :timing_option, 'list_now', id: 'list_now', data: { action: "change->auction#toggleListLaterFields" }, checked: true %>
-  <%= auction_form.label :timing_option, 'List Now', for: 'list_now', class: 'ml-2' %>
-  
-  <%= auction_form.radio_button :timing_option, 'list_later', id: 'list_later', data: { action: "change->auction#toggleListLaterFields" } %>
-  <%= auction_form.label :timing_option, 'List Later', for: 'list_later', class: 'ml-2' %>
-</div>
+        <!-- Toggle End Time Button -->
+        <div class="mb-4">
+            <button type="button" id="toggle_end_time" class="mt-1 block text-sm font-medium text-gray-700" data-action="click->auction#toggleEndTime">Set Different End Time</button>
 
-<!-- List Later Fields -->
-<div id="list_later_fields" class="mb-4 hidden" data-auction-target="listLaterFields">
-  <div class="mb-2">
-    <%= auction_form.label :start_date, 'Start Date', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.date_field :start_date, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-  <div>
-    <%= auction_form.label :start_time, 'Start Time', class: 'block text-sm font-medium text-gray-700' %>
-    <%= auction_form.time_field :start_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
-</div>
+        </div>
 
-
-      <!-- Auction Length -->
-      <div id="length" class="mb-4">
-        <%= auction_form.label :auction_length, 'Auction Length (days)', class: 'block text-sm font-medium text-gray-700' %>
-        <%= auction_form.select :auction_length, options_for_select(1..14), {}, class: 'form-select mt-1 block w-full p-2 border rounded', data: { selected_value: auction_form.object.auction_length || 7 } %>
-      </div>
-
-<!-- Toggle End Time -->
-<div class="mb-4">
-  <button type="button" id="toggle_end_time" class="mt-1 block text-sm font-medium text-gray-700" data-action="click->auction#toggleEndTime">Set Different End Time</button>
-</div>
-
-<!-- End Time Fields -->
+        <!-- End Time Fields -->
 <div class="mb-4 hidden" id="end_time_fields" data-auction-target="endTimeFields">
   <%= auction_form.label :end_time, 'End Time', class: 'block text-sm font-medium text-gray-700' %>
   <%= auction_form.time_field :end_time, class: 'form-input mt-1 block w-full p-2 border rounded' %>
 </div>
 
-
+      <% end %>
+    <% else %>
+      <%= render 'shared/auction_details', auction: form.object.auction %>
     <% end %>
-  <% else %>
-    <%= render 'shared/auction_details', auction: form.object.auction %>
   <% end %>
-<% end %>
+</div>

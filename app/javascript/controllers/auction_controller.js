@@ -6,9 +6,12 @@ export default class extends Controller {
 
   connect() {
     // Ensure the correct fields are shown or hidden on initial page load
+    console.log("Auction controller connected");
+
     this.toggleBuyItNowPrice();
     this.toggleReservePrice();
     this.toggleListLaterFields();
+    // this.toggleEndTime();
   }
 
   // Toggles the Buy It Now price field based on checkbox
@@ -41,8 +44,10 @@ export default class extends Controller {
     const listLaterFields = this.listLaterFieldsTarget;
 
     if (listLaterRadio && listLaterRadio.checked) {
+      console.log("List Later selected, showing fields.");
       listLaterFields.classList.remove("hidden");
     } else {
+      console.log("List Now selected, hiding List Later fields.");
       listLaterFields.classList.add("hidden");
     }
   }
@@ -50,6 +55,7 @@ export default class extends Controller {
   // Toggles the End Time fields when "Set Different End Time" is clicked
   toggleEndTime() {
     const endTimeFields = this.endTimeFieldsTarget;
+    console.log("Toggling End Time fields visibility.");
 
     if (endTimeFields.classList.contains("hidden")) {
       endTimeFields.classList.remove("hidden");
