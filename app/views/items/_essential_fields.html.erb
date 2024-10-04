@@ -1,6 +1,12 @@
 <div data-category-visibility-target="essential">
   <%= form.label :essential_type, 'Essential Type', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :essential_type, options_for_select(Item.essential_types.keys.map { |k| [k.humanize, k] }, @item.essential_type), { include_blank: true }, { id: "item_essential_type", data: { action: "change->category-visibility#updateEssentialFields" } } %>
+<%= form.select :essential_type, 
+  options_for_select(Item.essential_types.keys.map { |k| [k.humanize, k] }, @item.essential_type), 
+  { include_blank: true }, 
+  { id: "item_essential_type", 
+    data: { action: "change->category-visibility#updateEssentialFields" } 
+  } 
+%>
   <div data-category-visibility-target="essential_other" class="hidden">
     <%= form.text_field :essential_other, id: "item_essential_other", class: 'form-input mt-1 block w-full p-2 border rounded' %>
   </div>

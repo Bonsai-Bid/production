@@ -17,4 +17,4 @@
 // console.log('Global application.js is loaded');
 
 // // Optionally export modules for use elsewhere if needed
-import "./controllers"
+// import "./controllers"
