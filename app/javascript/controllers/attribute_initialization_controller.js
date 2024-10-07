@@ -19,7 +19,7 @@ export default class extends Controller {
     const showOtherValues = [
       'material_other', 'shape_other', 'color_other', 'size_other',
       'origin_other', 'essential_other', 'wire_other', 'tool_other',
-      'species_other', 'style_other', 'stage_other'
+      'species_other', 'style_other'
     ]
 
     if (showOtherValues.includes(selectedValue)) {

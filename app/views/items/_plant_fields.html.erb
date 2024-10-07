@@ -34,10 +34,10 @@
     { include_blank: true }, 
     { id: "item_plant_stage", data: { action: "change->category-visibility#updateOtherField" } } 
   %>
-  <div data-category-visibility-target="stage_other" class="hidden">
+  <%# <div data-category-visibility-target="stage_other" class="hidden">
     <%= form.text_field :stage_other, 
       id: "item_plant_stage_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded' 
     %>
-  </div>
+  <%# </div> %> 
 </div>

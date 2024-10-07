@@ -49,18 +49,6 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'SQL injection patterns' do #Revisit this later
-      xit 'sanitizes fields with SQL injection patterns' do
-        # Attempt SQL injection via the first name field
-        user = User.new(first_name: "John; DROP TABLE users; --", last_name: "Doe", email: "test@example.com",
-                        phone: "123-456-7890", password: "password123@", password_confirmation: "password123@",
-                        street: "123 Elm St", city: "Anytown", state: "California", zip: "12345", 
-                        time_zone: "Pacific Time (US & Canada)")
-        
-        expect(user.valid?).to be_truthy # Model should still be valid after sanitization
-        expect(user.first_name).not_to include("DROP TABLE") # The harmful SQL is sanitized out
-      end
-
       it 'accepts names with single quotes' do
         user = User.new(first_name: "O'Brien", last_name: 'Doe')
         user.valid?
@@ -94,4 +82,4 @@ RSpec.describe User, type: :model do
       end
     end
   end
-end
+

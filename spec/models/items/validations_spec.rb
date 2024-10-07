@@ -43,7 +43,7 @@ RSpec.describe Item, type: :model do
         expect(item).not_to be_valid
         expect(item.errors[:wire_type]).to include("can't be blank")
   
-        item.essential_type = :tools
+        item.essential_type = :tool
         item.tool_type = nil
         expect(item).not_to be_valid
         expect(item.errors[:tool_type]).to include("can't be blank")

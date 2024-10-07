@@ -92,7 +92,10 @@ class Auction < ApplicationRecord
   end
 
   def set_auction_times
+    Rails.logger.debug("Setting auction times with timing_option: #{timing_option}")
+
     auction_length_in_days = auction_length.to_i
+    Rails.logger.debug("Auction length in days: #{auction_length_in_days}")
 
     case timing_option
     when 'list_now'

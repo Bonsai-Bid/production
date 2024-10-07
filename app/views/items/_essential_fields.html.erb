@@ -36,7 +36,5 @@
 <div data-category-visibility-target="condition" class="hidden">
   <%= form.label :condition, 'Condition', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :condition, options_for_select(Item.conditions.keys.map { |k| [k.humanize, k] }, @item.condition), { include_blank: true }, { id: "item_condition", data: { action: "change->category-visibility#updateOtherField" } } %>
-  <div data-category-visibility-target="condition_other" class="hidden">
-    <%= form.text_field :condition_other, id: "item_condition_other", class: 'form-input mt-1 block w-full p-2 border rounded' %>
-  </div>
+
 </div>

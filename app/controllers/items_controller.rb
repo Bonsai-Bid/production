@@ -22,27 +22,57 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.seller = current_user
-    if @item.auction.valid?
-      if @item.auction
-        @item.auction.seller_id = current_user.id
-        @item.auction.set_auction_times
-      else
-        @item.build_auction(seller_id: current_user.id)
-      end
+  
+    if @item.auction.present?
+      @item.auction.seller = current_user
+      @item.auction.set_auction_times
+    else
+      @item.build_auction(seller_id: current_user.id)
+      @item.auction.set_auction_times
     end
+  
     respond_to do |format|
       if @item.save
-        # Handle successful save
         attach_images if params[:item][:images].present?
         format.html { redirect_to dashboard_user_path(current_user), notice: "Item was successfully created." }
         format.json { render :show, status: :created, location: @item }
       else
-        # Render form with errors
+        # Log and show error messages
+        Rails.logger.debug @item.errors.full_messages
+        flash[:error] = @item.errors.full_messages
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
   end
+  
+
+  # def create
+  #   @item = Item.new(item_params)
+  #   @item.seller = current_user
+  #   @item.auction.set_auction_times
+  #   if @item.auction.valid?
+  #     if @item.auction
+  #       @item.auction.seller_id = current_user.id
+  #     else
+  #       @item.build_auction(seller_id: current_user.id)
+  #     end
+  #   end
+  #   respond_to do |format|
+  #     if @item.save
+  #       # Handle successful save
+  #       attach_images if params[:item][:images].present?
+  #       format.html { redirect_to dashboard_user_path(current_user), notice: "Item was successfully created." }
+  #       format.json { render :show, status: :created, location: @item }
+  #     else
+  #       # Render form with errors
+  #       flash[:error] = @item.errors.full_messages
+
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @item.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
   
   
 

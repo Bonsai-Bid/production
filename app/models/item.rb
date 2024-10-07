@@ -94,9 +94,9 @@ class Item < ApplicationRecord
   with_options if: -> { category_type == 'essential' } do
     validates :essential_type, presence: true
     validates :wire_type, presence: true, if: -> { essential_type == 'wire' }
-    validates :tool_type, presence: true, if: -> { essential_type == 'tools' }
-    validates :brand, presence: true, if: -> { essential_type == 'tools' }
-    validates :condition, presence: true, if: -> { essential_type == 'tools' }
+    validates :tool_type, presence: true, if: -> { essential_type == 'tool' }
+    validates :brand, presence: true, if: -> { essential_type == 'tool' }
+    validates :condition, presence: true, if: -> { essential_type == 'tool' }
   end
 
   # Validate other fields when needed

@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = [
     "category", "plant", "container", "essential", "wire", "tool", "brand", "condition",
     "material_other", "shape_other", "color_other", "origin_other", "size_other",
-    "essential_other", "wire_other", "tool_other", "condition_other", "species_other", "style_other", "stage_other"
+    "essential_other", "wire_other", "tool_other", "species_other", "style_other"
   ]
 
   connect() {
@@ -46,7 +46,7 @@ export default class extends Controller {
     this.essential_otherTarget.classList.add('hidden')
     this.wire_otherTarget.classList.add('hidden')
     this.tool_otherTarget.classList.add('hidden')
-    this.condition_otherTarget.classList.add('hidden')
+    // this.condition_otherTarget.classList.add('hidden')
   }
 
   showPlantFields() {
@@ -110,9 +110,9 @@ export default class extends Controller {
       case "item_plant_style":
         otherField = this.style_otherTarget;
         break;
-      case "item_plant_stage":
-        otherField = this.stage_otherTarget;
-        break;
+      // case "item_plant_stage":
+      //   otherField = this.stage_otherTarget;
+      //   break;
       case "item_container_material":
         otherField = this.material_otherTarget;
         break;
@@ -134,9 +134,9 @@ export default class extends Controller {
       case "item_tool_type":
         otherField = this.tool_otherTarget;
         break;
-      case "item_condition":
-        otherField = this.condition_otherTarget;
-        break;
+      // case "item_condition":
+      //   otherField = this.condition_otherTarget;
+      //   break;
       case "item_essential_type":
         otherField = this.essential_otherTarget;
         break;

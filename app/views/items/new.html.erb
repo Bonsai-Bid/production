@@ -27,6 +27,10 @@
             </div>
 
             <%= render 'items/auction_fields', form: form %>
+
+            <div>
+                <%= form.submit 'Create Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+            </div>
         <% end %>
     </div>
 </body>
