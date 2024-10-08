@@ -12,12 +12,12 @@
 <div class="mb-4">
   <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :category_type, 
-                 options_for_select(Item.category_types.keys, @item.category_type), 
-                 { include_blank: true }, 
-                 { 
-                   data: { 
-                     category_visibility_target: "category",
-                     action: "change->category-visibility#updateVisibility"
-                   }
-                 } %>
+                  options_for_select(Item.category_types.keys.map { |k| [k.capitalize, k] }, @item.category_type), 
+                  { include_blank: true }, 
+                  { 
+                    data: { 
+                      category_visibility_target: "category",
+                      action: "change->category-visibility#updateVisibility"
+                    }
+                  } %>
 </div>

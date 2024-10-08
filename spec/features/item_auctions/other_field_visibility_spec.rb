@@ -14,24 +14,24 @@ RSpec.feature "Item Creation - Other Fields Visibility", type: :feature, js: tru
       select 'Container', from: 'item_category_type'
 
       # Material
-      select 'Other', from: 'item_material'
-      expect(page).to have_selector('#item_material_other', visible: true)
+      select 'Material other', from: 'item_container_material'
+      expect(page).to have_selector('#item_container_material_other', visible: true)
 
       # Shape
-      select 'Other', from: 'item_shape'
-      expect(page).to have_selector('#item_shape_other', visible: true)
+      select 'Shape other', from: 'item_container_shape'
+      expect(page).to have_selector('#item_container_shape_other', visible: true)
 
       # Color
-      select 'Other', from: 'item_color'
-      expect(page).to have_selector('#item_color_other', visible: true)
+      select 'Color other', from: 'item_container_color'
+      expect(page).to have_selector('#item_container_color_other', visible: true)
 
       # Size
-      select 'Other', from: 'item_size'
-      expect(page).to have_selector('#item_size_other', visible: true)
+      select 'Size other', from: 'item_container_size'
+      expect(page).to have_selector('#item_container_size_other', visible: true)
 
       # Origin
-      select 'Other', from: 'item_origin'
-      expect(page).to have_selector('#item_origin_other', visible: true)
+      select 'Origin other', from: 'item_container_origin'
+      expect(page).to have_selector('#item_container_origin_other', visible: true)
     end
 
     it 'displays the Other field for essential type when "Other" is selected and the category is "Essential"' do
@@ -39,7 +39,7 @@ RSpec.feature "Item Creation - Other Fields Visibility", type: :feature, js: tru
       select 'Essential', from: 'item_category_type'
 
       # Essential Type
-      select 'Other', from: 'item_essential_type'
+      select 'Essential other', from: 'item_essential_type'
       expect(page).to have_selector('#item_essential_other', visible: true)
     end
 
@@ -51,10 +51,10 @@ RSpec.feature "Item Creation - Other Fields Visibility", type: :feature, js: tru
       select 'Wire', from: 'item_essential_type'
       
       # Check if the Wire fields are visible
-      expect(page).to have_selector('#wire_fields', visible: true)
+      expect(page).to have_selector('#item_wire_type', visible: true)
 
       # Select "Other" from the Wire Type dropdown
-      select 'Other', from: 'item_wire'
+      select 'Wire other', from: 'item_wire_type'
       expect(page).to have_selector('#item_wire_other', visible: true)
     end
 
@@ -63,13 +63,13 @@ RSpec.feature "Item Creation - Other Fields Visibility", type: :feature, js: tru
       select 'Essential', from: 'item_category_type'
 
       # Select "Tools" from the Essential Type dropdown
-      select 'Tools', from: 'item_essential_type'
+      select 'Tool', from: 'item_essential_type'
 
       # Check if the Tools fields are visible
-      expect(page).to have_selector('#tools_fields', visible: true)
+      expect(page).to have_selector('#item_tool_type', visible: true)
 
       # Select "Other" from the Tool Type dropdown
-      select 'Other', from: 'item_tool'
+      select 'Tool other', from: 'item_tool_type'
       expect(page).to have_selector('#item_tool_other', visible: true)
     end
 
@@ -78,8 +78,8 @@ RSpec.feature "Item Creation - Other Fields Visibility", type: :feature, js: tru
       select 'Plant', from: 'item_category_type'
 
       # Species
-      select 'Species other', from: 'item_species'
-      expect(page).to have_selector('#item_species_other', visible: true)
+      select 'Species other', from: 'item_plant_species'
+      expect(page).to have_selector('#item_plant_species_other', visible: true)
     end
 
     it 'displays the Other field for style when "Other" is selected and the category is "Plant"' do
@@ -87,8 +87,8 @@ RSpec.feature "Item Creation - Other Fields Visibility", type: :feature, js: tru
       select 'Plant', from: 'item_category_type'
 
       # Style
-      select 'Style other', from: 'item_style'
-      expect(page).to have_selector('#item_style_other', visible: true)
+      select 'Style other', from: 'item_plant_style'
+      expect(page).to have_selector('#item_plant_style_other', visible: true)
     end
   end
 end

@@ -34,17 +34,17 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
     fill_in 'item_name', with: 'Ceramic Pot'
     fill_in 'item_description', with: 'Ceramic Pot that has no material'
     select 'Container', from: 'item_category_type'
-    select 'Round', from: 'item_shape'
-    select 'Blue', from: 'item_color'
-    select 'China', from: 'item_origin'
-    select 'Small', from: 'item_size'
+    select 'Round', from: 'item_container_shape'
+    select 'Blue', from: 'item_container_color'
+    select 'China', from: 'item_container_origin'
+    select 'Small', from: 'item_container_size'
   
     # Submit form
     click_button 'Create Item'
   
     # Check validation for missing material
-    material_valid = page.evaluate_script("document.querySelector('#item_material').validity.valid")
-    material_validation_message = page.evaluate_script("document.querySelector('#item_material').validationMessage")
+    material_valid = page.evaluate_script("document.querySelector('#item_container_material').validity.valid")
+    material_validation_message = page.evaluate_script("document.querySelector('#item_container_material').validationMessage")
     expect(material_valid).to be false
     expect(material_validation_message).to include('Please select an item in the list.')
   end
@@ -55,9 +55,9 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
     # Select "Other" for species
     fill_in 'item_name', with: 'Beautiful Bonsai'
     select 'Plant', from: 'item_category_type'
-    select 'Species other', from: 'item_species'
-    select 'Formal upright', from: 'item_style'
-    select 'Development', from: 'item_stage'
+    select 'Species other', from: 'item_plant_species'
+    select 'Formal upright', from: 'item_plant_style'
+    select 'Development', from: 'item_plant_stage'
   
     # Submit form
     click_button 'Create Item'
@@ -75,7 +75,7 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
     # Select "Other" for tool
     fill_in 'item_name', with: 'Bonsai Shears'
     select 'Essential', from: 'item_category_type'
-    select 'Tools', from: 'item_essential_type'
+    select 'Tool', from: 'item_essential_type'
     select 'Other', from: 'item_tool'
     fill_in 'item_brand', with: 'BonsaiMaster'
     select 'New', from: 'item_condition'

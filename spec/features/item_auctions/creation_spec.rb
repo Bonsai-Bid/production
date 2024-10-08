@@ -120,7 +120,7 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
       # Fill out valid data for essential tools type
       fill_in 'item_name', with: 'Bonsai Shears'
       select 'Essential', from: 'item_category_type'
-      select 'Tools', from: 'item_essential_type'
+      select 'Tool', from: 'item_essential_type'
       select 'Shears', from: 'item_tool'
       fill_in 'item_brand', with: 'BonsaiMaster'
       select 'New', from: 'item_condition'
@@ -141,7 +141,7 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
     # Fill out valid data for essential tools type
     fill_in 'item_name', with: 'Bonsai Shears'
     select 'Essential', from: 'item_category_type'
-    select 'Tools', from: 'item_essential_type'
+    select 'Tool', from: 'item_essential_type'
     select 'Shears', from: 'item_tool'
     fill_in 'item_brand', with: 'BonsaiMaster'
     select 'New', from: 'item_condition'

@@ -53,7 +53,7 @@ FactoryBot.define do
         item.essential_type = Item.essential_types.keys.sample unless item.essential_type.present?
         if item.essential_type == 'wire'
           item.wire_type = Item.wire_types.keys.sample unless item.wire_type.present?
-        elsif item.essential_type == 'tools'
+        elsif item.essential_type == 'tool'
           item.tool_type = Item.tool_types.keys.sample unless item.tool_type.present?
           item.condition = Item.conditions.keys.sample unless item.condition.present?
           item.brand = "Tool Brand"
