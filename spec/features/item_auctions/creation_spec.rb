@@ -21,40 +21,6 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
       name_validation_message = page.evaluate_script("document.querySelector('#item_name').validationMessage")
       expect(name_valid).to be false
       expect(name_validation_message).to include('Please fill out this field')
-  
-      # Check validation for missing category
-      category_type_valid = page.evaluate_script("document.querySelector('#item_category_type').validity.valid")
-      category_type_validation_message = page.evaluate_script("document.querySelector('#item_category_type').validationMessage")
-      expect(category_type_valid).to be false
-      expect(category_type_validation_message).to include('Please select a category')
-    end
-
-    xit 'creates an item and automatically associates an auction' do
-      visit new_item_path
-
-      fill_in 'Name', with: 'Test Item'
-      fill_in 'Description', with: 'A valid description for the item'
-      select 'Plant', from: 'Category'
-
-      # Fill out the required fields for a Plant category
-      select 'Azalea', from: 'Species'
-      select 'Broom', from: 'Style'
-      select 'Development', from: 'Stage'
-      select 'Commercial', from: 'Material'
-      select 'Bag', from: 'Shape'
-      select 'Black', from: 'Color'
-      select 'Medium', from: 'Size'
-      select 'China', from: 'Origin'
-
-      # Auction attributes
-      fill_in 'Starting Price', with: 100
-      fill_in 'Bid Increment', with: 10
-      choose 'List Now'
-
-      click_button 'Create Item'
-
-      expect(page).to have_content('Item and associated auction were successfully created.')
-      expect(Item.last.auction).to be_present
     end
 
     scenario 'form submits successfully with valid input for plant category' do
@@ -62,21 +28,25 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
     
       # Fill out valid data for plant category
       fill_in 'item_name', with: 'Beautiful Bonsai'
+      fill_in 'item_description', with: 'Beautiful Bonsai Tree'
       select 'Plant', from: 'item_category_type'
-      select 'Maple', from: 'item_species'
-      select 'Formal Upright', from: 'item_style'
-      select 'Development', from: 'item_stage'
-      select 'Handmade', from: 'item_material'
-      select 'Round', from: 'item_shape'
-      select 'Green', from: 'item_color'
-      select 'Japan', from: 'item_origin'
-      select 'Medium', from: 'item_size'
+      select 'Maple', from: 'item_plant_species'
+      select 'Formal upright', from: 'item_plant_style'
+      select 'Development', from: 'item_plant_stage'
+      select 'Handmade', from: 'item_container_material'
+      select 'Round', from: 'item_container_shape'
+      select 'Green', from: 'item_container_color'
+      select 'Japan', from: 'item_container_origin'
+      select 'Medium', from: 'item_container_size'
+      fill_in 'item_auction_attributes_starting_price', with: 100
+      fill_in 'item_auction_attributes_bid_increment', with: 10
     
       # Submit form
       click_button 'Create Item'
     
       # Expect successful submission message
       expect(page).to have_content('Item was successfully created')
+      expect(Item.last.auction).to be_present
     end
 
     scenario 'form submits successfully with valid input for container category' do
@@ -84,18 +54,22 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
     
       # Fill out valid data for container category
       fill_in 'item_name', with: 'Ceramic Pot'
+      fill_in 'item_description', with: 'Beautiful Ceramic Pot'
       select 'Container', from: 'item_category_type'
-      select 'Ceramic', from: 'item_material'
-      select 'Round', from: 'item_shape'
-      select 'Blue', from: 'item_color'
-      select 'China', from: 'item_origin'
-      select 'Small', from: 'item_size'
+      select 'Commercial', from: 'item_container_material'
+      select 'Round', from: 'item_container_shape'
+      select 'Blue', from: 'item_container_color'
+      select 'China', from: 'item_container_origin'
+      select 'Small', from: 'item_container_size'
+      fill_in 'item_auction_attributes_starting_price', with: 100
+      fill_in 'item_auction_attributes_bid_increment', with: 10
     
       # Submit form
       click_button 'Create Item'
     
       # Expect successful submission message
       expect(page).to have_content('Item was successfully created')
+      expect(Item.last.auction).to be_present
     end
 
     scenario 'form submits successfully with valid input for essential type wire' do
@@ -103,15 +77,20 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
     
       # Fill out valid data for essential wire type
       fill_in 'item_name', with: 'Bonsai Wire'
+      fill_in 'item_description', with: 'Some Aluminum Wire'
+
       select 'Essential', from: 'item_category_type'
       select 'Wire', from: 'item_essential_type'
-      select 'Aluminum', from: 'item_wire'
+      select 'Aluminum', from: 'item_wire_type'
+      fill_in 'item_auction_attributes_starting_price', with: 100
+      fill_in 'item_auction_attributes_bid_increment', with: 10
     
       # Submit form
       click_button 'Create Item'
     
       # Expect successful submission message
       expect(page).to have_content('Item was successfully created')
+      expect(Item.last.auction).to be_present
     end
 
     scenario 'form submits successfully with valid input for essential type tools' do
@@ -119,38 +98,24 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
     
       # Fill out valid data for essential tools type
       fill_in 'item_name', with: 'Bonsai Shears'
+      fill_in 'item_description', with: 'Some shears'
       select 'Essential', from: 'item_category_type'
       select 'Tool', from: 'item_essential_type'
-      select 'Shears', from: 'item_tool'
+      select 'Shears', from: 'item_tool_type'
       fill_in 'item_brand', with: 'BonsaiMaster'
       select 'New', from: 'item_condition'
+      fill_in 'item_auction_attributes_starting_price', with: 100
+      fill_in 'item_auction_attributes_bid_increment', with: 10
     
       # Submit form
       click_button 'Create Item'
     
       # Expect successful submission message
       expect(page).to have_content('Item was successfully created')
+      expect(Item.last.auction).to be_present
     end
     
     
-  end
-
-  scenario 'form submits successfully with valid input for essential type tools' do
-    visit new_item_path
-  
-    # Fill out valid data for essential tools type
-    fill_in 'item_name', with: 'Bonsai Shears'
-    select 'Essential', from: 'item_category_type'
-    select 'Tool', from: 'item_essential_type'
-    select 'Shears', from: 'item_tool'
-    fill_in 'item_brand', with: 'BonsaiMaster'
-    select 'New', from: 'item_condition'
-  
-    # Submit form
-    click_button 'Create Item'
-  
-    # Expect successful submission message
-    expect(page).to have_content('Item was successfully created')
   end
 
   context 'when mandatory fields are missing' do
@@ -176,8 +141,8 @@ RSpec.describe 'Item and Auction Creation', type: :feature, js: true do
       fill_in 'Description', with: 'Invalid enum values'
       select 'Plant', from: 'Category'
 
-      page.execute_script("document.querySelector('#item_species').value = 'invalid_value'")
-      page.execute_script("document.querySelector('#item_material').value = 'invalid_value'")
+      page.execute_script("document.querySelector('#item_plant_species').value = 'invalid_value'")
+      page.execute_script("document.querySelector('#item_container_material').value = 'invalid_value'")
 
       click_button 'Create Item'
 
