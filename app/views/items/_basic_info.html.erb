@@ -6,14 +6,14 @@
 
 <div class="mb-4">
   <%= form.label :description, 'Description', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded' %>
+  <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded', required: true, aria: { required: true } %>
 </div>
 
 <div class="mb-4">
   <%= form.label :category_type, 'Category', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :category_type, 
                   options_for_select(Item.category_types.keys.map { |k| [k.capitalize, k] }, @item.category_type), 
-                  { include_blank: true }, 
+                  { include_blank: true, required: true }, 
                   { 
                     data: { 
                       category_visibility_target: "category",
