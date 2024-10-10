@@ -13,96 +13,274 @@ export default class extends Controller {
   }
 
   updateVisibility() {
-    const selectedCategory = this.categoryTarget.value
-    this.hideAllFields()
+    const selectedCategory = this.categoryTarget.value;
+    this.hideAllFields();
 
     switch (selectedCategory) {
       case 'plant':
-        this.showPlantFields()
-        this.showContainerFields()
-        break
+        this.showPlantFields();
+        this.showContainerFields(); // Also show container fields when 'plant' is selected
+        break;
       case 'container':
-        this.showContainerFields()
-        break
+        this.showContainerFields();
+        break;
       case 'essential':
-        this.showEssentialFields()
-        break
+        this.showEssentialFields();
+        break;
     }
   }
 
   hideAllFields() {
-    this.plantTarget.classList.add('hidden')
-    this.containerTarget.classList.add('hidden')
-    this.essentialTarget.classList.add('hidden')
-    this.wireTarget.classList.add('hidden')
-    this.toolTarget.classList.add('hidden')
-    this.brandTarget.classList.add('hidden')
-    this.conditionTarget.classList.add('hidden')
-    this.material_otherTarget.classList.add('hidden')
-    this.shape_otherTarget.classList.add('hidden')
-    this.color_otherTarget.classList.add('hidden')
-    this.origin_otherTarget.classList.add('hidden')
-    this.size_otherTarget.classList.add('hidden')
-    this.essential_otherTarget.classList.add('hidden')
-    this.wire_otherTarget.classList.add('hidden')
-    this.tool_otherTarget.classList.add('hidden')
-    // this.condition_otherTarget.classList.add('hidden')
+    this.plantTarget.classList.add('hidden');
+    this.containerTarget.classList.add('hidden');
+    this.essentialTarget.classList.add('hidden');
+    this.wireTarget.classList.add('hidden');
+    this.toolTarget.classList.add('hidden');
+    this.brandTarget.classList.add('hidden');
+    this.conditionTarget.classList.add('hidden');
+    this.material_otherTarget.classList.add('hidden');
+    this.shape_otherTarget.classList.add('hidden');
+    this.color_otherTarget.classList.add('hidden');
+    this.origin_otherTarget.classList.add('hidden');
+    this.size_otherTarget.classList.add('hidden');
+    this.essential_otherTarget.classList.add('hidden');
+    this.wire_otherTarget.classList.add('hidden');
+    this.tool_otherTarget.classList.add('hidden');
+
+    // Remove required attributes for all inputs when fields are hidden
+    this.removeRequiredFromAllFields();
+  }
+
+  removeRequiredFromAllFields() {
+    // Remove 'required' attribute for all form fields
+    const allTargets = [this.plantTarget, this.containerTarget, this.essentialTarget, this.wireTarget, this.toolTarget];
+    allTargets.forEach(target => {
+      if (target) {
+        target.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = false;
+        });
+      }
+    });
   }
 
   showPlantFields() {
-    this.plantTarget.classList.remove('hidden')
+    this.plantTarget.classList.remove('hidden');
+    this.plantTarget.querySelectorAll('input, select, textarea').forEach(input => {
+      if (!input.id.includes('other')) {
+        input.required = true;  // Only apply required to non-"other" fields
+      }
+    });
   }
 
   showContainerFields() {
-    this.containerTarget.classList.remove('hidden')
+    this.containerTarget.classList.remove('hidden');
+    this.containerTarget.querySelectorAll('input, select, textarea').forEach(input => {
+      if (!input.id.includes('other')) {
+        input.required = true;  // Only apply required to non-"other" fields
+      }
+    });
   }
 
   showEssentialFields() {
-    this.essentialTarget.classList.remove('hidden')
+    this.essentialTarget.classList.remove('hidden');
+    this.essentialTarget.querySelectorAll('input, select, textarea').forEach(input => {
+      if (!input.id.includes('other')) {
+        input.required = true;  // Only apply required to non-"other" fields
+      }
+    });
   }
+
   updateEssentialFields(event) {
     const selectedEssential = event.target.value;
-  
-    // Hide all essential subfields first
-    this.hideEssentialSubFields();
-  
-    // Show specific fields based on selected value
+    this.hideEssentialSubFields(); // Hide all subfields first
+
     switch (selectedEssential) {
       case 'wire':
-        this.wireTarget.classList.remove('hidden');
+        this.showWireFields();
         break;
       case 'tool':
-        this.toolTarget.classList.remove('hidden');
-        this.brandTarget.classList.remove('hidden');
-        this.conditionTarget.classList.remove('hidden');
+        this.showToolFields();
         break;
       case 'other':
-        this.essential_otherTarget.classList.remove('hidden');
+        this.showEssentialOtherField();
         break;
       default:
         break;
     }
-  
-    // Also trigger the updateOtherField logic to show/hide "other" fields
+
     this.updateOtherField(event);
   }
-  
+
   hideEssentialSubFields() {
-    // Hide all fields initially
     this.wireTarget.classList.add('hidden');
     this.toolTarget.classList.add('hidden');
     this.brandTarget.classList.add('hidden');
     this.conditionTarget.classList.add('hidden');
     this.essential_otherTarget.classList.add('hidden');
+
+    // Remove required attributes for essential subfields
+    this.removeRequiredFromEssentialFields();
   }
-  
+
+  removeRequiredFromEssentialFields() {
+    [this.wireTarget, this.toolTarget, this.brandTarget, this.conditionTarget, this.essential_otherTarget].forEach(target => {
+      if (target) {
+        target.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = false;
+        });
+      }
+    });
+  }
+
+  showWireFields() {
+    this.wireTarget.classList.remove('hidden');
+    this.wireTarget.querySelectorAll('input, select, textarea').forEach(input => {
+      if (!input.id.includes('other')) {
+        input.required = true;  // Only apply required to non-"other" fields
+      }
+    });
+  }
+
+  showToolFields() {
+    this.toolTarget.classList.remove('hidden');
+    this.toolTarget.querySelectorAll('input, select, textarea').forEach(input => {
+      if (!input.id.includes('other')) {
+        input.required = true;  // Only apply required to non-"other" fields
+      }
+    });
+    this.brandTarget.classList.remove('hidden');
+    this.conditionTarget.classList.remove('hidden');
+  }
+
+  showEssentialOtherField() {
+    this.essential_otherTarget.classList.remove('hidden');
+    this.essential_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+      input.required = true;  // Only make "other" required when "other" is selected
+    });
+  }
+
+  updatePlantFields(event) {
+    const selectedPlant = event.target.value;
+    this.hidePlantSubFields(); // Hide all subfields first
+
+    switch (selectedPlant) {
+      case 'species':
+        this.speciesTarget.classList.remove('hidden');
+        this.speciesTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          if (!input.id.includes('other')) {
+            input.required = true;
+          }
+        });
+        break;
+      case 'style':
+        this.styleTarget.classList.remove('hidden');
+        this.styleTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          if (!input.id.includes('other')) {
+            input.required = true;
+          }
+        });
+        break;
+      case 'other':
+        this.species_otherTarget.classList.remove('hidden');
+        this.style_otherTarget.classList.remove('hidden');
+        this.species_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = true;
+        });
+        this.style_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = true;
+        });
+        break;
+      default:
+        break;
+    }
+
+    this.updateOtherField(event);
+  }
+
+  hidePlantSubFields() {
+    this.speciesTarget.classList.add('hidden');
+    this.styleTarget.classList.add('hidden');
+    this.species_otherTarget.classList.add('hidden');
+    this.style_otherTarget.classList.add('hidden');
+
+    // Remove required attributes when hidden
+    this.removeRequiredFromPlantFields();
+  }
+
+  removeRequiredFromPlantFields() {
+    [this.speciesTarget, this.styleTarget, this.species_otherTarget, this.style_otherTarget].forEach(target => {
+      if (target) {
+        target.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = false;
+        });
+      }
+    });
+  }
+
+  updateContainerFields(event) {
+    const selectedContainer = event.target.value;
+    this.hideContainerSubFields(); // Hide all subfields first
+
+    switch (selectedContainer) {
+      case 'material':
+        this.materialTarget.classList.remove('hidden');
+        this.materialTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          if (!input.id.includes('other')) {
+            input.required = true;
+          }
+        });
+        break;
+      case 'shape':
+        this.shapeTarget.classList.remove('hidden');
+        this.shapeTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          if (!input.id.includes('other')) {
+            input.required = true;
+          }
+        });
+        break;
+      case 'other':
+        this.material_otherTarget.classList.remove('hidden');
+        this.shape_otherTarget.classList.remove('hidden');
+        this.material_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = true;
+        });
+        this.shape_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = true;
+        });
+        break;
+      default:
+        break;
+    }
+
+    this.updateOtherField(event);
+  }
+
+  hideContainerSubFields() {
+    this.materialTarget.classList.add('hidden');
+    this.shapeTarget.classList.add('hidden');
+    this.material_otherTarget.classList.add('hidden');
+    this.shape_otherTarget.classList.add('hidden');
+
+    // Remove required attributes when hidden
+    this.removeRequiredFromContainerFields();
+  }
+
+  removeRequiredFromContainerFields() {
+    [this.materialTarget, this.shapeTarget, this.material_otherTarget, this.shape_otherTarget].forEach(target => {
+      if (target) {
+        target.querySelectorAll('input, select, textarea').forEach(input => {
+          input.required = false;
+        });
+      }
+    });
+  }
+
   updateOtherField(event) {
     const selectElement = event.target;
     const value = selectElement.value;
-  
-    // Determine which "other" field needs to be shown based on select element
+
     let otherField;
-    
+
     switch (selectElement.id) {
       case "item_plant_species":
         otherField = this.species_otherTarget;
@@ -110,9 +288,6 @@ export default class extends Controller {
       case "item_plant_style":
         otherField = this.style_otherTarget;
         break;
-      // case "item_plant_stage":
-      //   otherField = this.stage_otherTarget;
-      //   break;
       case "item_container_material":
         otherField = this.material_otherTarget;
         break;
@@ -134,17 +309,13 @@ export default class extends Controller {
       case "item_tool_type":
         otherField = this.tool_otherTarget;
         break;
-      // case "item_condition":
-      //   otherField = this.condition_otherTarget;
-      //   break;
       case "item_essential_type":
         otherField = this.essential_otherTarget;
         break;
       default:
         otherField = null;
     }
-  
-    // If a matching "other" field exists and the value includes "other"
+
     if (otherField) {
       if (value.includes('other')) {
         otherField.classList.remove('hidden');
@@ -152,89 +323,8 @@ export default class extends Controller {
       } else {
         otherField.classList.add('hidden');
         otherField.required = false;
-        otherField.value = '';  // Clear the input when hidden
+        otherField.value = '';
       }
     }
   }
-  // updateEssentialFields(event) {
-  //   const selectedEssential = event.target.value
-  //   this.hideEssentialSubFields()
-
-  //   switch (selectedEssential) {
-  //     case 'wire':
-  //       this.wireTarget.classList.remove('hidden')
-  //       break
-  //     case 'tool':
-  //       this.toolTarget.classList.remove('hidden')
-  //       this.brandTarget.classList.remove('hidden')
-  //       this.conditionTarget.classList.remove('hidden')
-  //       break
-  //     case 'other_essential':
-  //       this.essential_otherTarget.classList.remove('hidden')
-  //       break
-  //   }
-  // }
-
-  // hideEssentialSubFields() {
-  //   this.wireTarget.classList.add('hidden')
-  //   this.toolTarget.classList.add('hidden')
-  //   this.brandTarget.classList.add('hidden')
-  //   this.conditionTarget.classList.add('hidden')
-  //   this.essential_otherTarget.classList.add('hidden')
-  // }
-  // updateOtherField(event) {
-  //   const selectElement = event.target;
-  //   const value = selectElement.value;
-  
-  //   // Determine which "other" field needs to be shown
-  //   let otherField;
-    
-  //   switch (selectElement.id) {
-  //     case "item_wire_type":
-  //       otherField = this.wire_otherTarget;
-  //       break;
-  //     case "item_tool_type":
-  //       otherField = this.tool_otherTarget;
-  //       break;
-  //     case "item_condition":
-  //       otherField = this.condition_otherTarget;
-  //       break;
-  //     case "item_essential_type":
-  //       otherField = this.essential_otherTarget;
-  //       break;
-  //     default:
-  //       otherField = null;
-  //   }
-  
-  //   // If there's a matching "other" field and the value includes "other"
-  //   if (otherField) {
-  //     if (value.includes('other')) {
-  //       otherField.classList.remove('hidden');
-  //       otherField.required = true;
-  //     } else {
-  //       otherField.classList.add('hidden');
-  //       otherField.required = false;
-  //       otherField.value = '';  // Clear the input if it's hidden
-  //     }
-  //   }
-  // }
-  // updateOtherField(event) {
-  //   const selectElement = event.target;
-  //   const value = selectElement.value;
-  
-  //   // Accessing the target directly as essential_otherTarget
-  //   const otherField = this.essential_otherTarget;
-  
-  //   if (value.includes('other')) {
-  //     // Show the other field
-  //     otherField.classList.remove('hidden');
-  //     otherField.required = true;
-  //   } else {
-  //     // Hide the other field
-  //     otherField.classList.add('hidden');
-  //     otherField.required = false;
-  //     otherField.value = '';  // Clear the input if it's hidden
-  //   }
-  // }
-  
 }

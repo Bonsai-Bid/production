@@ -25,10 +25,13 @@ export default class extends Controller {
     if (showOtherValues.includes(selectedValue)) {
       this.otherTarget.classList.remove('hidden')
       this.otherTarget.removeAttribute('aria-hidden')
+      this.otherTarget.required = true;  
     } else {
       this.otherTarget.classList.add('hidden')
       this.otherTarget.setAttribute('aria-hidden', 'true')
       this.otherTarget.value = ''
+      this.otherTarget.required = false; 
+
     }
   }
 

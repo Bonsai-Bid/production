@@ -63,8 +63,8 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
     click_button 'Create Item'
   
     # Check validation for missing species_other
-    species_other_valid = page.evaluate_script("document.querySelector('#item_species_other').validity.valid")
-    species_other_validation_message = page.evaluate_script("document.querySelector('#item_species_other').validationMessage")
+    species_other_valid = page.evaluate_script("document.querySelector('#item_plant_species_other').validity.valid")
+    species_other_validation_message = page.evaluate_script("document.querySelector('#item_plant_species_other').validationMessage")
     expect(species_other_valid).to be false
     expect(species_other_validation_message).to include('Please fill out this field')
   end
@@ -76,7 +76,7 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
     fill_in 'item_name', with: 'Bonsai Shears'
     select 'Essential', from: 'item_category_type'
     select 'Tool', from: 'item_essential_type'
-    select 'Other', from: 'item_tool'
+    select 'Tool other', from: 'item_tool_type'
     fill_in 'item_brand', with: 'BonsaiMaster'
     select 'New', from: 'item_condition'
   
@@ -103,8 +103,8 @@ RSpec.feature "Item Creation - Sad Path", type: :feature, js: true do
     click_button 'Create Item'
   
     # Check validation for missing wire_type
-    wire_type_valid = page.evaluate_script("document.querySelector('#item_wire').validity.valid")
-    wire_type_validation_message = page.evaluate_script("document.querySelector('#item_wire').validationMessage")
+    wire_type_valid = page.evaluate_script("document.querySelector('#item_wire_type').validity.valid")
+    wire_type_validation_message = page.evaluate_script("document.querySelector('#item_wire_type').validationMessage")
     expect(wire_type_valid).to be false
     expect(wire_type_validation_message).to include('Please select an item in the list.')
   end
