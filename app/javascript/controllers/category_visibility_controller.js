@@ -57,7 +57,7 @@ export default class extends Controller {
     allTargets.forEach(target => {
       if (target) {
         target.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = false;
+          input.removeAttribute('required');  // Use removeAttribute instead of setting required to false
         });
       }
     });
@@ -67,7 +67,7 @@ export default class extends Controller {
     this.plantTarget.classList.remove('hidden');
     this.plantTarget.querySelectorAll('input, select, textarea').forEach(input => {
       if (!input.id.includes('other')) {
-        input.required = true;  // Only apply required to non-"other" fields
+        input.setAttribute('required', 'true');  // Use setAttribute to make fields required
       }
     });
   }
@@ -76,7 +76,7 @@ export default class extends Controller {
     this.containerTarget.classList.remove('hidden');
     this.containerTarget.querySelectorAll('input, select, textarea').forEach(input => {
       if (!input.id.includes('other')) {
-        input.required = true;  // Only apply required to non-"other" fields
+        input.setAttribute('required', 'true');  // Use setAttribute to make fields required
       }
     });
   }
@@ -85,7 +85,7 @@ export default class extends Controller {
     this.essentialTarget.classList.remove('hidden');
     this.essentialTarget.querySelectorAll('input, select, textarea').forEach(input => {
       if (!input.id.includes('other')) {
-        input.required = true;  // Only apply required to non-"other" fields
+        input.setAttribute('required', 'true');  // Use setAttribute to make fields required
       }
     });
   }
@@ -126,7 +126,7 @@ export default class extends Controller {
     [this.wireTarget, this.toolTarget, this.brandTarget, this.conditionTarget, this.essential_otherTarget].forEach(target => {
       if (target) {
         target.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = false;
+          input.removeAttribute('required');  // Use removeAttribute to remove required fields
         });
       }
     });
@@ -136,7 +136,7 @@ export default class extends Controller {
     this.wireTarget.classList.remove('hidden');
     this.wireTarget.querySelectorAll('input, select, textarea').forEach(input => {
       if (!input.id.includes('other')) {
-        input.required = true;  // Only apply required to non-"other" fields
+        input.setAttribute('required', 'true');  // Use setAttribute to make fields required
       }
     });
   }
@@ -145,7 +145,7 @@ export default class extends Controller {
     this.toolTarget.classList.remove('hidden');
     this.toolTarget.querySelectorAll('input, select, textarea').forEach(input => {
       if (!input.id.includes('other')) {
-        input.required = true;  // Only apply required to non-"other" fields
+        input.setAttribute('required', 'true');  // Use setAttribute to make fields required
       }
     });
     this.brandTarget.classList.remove('hidden');
@@ -155,47 +155,60 @@ export default class extends Controller {
   showEssentialOtherField() {
     this.essential_otherTarget.classList.remove('hidden');
     this.essential_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
-      input.required = true;  // Only make "other" required when "other" is selected
+      input.setAttribute('required', 'true');  // Use setAttribute to make 'other' field required
     });
   }
 
   updatePlantFields(event) {
     const selectedPlant = event.target.value;
     this.hidePlantSubFields(); // Hide all subfields first
-
+  
     switch (selectedPlant) {
       case 'species':
         this.speciesTarget.classList.remove('hidden');
         this.speciesTarget.querySelectorAll('input, select, textarea').forEach(input => {
           if (!input.id.includes('other')) {
-            input.required = true;
+            input.setAttribute('required', 'true');  // Set required for species, but not for 'other'
           }
         });
+        // Make sure the 'other' fields are not required when 'species' is selected
+        this.species_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          input.removeAttribute('required');
+        });
         break;
+        
       case 'style':
         this.styleTarget.classList.remove('hidden');
         this.styleTarget.querySelectorAll('input, select, textarea').forEach(input => {
           if (!input.id.includes('other')) {
-            input.required = true;
+            input.setAttribute('required', 'true');  // Set required for style, but not for 'other'
           }
         });
+        // Make sure the 'other' fields are not required when 'style' is selected
+        this.style_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
+          input.removeAttribute('required');
+        });
         break;
+        
       case 'other':
         this.species_otherTarget.classList.remove('hidden');
         this.style_otherTarget.classList.remove('hidden');
+        
         this.species_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = true;
+          input.setAttribute('required', 'true');  // Only make 'other' field required
         });
         this.style_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = true;
+          input.setAttribute('required', 'true');  // Only make 'other' field required
         });
         break;
+        
       default:
         break;
     }
-
-    this.updateOtherField(event);
+  
+    this.updateOtherField(event);  // Ensure further updates to the 'Other' field visibility/requirement
   }
+  
 
   hidePlantSubFields() {
     this.speciesTarget.classList.add('hidden');
@@ -211,7 +224,7 @@ export default class extends Controller {
     [this.speciesTarget, this.styleTarget, this.species_otherTarget, this.style_otherTarget].forEach(target => {
       if (target) {
         target.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = false;
+          input.removeAttribute('required');  // Use removeAttribute to remove required fields
         });
       }
     });
@@ -226,7 +239,7 @@ export default class extends Controller {
         this.materialTarget.classList.remove('hidden');
         this.materialTarget.querySelectorAll('input, select, textarea').forEach(input => {
           if (!input.id.includes('other')) {
-            input.required = true;
+            input.setAttribute('required', 'true');  // Use setAttribute to make fields required
           }
         });
         break;
@@ -234,7 +247,7 @@ export default class extends Controller {
         this.shapeTarget.classList.remove('hidden');
         this.shapeTarget.querySelectorAll('input, select, textarea').forEach(input => {
           if (!input.id.includes('other')) {
-            input.required = true;
+            input.setAttribute('required', 'true');  // Use setAttribute to make fields required
           }
         });
         break;
@@ -242,10 +255,10 @@ export default class extends Controller {
         this.material_otherTarget.classList.remove('hidden');
         this.shape_otherTarget.classList.remove('hidden');
         this.material_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = true;
+          input.setAttribute('required', 'true');  // Use setAttribute to make 'other' field required
         });
         this.shape_otherTarget.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = true;
+          input.setAttribute('required', 'true');  // Use setAttribute to make 'other' field required
         });
         break;
       default:
@@ -269,7 +282,7 @@ export default class extends Controller {
     [this.materialTarget, this.shapeTarget, this.material_otherTarget, this.shape_otherTarget].forEach(target => {
       if (target) {
         target.querySelectorAll('input, select, textarea').forEach(input => {
-          input.required = false;
+          input.removeAttribute('required');  // Use removeAttribute to remove required fields
         });
       }
     });
@@ -319,11 +332,11 @@ export default class extends Controller {
     if (otherField) {
       if (value.includes('other')) {
         otherField.classList.remove('hidden');
-        otherField.required = true;
+        otherField.setAttribute('required', 'true');  // Use setAttribute to make 'other' field required
       } else {
         otherField.classList.add('hidden');
-        otherField.required = false;
-        otherField.value = '';
+        otherField.removeAttribute('required');  // Use removeAttribute to remove required field
+        otherField.value = '';  // Clear the value when hiding
       }
     }
   }
