@@ -1,6 +1,6 @@
 <div data-category-visibility-target="container">
   <!-- Material Field -->
-  <%= form.label :material, 'Material', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.label :material, 'Material', for: 'item_container_material', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :material, 
     options_for_select(Item.materials.keys.map { |k| [k.humanize, k] }, @item.material), 
     { include_blank: true }, 
@@ -14,7 +14,7 @@
   </div>
 
   <!-- Shape Field -->
-  <%= form.label :shape, 'Shape', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.label :shape, 'Shape', for: 'item_container_shape', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :shape, 
     options_for_select(Item.shapes.keys.map { |k| [k.humanize, k] }, @item.shape), 
     { include_blank: true }, 
@@ -28,7 +28,7 @@
   </div>
 
   <!-- Color Field -->
-  <%= form.label :color, 'Color', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.label :color, 'Color', for: 'item_container_color', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :color, 
     options_for_select(Item.colors.keys.map { |k| [k.humanize, k] }, @item.color), 
     { include_blank: true }, 
@@ -42,7 +42,7 @@
   </div>
 
   <!-- Origin Field -->
-  <%= form.label :origin, 'Origin', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.label :origin, 'Origin', for: 'item_container_origin', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :origin, 
     options_for_select(Item.origins.keys.map { |k| [k.humanize, k] }, @item.origin), 
     { include_blank: true }, 
@@ -56,7 +56,7 @@
   </div>
 
   <!-- Size Field -->
-  <%= form.label :size, 'Size', class: 'block text-sm font-medium text-gray-700' %>
+  <%= form.label :size, 'Size', for: 'item_container_size', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :size, 
     options_for_select(Item.sizes.keys.map { |k| [k.humanize, k] }, @item.size), 
     { include_blank: true }, 
