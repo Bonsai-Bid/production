@@ -4,9 +4,9 @@
   <%= form.select :material, 
     options_for_select(Item.materials.keys.map { |k| [k.humanize, k] }, @item.material), 
     { include_blank: true }, 
-    { id: "item_container_material", required: false, data: { action: "change->category-visibility#updateOtherField" } } 
+    { id: "item_container_material", required: false, data: { other_field_target: "materialSelect", action: "change->other-field#toggleOtherField" } } 
   %>
-  <div data-category-visibility-target="material_other" class="hidden">
+  <div data-other-field-target="materialOther" class="hidden">
     <%= form.text_field :material_other, 
       id: "item_container_material_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -18,9 +18,9 @@
   <%= form.select :shape, 
     options_for_select(Item.shapes.keys.map { |k| [k.humanize, k] }, @item.shape), 
     { include_blank: true }, 
-    { id: "item_container_shape", required: false, data: { action: "change->category-visibility#updateOtherField" } } 
+    { id: "item_container_shape", required: false, data: { other_field_target: "shapeSelect", action: "change->other-field#toggleOtherField" } } 
   %>
-  <div data-category-visibility-target="shape_other" class="hidden">
+  <div data-other-field-target="shapeOther" class="hidden">
     <%= form.text_field :shape_other, 
       id: "item_container_shape_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -32,9 +32,9 @@
   <%= form.select :color, 
     options_for_select(Item.colors.keys.map { |k| [k.humanize, k] }, @item.color), 
     { include_blank: true }, 
-    { id: "item_container_color", required: false, data: { action: "change->category-visibility#updateOtherField" } } 
+    { id: "item_container_color", required: false, data: { other_field_target: "colorSelect", action: "change->other-field#toggleOtherField" } } 
   %>
-  <div data-category-visibility-target="color_other" class="hidden">
+  <div data-other-field-target="colorOther" class="hidden">
     <%= form.text_field :color_other, 
       id: "item_container_color_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -46,9 +46,10 @@
   <%= form.select :origin, 
     options_for_select(Item.origins.keys.map { |k| [k.humanize, k] }, @item.origin), 
     { include_blank: true }, 
-    { id: "item_container_origin", required: false, data: { action: "change->category-visibility#updateOtherField" } } 
+    { id: "item_container_origin", required: false, data: { other_field_target: "originSelect", action: "change->other-field#toggleOtherField" } } 
   %>
-  <div data-category-visibility-target="origin_other" class="hidden">
+  
+  <div data-other-field-target="originOther" class="hidden">
     <%= form.text_field :origin_other, 
       id: "item_container_origin_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -60,9 +61,9 @@
   <%= form.select :size, 
     options_for_select(Item.sizes.keys.map { |k| [k.humanize, k] }, @item.size), 
     { include_blank: true }, 
-    { id: "item_container_size", required: false, data: { action: "change->category-visibility#updateOtherField" } } 
+    { id: "item_container_size", required: false, data: { other_field_target: "sizeSelect", action: "change->other-field#toggleOtherField" } } 
   %>
-  <div data-category-visibility-target="size_other" class="hidden">
+  <div data-other-field-target="sizeOther" class="hidden">
     <%= form.text_field :size_other, 
       id: "item_container_size_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 

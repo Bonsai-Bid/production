@@ -4,71 +4,74 @@
   <%= form.select :essential_type, 
     options_for_select(Item.essential_types.keys.map { |k| [k.humanize, k] }, @item.essential_type), 
     { include_blank: true }, 
-    { id: "item_essential_type", data: { action: "change->essential-fields#updateFields" } } 
+    { id: "item_essential_type", data: { 
+        "category-visibility-target": "essential", 
+        "other-field-target": "essentialSelect", 
+        action: "change->category-visibility#updateEssentialFields change->other-field#toggleOtherField" 
+      } 
+    } 
   %>
 
   <!-- 'Other' Field for Essential -->
-  <div data-essential-fields-target="essentialOther" class="hidden">
+  <div data-other-field-target="essentialOther" class="hidden">
     <%= form.text_field :essential_other, 
       id: "item_essential_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
       required: false %>
   </div>
-</div>
 
-<div data-essential-fields-target="wire" class="hidden">
-  <!-- Wire Type -->
-  <%= form.label :wire_type, 'Wire Type', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :wire_type, 
-    options_for_select(Item.wire_types.keys.map { |k| [k.humanize, k] }, @item.wire_type), 
-    { include_blank: true }, 
-    { id: "item_wire_type", data: { action: "change->essential-fields#updateFields" } } 
-  %>
+  <!-- Wire Section -->
+  <div data-category-visibility-target="wire" class="hidden">
+    <%= form.label :wire_type, 'Wire Type', class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.select :wire_type, 
+      options_for_select(Item.wire_types.keys.map { |k| [k.humanize, k] }, @item.wire_type), 
+      { include_blank: true }, 
+      { id: "item_wire_type", required: false, data: { other_field_target: "wireSelect", action: "change->other-field#toggleOtherField" } } 
+    %>
 
-  <!-- 'Other' Field for Wire -->
-  <div data-essential-fields-target="wireOther" class="hidden">
-    <%= form.text_field :wire_other, 
-      id: "item_wire_other", 
+    <!-- 'Other' Field for Wire -->
+    <div data-other-field-target="wireOther" class="hidden">
+      <%= form.text_field :wire_other, 
+        id: "item_wire_other", 
+        class: 'form-input mt-1 block w-full p-2 border rounded', 
+        required: false %>
+    </div>
+  </div>
+
+  <!-- Tool Section -->
+  <div data-category-visibility-target="tool" class="hidden">
+    <%= form.label :tool_type, 'Tool Type', class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.select :tool_type, 
+      options_for_select(Item.tool_types.keys.map { |k| [k.humanize, k] }, @item.tool_type), 
+      { include_blank: true }, 
+      { id: "item_tool_type", required: false, data: { other_field_target: "toolSelect", action: "change->other-field#toggleOtherField" } } 
+    %>
+
+    <!-- 'Other' Field for Tool -->
+    <div data-other-field-target="toolOther" class="hidden">
+      <%= form.text_field :tool_other, 
+        id: "item_tool_other", 
+        class: 'form-input mt-1 block w-full p-2 border rounded', 
+        required: false %>
+    </div>
+  </div>
+
+  <!-- Brand Section -->
+  <div data-category-visibility-target="brand" class="hidden">
+    <%= form.label :brand, 'Brand', class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.text_field :brand, 
+      id: "item_brand", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
       required: false %>
   </div>
-</div>
 
-<div data-essential-fields-target="tool" class="hidden">
-  <!-- Tool Type -->
-  <%= form.label :tool_type, 'Tool Type', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :tool_type, 
-    options_for_select(Item.tool_types.keys.map { |k| [k.humanize, k] }, @item.tool_type), 
-    { include_blank: true }, 
-    { id: "item_tool_type", data: { action: "change->essential-fields#updateFields" } } 
-  %>
-
-  <!-- 'Other' Field for Tool -->
-  <div data-essential-fields-target="toolOther" class="hidden">
-    <%= form.text_field :tool_other, 
-      id: "item_tool_other", 
-      class: 'form-input mt-1 block w-full p-2 border rounded', 
-      required: false %>
+  <!-- Condition Section -->
+  <div data-category-visibility-target="condition" class="hidden">
+    <%= form.label :condition, 'Condition', class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.select :condition, 
+      options_for_select(Item.conditions.keys.map { |k| [k.humanize, k] }, @item.condition), 
+      { include_blank: true }, 
+      { id: "item_condition", required: false, data: { other_field_target: "conditionSelect", action: "change->other-field#toggleOtherField" } } 
+    %>
   </div>
-</div>
-
-<div data-category-visibility-target="brand" class="hidden">
-  <!-- Brand -->
-  <%= form.label :brand, 'Brand', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.text_field :brand, 
-    id: "item_brand", 
-    class: 'form-input mt-1 block w-full p-2 border rounded', 
-    required: false %>
-</div>
-
-<div data-category-visibility-target="condition" class="hidden">
-  <!-- Condition -->
-  <%= form.label :condition, 'Condition', class: 'block text-sm font-medium text-gray-700' %>
-  <%= form.select :condition, 
-    options_for_select(Item.conditions.keys.map { |k| [k.humanize, k] }, @item.condition), 
-    { include_blank: true }, 
-    { id: "item_condition", 
-      data: { action: "change->category-visibility#updateOtherField" } 
-    } 
-  %>
 </div>

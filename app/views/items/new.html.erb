@@ -11,23 +11,29 @@
 
 <body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
     <div class="container mx-auto mt-5 px-4">
-        <%= form_with(model: @item, data: { controller: "category-visibility" }) do |form| %>
+        <%= form_with(model: @item, data: { controller: "category-visibility other-field" }) do |form| %>
+            <!-- Reference the basic_info partial here -->
             <%= render 'items/basic_info', form: form %>
 
+            <!-- Plant Section -->
             <div data-category-visibility-target="plant" class="hidden">
                 <%= render 'items/plant_fields', form: form %>
             </div>
 
+            <!-- Container Section -->
             <div data-category-visibility-target="container" class="hidden">
                 <%= render 'items/container_fields', form: form %>
             </div>
 
+            <!-- Essential Section -->
             <div data-category-visibility-target="essential" class="hidden">
                 <%= render 'items/essential_fields', form: form %>
             </div>
 
+            <!-- Auction Fields -->
             <%= render 'items/auction_fields', form: form %>
 
+            <!-- Submit Button -->
             <div>
                 <%= form.submit 'Create Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
             </div>
