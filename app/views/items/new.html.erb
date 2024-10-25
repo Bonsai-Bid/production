@@ -11,9 +11,32 @@
 
 <body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
     <div class="container mx-auto mt-5 px-4">
-        <%= form_with(model: @item, data: { controller: "category-visibility other-field" }) do |form| %>
-            <!-- Reference the basic_info partial here -->
-            <%= render 'items/basic_info', form: form %>
+        <%= form_with(model: @item, data: { controller: "category-visibility" }) do |form| %>
+
+            <!-- Basic Info Section -->
+            <div class="mb-4">
+                <%= form.label :name, 'Name', class: 'block text-sm font-medium text-gray-700' %>
+                <%= form.text_field :name, class: 'form-input mt-1 block w-full p-2 border rounded', required: true %>
+            </div>
+
+            <div class="mb-4">
+                <%= form.label :description, 'Description', class: 'block text-sm font-medium text-gray-700' %>
+                <%= form.text_area :description, class: 'form-textarea mt-1 block w-full p-2 border rounded', required: true %>
+            </div>
+
+            <!-- Category Type Dropdown -->
+            <div class="mb-4">
+                <%= form.label :category_type, "Category", class: "block text-sm font-medium text-gray-700" %>
+                <%= form.select :category_type, 
+                    options_for_select(Item.category_types.keys.map { |k| [k.capitalize, k] }, @item.category_type), 
+                    { include_blank: true }, 
+                    { id: "item_category", 
+                    required: false, 
+                    data: { category_visibility_target: "category", 
+                            action: "change->category-visibility#updateVisibility" } 
+                    } %>
+                </div>
+
 
             <!-- Plant Section -->
             <div data-category-visibility-target="plant" class="hidden">
@@ -37,6 +60,7 @@
             <div>
                 <%= form.submit 'Create Item', class: 'btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
             </div>
+
         <% end %>
     </div>
 </body>

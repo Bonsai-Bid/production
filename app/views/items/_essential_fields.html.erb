@@ -1,19 +1,18 @@
-<div data-category-visibility-target="essential">
+<div data-controller="category-visibility" data-category-visibility-target="essential">
   <!-- Essential Type -->
   <%= form.label :essential_type, 'Essential Type', class: 'block text-sm font-medium text-gray-700' %>
   <%= form.select :essential_type, 
     options_for_select(Item.essential_types.keys.map { |k| [k.humanize, k] }, @item.essential_type), 
     { include_blank: true }, 
     { id: "item_essential_type", data: { 
-        "category-visibility-target": "essential", 
-        "other-field-target": "essentialSelect", 
-        action: "change->category-visibility#updateEssentialFields change->other-field#toggleOtherField" 
+        category_visibility_target: "essentialSelect", 
+        action: "change->category-visibility#updateEssentialFields" 
       } 
     } 
   %>
 
   <!-- 'Other' Field for Essential -->
-  <div data-other-field-target="essentialOther" class="hidden">
+  <div data-category-visibility-target="essentialOther" class="hidden">
     <%= form.text_field :essential_other, 
       id: "item_essential_other", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -26,11 +25,11 @@
     <%= form.select :wire_type, 
       options_for_select(Item.wire_types.keys.map { |k| [k.humanize, k] }, @item.wire_type), 
       { include_blank: true }, 
-      { id: "item_wire_type", required: false, data: { other_field_target: "wireSelect", action: "change->other-field#toggleOtherField" } } 
+      { id: "item_wire_type", required: false, data: { category_visibility_target: "wireSelect" } } 
     %>
 
     <!-- 'Other' Field for Wire -->
-    <div data-other-field-target="wireOther" class="hidden">
+    <div data-category-visibility-target="wireOther" class="hidden">
       <%= form.text_field :wire_other, 
         id: "item_wire_other", 
         class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -44,11 +43,11 @@
     <%= form.select :tool_type, 
       options_for_select(Item.tool_types.keys.map { |k| [k.humanize, k] }, @item.tool_type), 
       { include_blank: true }, 
-      { id: "item_tool_type", required: false, data: { other_field_target: "toolSelect", action: "change->other-field#toggleOtherField" } } 
+      { id: "item_tool_type", required: false, data: { category_visibility_target: "toolSelect" } } 
     %>
 
     <!-- 'Other' Field for Tool -->
-    <div data-other-field-target="toolOther" class="hidden">
+    <div data-category-visibility-target="toolOther" class="hidden">
       <%= form.text_field :tool_other, 
         id: "item_tool_other", 
         class: 'form-input mt-1 block w-full p-2 border rounded', 
@@ -62,7 +61,8 @@
     <%= form.text_field :brand, 
       id: "item_brand", 
       class: 'form-input mt-1 block w-full p-2 border rounded', 
-      required: false %>
+      required: false, 
+      data: { category_visibility_target: "brandSelect" } %>
   </div>
 
   <!-- Condition Section -->
@@ -71,7 +71,7 @@
     <%= form.select :condition, 
       options_for_select(Item.conditions.keys.map { |k| [k.humanize, k] }, @item.condition), 
       { include_blank: true }, 
-      { id: "item_condition", required: false, data: { other_field_target: "conditionSelect", action: "change->other-field#toggleOtherField" } } 
+      { id: "item_condition", required: false, data: { category_visibility_target: "conditionSelect" } } 
     %>
   </div>
 </div>
